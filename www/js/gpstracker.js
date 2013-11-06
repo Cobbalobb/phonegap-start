@@ -62,6 +62,8 @@ $("#startTracking_stop").live('click', function(){
 	// Stop tracking the user
 	navigator.geolocation.clearWatch(watch_id);
 	
+    console.log(tracking_data);
+
 	// Save the tracking data
 	window.localStorage.setItem(track_id, JSON.stringify(tracking_data));
 
