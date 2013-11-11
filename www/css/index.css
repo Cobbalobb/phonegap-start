@@ -80,7 +80,7 @@ body {
 }
 
 h1 {
-    font-size:24px;
+    font-size:2em;
     font-weight:normal;
     margin:0px;
     overflow:visible;
@@ -130,7 +130,7 @@ h1 {
     padding-left: 15px;
     padding-top: 15px;
     padding-bottom: 15px;
-    font-size: 22px;
+    font-size: 1.8em;
 }
 
 .header{
@@ -172,21 +172,20 @@ h1 {
 }
 
 .home_but{
-    height: 71px;
-    padding: 15px;
+    padding: 4em 15px;
 }
 
 .dynamic{
     text-align: right;
     float: right;
     font-family: "roboto-condensed",'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
-    font-size: 33px;
-    padding-top: 14px;
+    font-size: 2.6em;
+  /*  padding-top: 14px;*/
 }
 
 .head{
     float: left;
-    padding-top: 21px;
+   /* padding-top: 21px; */
 }
 
 .home_but h1{
