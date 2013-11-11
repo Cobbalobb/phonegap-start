@@ -20,12 +20,22 @@
     -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
 }
 
+@font-face {
+    font-family: "roboto";
+    src: url("fonts/Roboto-Regular.ttf") format("opentype");   
+    }
+
+@font-face {
+    font-family: "roboto-condensed";
+    src: url("fonts/RobotoCondensed-Regular.ttf") format("opentype");   
+    }
+
 body {
     -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
     -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
     -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
-    background-color:#E4E4E4;
-    background-image:linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
+    background-color:#fff;
+    /*background-image:linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
     background-image:-webkit-linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
     background-image:-ms-linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
     background-image:-webkit-gradient(
@@ -35,13 +45,13 @@ body {
         color-stop(0, #A7A7A7),
         color-stop(0.51, #E4E4E4)
     );
-    background-attachment:fixed;
-    font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
+    background-attachment:fixed;*/
+    font-family: "roboto",'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
     font-size:12px;
     height:100%;
     margin:0px;
     padding:0px;
-    text-transform:uppercase;
+    /*text-transform:uppercase;*/
     width:100%;
 }
 
@@ -76,6 +86,7 @@ h1 {
     overflow:visible;
     padding:0px;
     text-align:center;
+    color: #fff;
 }
 
 .event {
@@ -112,4 +123,91 @@ h1 {
 .blink {
     animation:fade 3000ms infinite;
     -webkit-animation:fade 3000ms infinite;
+}
+
+.header h1{
+    text-align: left;
+    padding-left: 15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-size: 22px;
+}
+
+.header{
+    background-color: #f1736a;
+}
+
+#welcome{
+    margin: 20px 20px 0 0;  
+    overflow: auto
+}
+
+#user-img{
+    padding-left: 15px;
+    float: left;
+    padding-right: 10px;
+}
+
+#user-img img {
+    display: block
+}
+
+#welcome-message{
+    margin-bottom: 15px;
+}
+
+#welcome-message h1{
+    color: #3c3c3c;
+    text-align: left;
+}
+#welcome-message h2{
+    color: #3c3c3c;
+    font-weight: normal;
+    -webkit-margin-before: 0px;
+}
+
+#welcome-message h2 a{
+    color: #df5a49;
+    text-decoration: none;
+}
+
+.home_but{
+    height: 71px;
+    padding: 15px;
+}
+
+.dynamic{
+    text-align: right;
+    float: right;
+    font-family: "roboto-condensed",'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
+    font-size: 33px;
+    padding-top: 14px;
+}
+
+.head{
+    float: left;
+    padding-top: 21px;
+}
+
+.home_but h1{
+    text-align: left;
+}
+
+#footprint{
+    background-color: #df5a49;
+}
+#reductions{
+    background-color: #e27a3f;
+}
+#actions{
+    background-color: #efc94c;
+}
+#friends{
+    background-color: #45b29d;
+}
+#badges{
+    background-color: #528aab;
+}
+#journey{
+    background-color: #334d5c;
 }
