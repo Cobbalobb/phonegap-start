@@ -1,4 +1,4 @@
-var serviceURL = "../services/";
+var serviceURL = "http://carbon.jamescobbett.co.uk/services/";
 
 var users;
 
