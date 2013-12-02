@@ -4,7 +4,7 @@ var users;
 
 function getuserList() {
 	console.log('test');
-	 $.getJSON(serviceURL + 'getuser.php', { dataType: 'jsonp'}, function(data) {
+	 $.getJSON(serviceURL + 'getuser.php?jsoncallback=processJSON', { dataType: 'jsonp'}, function(data) {
 	 	console.log(data.items.id);
 		users = data.items;
 		$('#name').append(data.items.name + ',');
