@@ -14,7 +14,8 @@ while($row = mysqli_fetch_array($results)){
 };
 echo '{"items":'. json_encode($user) .'}'; 
 
-
+mysqli_query($con,"INSERT INTO user (name)
+VALUES ('Peter')");
 
 // $sql = "select e.id, e.name";
 
