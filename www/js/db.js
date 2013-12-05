@@ -43,7 +43,7 @@ function getCurrentUsersName() {
 
     function errorCB(err) {
         alert("Error processing SQL: "+err.code);
-        document.location.href = 'signup.html';
+        document.location.href = 'login.html';
     }
 
     var db = window.openDatabase("User", "1.0", "User DB", 1000000);
