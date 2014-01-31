@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=medium-dpi" />
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <script src="http://debug.phonegap.com/target/target-script-min.js#anonymous"></script>
+        <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="js/jquery.mobile-1.3.2.min.js"></script>
+        <script src="js/users.js"></script>
+        <script src="js/db.js"></script>
+        <script src="js/index.js"></script>
+        <script src="js/calculate.js"></script>
+        <title>Hello World</title>
+    </head>
+    <body>
+                <form name="calculateForm" id="calculateForm" action="#" method="post">
+<!-- Start of Log in page -->
+<div data-role="page" id="home">
+
+    <div class="header" data-role="header">
+    
+        <h1>Carbon Cutter</h1>
+    
+    </div>
+
+    <div data-role="content">
+        <div id="welcome">
+
+       </div>
+        <div class="house-one">
+            <div class="question" id="house_type">
+                <h2>1.</h2> <h3>How big is your house?</h3>
+            </div>
+
+            <ul class="answers">
+                <li><input type="radio" name="house" value="small">Small/Flat</li>
+                <li><input type="radio" name="house" value="medium">Medium</li>
+                <li><input type="radio" name="house" value="large">Large</li>
+            </ul>
+        </div>
+
+        <div class="house-two">
+            <div class="question" id="house_type">
+                <h2>2.</h2> <h3>How many people do you live with?</h3>
+            </div>
+
+            <ul class="answers">
+                <li><input type="range" name="people" min="1" max="10"></li>
+            </ul>
+        </div>
+
+        <div class="house-three">
+            <div class="question" id="house_type">
+                <h2>3.</h2> <h3>How is your house heated?</h3>
+            </div>
+
+            <ul class="answers">
+                <li><input type="radio" name="heating" value="gas">Gas</li>
+                <li><input type="radio" name="heating" value="electricity">Electricity</li>
+                <li><input type="radio" name="heating" value="oil">Oil</li>
+                <li><input type="radio" name="heating" value="wood">Wood</li>
+            </ul>
+
+        </div>
+
+
+</div>
+
+<!-- Start of Log in page -->
+<div data-role="page" id="travel">
+
+    <div class="header" data-role="header">
+    
+        <h1>Carbon Cutter</h1>
+    
+    </div>
+
+    <div data-role="content">
+        <div id="welcome">
+
+       </div>
+        <div class="travel-one">
+            <div class="question" id="travel_type">
+                <h2>1.</h2> <h3>Do you have a car?</h3>
+            </div>
+
+            <ul class="answers">
+                <li><input type="radio" name="car" value="yes">Yes</li>
+                <li><input type="radio" name="car" value="no">No</li>
+            </ul>
+
+        </div>
+
+    </div>
+
+    <div class="travel-two">
+            <div class="question" id="travel_type">
+                <h2>1.</h2> <h3>What type of engine does your car have?</h3>
+            </div>
+
+            <ul class="answers">
+                <li><input type="radio" name="engine" value="petrol">Petrol</li>
+                <li><input type="radio" name="engine" value="diesel">Diesel</li>
+                <li><input type="radio" name="engine" value="hybrid">Hybrid</li>
+            </ul>
+
+        </div>
+
+    </div>
+
+    <div class="travel-three">
+            <div class="question" id="travel_type">
+                <h2>1.</h2> <h3>How big is your car?</h3>
+            </div>
+
+            <ul class="answers">
+                <li><input type="radio" name="car_size" value="small">Small</li>
+                <li><input type="radio" name="car_size" value="medium">Mediun</li>
+                <li><input type="radio" name="car_size" value="large">Large</li>
+            </ul>
+
+        </div>
+
+    </div>
+
+    <div class="travel-four">
+            <div class="question" id="car_miles">
+                <h2>1.</h2> <h3>How many miles do you travel by car per month?</h3>
+            </div>
+
+            <ul class="answers">
+                <li><input type="range" name="car_miles" step="25" min="0" max="1000"></li>
+            </ul>
+
+        </div>
+
+    <div class="travel-five">
+            <div class="question" id="car_miles">
+                <h2>1.</h2> <h3>How many miles do you travel by train per month?</h3>
+            </div>
+
+            <ul class="answers">
+                <li><input type="range" name="train_miles" step="25" min="0" max="1000"></li>
+            </ul>
+
+        </div>
+
+    <div class="travel-six">
+            <div class="question" id="car_miles">
+                <h2>1.</h2> <h3>How many miles do you travel by bus per month?</h3>
+            </div>
+
+            <ul class="answers">
+                <li><input type="range" name="bus_miles" step="25" min="0" max="1000"></li>
+            </ul>
+
+        </div>
+
+    <div class="travel-seven">
+            <div class="question" id="car_miles">
+                <h2>1.</h2> <h3>How many flights do you take per year?</h3>
+            </div>
+
+            <ul class="answers">
+                <li>Domestic flights: <input type="range" name="domestic_flights" step="1" min="0" max="10"></li>
+                <li>Short short haul flights (Europe): <input type="range" name="short_flights" step="1" min="0" max="10"></li>
+                <li>Long haul flights: <input type="range" name="long_flights" step="1" min="0" max="10"></li>
+            </ul>
+
+        </div>
+
+    </div>
+
+
+</div>
+<!-- End of Login page -->
+
+<!-- Start of Log in page -->
+<div data-role="page" id="food">
+
+    <div class="header" data-role="header">
+    
+        <h1>Carbon Cutter</h1>
+    
+    </div>
+
+    <div data-role="content">
+        <div id="welcome">
+
+        </div>
+        <div class="food-one">
+            <div class="question" id="food_type">
+                <h2>1.</h2> <h3>How often do you eat meat and fish?</h3>
+            </div>
+
+            <ul class="answers">
+                <li><input type="radio" name="meat" value=">1">More than once a day</li>
+                <li><input type="radio" name="meat" value="daily">Once a day</li>
+                <li><input type="radio" name="meat" value="few_times_a_week">A few times a week</li>
+                <li><input type="radio" name="meat" value="weekly">Once a week</li>
+                <li><input type="radio" name="meat" value="less_frequently">Less frequently</li>
+                <li><input type="radio" name="meat" value="never">Never</li>
+            </ul>
+
+        </div>
+
+        <div class="food-two">
+            <div class="question" id="organic">
+                <h2>2.</h2> <h3>How often do you buy organic produce?</h3>
+            </div>
+
+            <ul class="answers">
+                <li><input type="radio" name="organic" value="always">Always</li>
+                <li><input type="radio" name="organic" value="regularly">Regularly</li>
+                <li><input type="radio" name="organic" value="sometimes">Sometimes</li>
+                <li><input type="radio" name="organic" value="never">Never</li>
+            </ul>
+
+        </div>
+
+        <div class="food-three">
+            <div class="question" id="local">
+                <h2>3.</h2> <h3>How often do you buy local produce?</h3>
+            </div>
+
+            <ul class="answers">
+                <li><input type="radio" name="local" value="always">Always</li>
+                <li><input type="radio" name="local" value="regularly">Regularly</li>
+                <li><input type="radio" name="local" value="sometimes">Sometimes</li>
+                <li><input type="radio" name="local" value="never">Never</li>
+            </ul>
+
+        </div>
+
+        <div class="food-four">
+            <div class="question" id="compost">
+                <h2>4.</h2> <h3>Do you compost?</h3>
+            </div>
+
+            <ul class="answers">
+                <li><input type="radio" name="compost" value="yes">Yes</li>
+                <li><input type="radio" name="compost" value="no">No</li>
+            </ul>
+
+        </div>
+    </div>
+
+
+</div>
+<!-- End of Login page -->
+
+<!-- Start of Log in page -->
+<div data-role="page" id="other">
+
+    <div class="header" data-role="header">
+    
+        <h1>Carbon Cutter</h1>
+    
+    </div>
+
+    <div data-role="content">
+        <div id="welcome">
+
+        </div>
+        
+        <div class="other-one">
+            <div class="question" id="clothes">
+                <h2>1.</h2> <h3>How much a month do you spend on clothes, shoes and fabrics?</h3>
+            </div>
+
+            <ul class="answers">
+                <li><input type="range" name="clothes" step="15" min="0" max="100"></li>
+            </ul>
+
+        </div>
+
+         <div class="other-two">
+            <div class="question" id="electronics">
+                <h2>1.</h2> <h3>How much a year do you spend on Electronics?</h3>
+            </div>
+
+            <ul class="answers">
+                <li><input type="range" name="electronics" step="75" min="0" max="10000"></li>
+            </ul>
+
+        </div>
+
+         <div class="other-three">
+            <div class="question" id="othershopping">
+                <h2>1.</h2> <h3>How much a month do you spend on other shopping?</h3>
+            </div>
+
+            <ul class="answers">
+                <li><input type="range" name="other_shopping" step="10" min="0" max="100"></li>
+            </ul>
+
+        </div>
+
+
+    </div>
+
+
+</div>
+            <a href="javascript:void(1);" onclick="submitCalculateForm()" id="signButton"> <img src="images/sign.png" alt="Sign up"></a>
+        </form>
+<!-- End of Login page -->
+        <script type="text/javascript">getuserList();</script>
+        <script type="text/javascript" src="phonegap.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript">
+            app.initialize();
+        </script>
+    </body>
+</html>
