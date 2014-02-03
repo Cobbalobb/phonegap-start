@@ -254,3 +254,57 @@ function getUserInfo(){
    getCurrentUsersName();
    getCurrentUsersFootprint();
 }
+
+function addActionToList(actionid){
+    alert(actionid);
+    // declaring variables to be used
+    var xhr, target, changeListener, url, data;
+    //setting url to the php code to add comments to the db
+    url = "http://carbon.jamescobbett.co.uk/services/addActionToList.php";
+    var data = new FormData();
+
+    data.append("userid", getCurrentUsersID());
+    data.append("actionid", actionid);
+
+    console.log("Sending", data);
+    console.log(this.test);
+    // create a request object
+    xhr = new XMLHttpRequest();
+
+    changeListener = function () {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                console.log("Response", this.responseText);
+                var response = this.responseText;
+                var s = "success";
+                var message = response.indexOf("exception");
+                console.log(message);
+                if (message == -1){
+                     //$('#failure').slideToggle("slow");                    
+                    //document.getElementById("failure").style.display = "block";
+                    //document.getElementById("failure").innerHTML ="<div id='failureText'><img src='images/cross.png' id='cross'> <h1>Oops! " + response + "</h1></div>";
+                    alert('success');
+                }
+                else {
+                    //$('#success').slideDown("slow");                    
+                    //document.getElementById("failure").style.display = "none";
+                    //document.getElementById("firstName").innerHTML ='<div id="newN"><h6>'+name+'</h6></div><div id="newAL">'+age+', '+location+'</div>';
+                    alert('failure');
+                }
+                //result = JSON.parse(this.responseText);
+                //injectContent(result.id, form);
+            }
+        }
+    };
+
+    // initialise a request, specifying the HTTP method
+    // to be used and the URL to be connected to.
+    xhr.onreadystatechange = changeListener;
+    xhr.open('POST', url, true);
+    //xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.send(data);
+
+
+
+    return false;
+}
