@@ -53,7 +53,6 @@ function getCurrentUsersName() {
  }
 
 function getCurrentUsersID() {
-alert('in function');
     function queryDB(tx) {
         //tx.executeSql('DROP TABLE IF EXISTS User');
         tx.executeSql('SELECT id FROM User', [], querySuccess, errorCB);
