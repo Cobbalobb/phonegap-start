@@ -1,3 +1,20 @@
+function logout(){
+    function dropDB(tx) {
+    tx.executeSql('DROP TABLE IF EXISTS User');
+    }
+
+    function errorCB(err) {
+        alert("Error processing SQL: "+err.code);
+    }
+
+    function successCB() {
+        alert("success!");
+        document.location.href = 'index.html';
+    }
+    var db = window.openDatabase("User", "1.0", "User DB", 1000000);
+    db.transaction(dropDB, errorCB, successCB);
+}
+
 function login(id, first_name, last_name, email){
     function populateDB(tx) {
     tx.executeSql('DROP TABLE IF EXISTS User');
