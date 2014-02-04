@@ -111,7 +111,7 @@ function getCurrentUsersID() {
 
     function queryDB(tx) {
         //tx.executeSql('DROP TABLE IF EXISTS User');
-        tx.executeSql('SELECT * FROM Footprint', [], querySuccess, errorCB);
+        tx.executeSql('SELECT total FROM Footprint', [], querySuccess, errorCB);
     }
 
     function querySuccess(tx, results) {
