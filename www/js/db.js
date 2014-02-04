@@ -256,7 +256,6 @@ function getUserInfo(){
 }
 
 function addActionToList(actionid){
-    alert(actionid);
     // declaring variables to be used
     var xhr, target, changeListener, url, data;
     //setting url to the php code to add comments to the db
@@ -280,16 +279,16 @@ function addActionToList(actionid){
                 var message = response.indexOf("exception");
                 console.log(message);
                 if (message == -1){
-                     //$('#failure').slideToggle("slow");                    
+                    $('#succesfully-added').slideToggle("slow");                    
                     //document.getElementById("failure").style.display = "block";
-                    //document.getElementById("failure").innerHTML ="<div id='failureText'><img src='images/cross.png' id='cross'> <h1>Oops! " + response + "</h1></div>";
-                    alert('success');
+                    document.getElementById("success-message").innerHTML = "Succesfully added to your list.";
+                    //alert('success');
                 }
                 else {
                     //$('#success').slideDown("slow");                    
                     //document.getElementById("failure").style.display = "none";
                     //document.getElementById("firstName").innerHTML ='<div id="newN"><h6>'+name+'</h6></div><div id="newAL">'+age+', '+location+'</div>';
-                    alert('failure');
+                    //alert('failure');
                 }
                 //result = JSON.parse(this.responseText);
                 //injectContent(result.id, form);

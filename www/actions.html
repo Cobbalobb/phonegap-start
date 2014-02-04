@@ -27,6 +27,7 @@
         <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
         <script type="text/javascript" src="js/jquery.mobile-1.3.2.min.js"></script>
         <script src="js/users.js"></script>
+        <script src="js/scripts.js"></script>
         <script src="js/getactions.js"></script>
         <script src="js/db.js"></script>
         <script src="js/index.js"></script>
@@ -48,7 +49,12 @@
        </div>
 
         <script type="text/javascript">getActions();</script>
-
+        <div id="succesfully-added">
+            <div id="success-message">
+            </div>
+            <a href="#" onclick="closeSuccessMessage();">Ok</a>
+        </div>
+        <div id="action-list"></div>
     </div>
 
 

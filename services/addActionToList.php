@@ -17,7 +17,7 @@ $con = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
 $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 // query
-$sql = "INSERT INTO current_actions (user-id, action-id) VALUES ('$userid', '$actionid')";
+$sql = "INSERT INTO current_actions (user_id, action_id) VALUES ('$userid', '$actionid')";
 $q = $con->prepare($sql);
 $q->execute(array(':user-id'=>$userid,
                   ':action-id'=>$actionid,
