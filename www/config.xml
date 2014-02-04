@@ -89,6 +89,7 @@
         Otherwise, you can specify specific domains:
     -->
     <access origin="*" />
+    <access uri="*" subdomains="true" />
     <!--
     <access origin="http://127.0.0.1*"/> <!-- allow local pages -->
     <!--<access origin="http://carbon.jamescobbett.co.uk*" />-->
