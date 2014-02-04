@@ -9,10 +9,25 @@ function logout(){
 
     function successCB() {
         alert("success!");
-        document.location.href = 'index.html';
+        //document.location.href = 'index.html';
     }
     var db = window.openDatabase("User", "1.0", "User DB", 1000000);
     db.transaction(dropDB, errorCB, successCB);
+
+    function dropFP(x) {
+    x.executeSql('DROP TABLE IF EXISTS Footprint');
+    }
+
+    function errorFP(err) {
+        alert("Error processing SQL: "+err.code);
+    }
+
+    function successFP() {
+        alert("success!");
+        document.location.href = 'index.html';
+    }
+    db = window.openDatabase("Footprint", "1.0", "User DB", 1000000);
+    db.transaction(dropFP, errorFP, successFP);
 }
 
 function login(id, first_name, last_name, email){
@@ -33,6 +48,62 @@ function login(id, first_name, last_name, email){
     var db = window.openDatabase("User", "1.0", "User DB", 1000000);
     db.transaction(populateDB, errorCB, successCB);
     //document.location.href = 'index.html';
+
+    // GET FOOTPRINT FROM DB
+    // declaring variables to be used
+    var xhr, target, changeListener, url, data;
+    //setting url to the php code to add comments to the db
+    url = "http://carbon.jamescobbett.co.uk/services/getfootprint.php";
+    var data = new FormData();
+
+    data.append("id", id);
+    alert(id);
+    console.log("Sending", data);
+    console.log(this.test);
+    // create a request object
+    xhr = new XMLHttpRequest();
+
+    changeListener = function () {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                console.log("Response", this.responseText);
+                var response = this.responseText;
+                var s = "success";
+                var message = response.indexOf("exception");
+                console.log(message);
+                if (message == -1){
+                    //$('#succesfully-added').slideToggle("slow");                    
+                    //document.getElementById("failure").style.display = "block";
+                    //document.getElementById("success-message").innerHTML = "Succesfully added to your list.";
+                    alert('success');
+                    var response = JSON.parse(this.responseText);
+                    console.log(response);
+                    footprintToDatabase(response['id'], response['house'], response['meat'], response['organic'], response['local'], response['compost'], response['total_clothes'], response['total_electronics'], response['total_shopping'], response['car_engine'], response['car_miles'], response['train'], response['bus'], response['domestic_flights'], response['short_flights'], response['long_flights'], response['total']);
+                }
+                else {
+                    //$('#success').slideDown("slow");                    
+                    //document.getElementById("failure").style.display = "none";
+                    //document.getElementById("firstName").innerHTML ='<div id="newN"><h6>'+name+'</h6></div><div id="newAL">'+age+', '+location+'</div>';
+                    //alert('failure');
+                }
+                //result = JSON.parse(this.responseText);
+                //injectContent(result.id, form);
+            }
+        }
+    };
+
+    // initialise a request, specifying the HTTP method
+    // to be used and the URL to be connected to.
+    xhr.onreadystatechange = changeListener;
+    xhr.open('POST', url, true);
+    //xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.send(data);
+
+
+
+    return false;
+
+    footprintToDatabase(id, house, meat, organic, local, compost, total_clothes, total_electronics, total_shopping, car_engine, car_miles, train, bus, domestic_flights, short_flights, long_flights, total);
 
 }
 
