@@ -15,3 +15,12 @@ function goToSignup(){
 	        showLoadMsg: true,
 	        reload: true
 	    });}
+
+function goToLogin(){
+	$(':mobile-pagecontainer').pagecontainer('change', 'login.html', {
+	        transition: 'slide',
+	        changeHash: true,
+	        reverse: false,
+	        showLoadMsg: true,
+	        reload: true
+	    });}
