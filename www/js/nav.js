@@ -7,7 +7,7 @@ function goToActions(){
 	        reload: true
 	    });}
 
-function goToActions(){
+function goToSignup(){
 	$(':mobile-pagecontainer').pagecontainer('change', 'signup.html', {
 	        transition: 'slideup',
 	        changeHash: true,
