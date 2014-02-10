@@ -260,7 +260,7 @@ function getCurrentUsersID() {
     }
     // var dbfp = window.openDatabase("Footprint", "1.0", "User DB", 1000000);
     // dbfp.transaction(populateDB, errorCB, successCB);
-    //var db = window.openDatabase("User", "1.0", "User DB", 1000000);
+    var db = window.openDatabase("User", "1.0", "User DB", 1000000);
     db.transaction(populateDB, errorCB, successCB);
     //document.location.href = 'index.html';
  }
