@@ -45,7 +45,7 @@ function login(id, first_name, last_name, email){
 
     function successCB() {
         alert("success!");
-        document.location.href = 'index.html';
+        //document.location.href = 'index.html';
     }
     //var db = window.openDatabase("User", "1.0", "User DB", 1000000);
     db.transaction(populateDB, errorCB, successCB);
@@ -256,7 +256,7 @@ function getCurrentUsersID() {
 
     function successCB() {
         alert("success footprint added!");
-        //document.location.href = 'index.html';
+        document.location.href = 'index.html';
     }
     // var dbfp = window.openDatabase("Footprint", "1.0", "User DB", 1000000);
     // dbfp.transaction(populateDB, errorCB, successCB);
