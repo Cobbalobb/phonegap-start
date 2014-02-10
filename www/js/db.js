@@ -157,8 +157,8 @@ function getCurrentUsersName() {
 
     function errorCB(err) {
         alert("Error processing SQL: "+err.code);
-        goToLogin();
-        //document.location.href = 'login.html';
+        //goToLogin();
+        document.location.href = 'login.html';
     }
 
     //var db = window.openDatabase("User", "1.0", "User DB", 1000000);

@@ -8,19 +8,22 @@ function goToActions(){
 	    });}
 
 function goToSignup(){
-	$(':mobile-pagecontainer').pagecontainer('change', 'signup.html', {
-	        transition: 'slideup',
-	        changeHash: true,
-	        reverse: false,
-	        showLoadMsg: true,
-	        reload: true
-	    });}
+	// $(':mobile-pagecontainer').pagecontainer('change', 'signup.html', {
+	//         transition: 'slideup',
+	//         changeHash: true,
+	//         reverse: false,
+	//         showLoadMsg: true,
+	//         reload: true
+	//     });
+	        document.location.href = 'signup.html';
+}
 
 function goToLogin(){
-	$(':mobile-pagecontainer').pagecontainer('change', 'login.html', {
-	        transition: 'slide',
-	        changeHash: true,
-	        reverse: false,
-	        showLoadMsg: true,
-	        reload: true
-	    });}
+	// $(':mobile-pagecontainer').pagecontainer('change', 'login.html', {
+	//         transition: 'slide',
+	//         changeHash: true,
+	//         reverse: false,
+	//         showLoadMsg: true,
+	//         reload: true
+	//     });
+}
