@@ -49,30 +49,30 @@ function login(id, first_name, last_name, email){
     }
     //var db = window.openDatabase("User", "1.0", "User DB", 1000000);
     db.transaction(populateDB, errorCB, successCB);
-    //document.location.href = 'index.html';
+    document.location.href = 'index.html';
     
     //GET ACTIONS FROM SERVER TO LOCAL DB
     //actionstoDB();
-    xmlhttp=new XMLHttpRequest();
-    xmlhttp.onreadystatechange=function()
-      {
-      if (xmlhttp.readyState==4 && xmlhttp.status==200)
-        {
-            //console.log(xmlhttp.responseText);
-            var response = JSON.parse(xmlhttp.responseText);
-            console.log(response[0]);
-            for(var i = 0; i < response.length; i++){
-                function(response) { 
-                    db.transaction(function (tx) {  
-                    tx.executeSql('INSERT INTO Actions (ID) VALUES (?)',  response[i]['id']);
-                  });
-                }(i);
-                //actionstoDB(response[i]['id'], response[i]['action'], response[i]['description'], response[i]['reduction'], response[i]['category'], response[i]['max']);
-            };
-        }
-      }
-    xmlhttp.open("GET","http://carbon.jamescobbett.co.uk/services/getactions.php");
-    xmlhttp.send();
+    // xmlhttp=new XMLHttpRequest();
+    // xmlhttp.onreadystatechange=function()
+    //   {
+    //   if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    //     {
+    //         //console.log(xmlhttp.responseText);
+    //         var response = JSON.parse(xmlhttp.responseText);
+    //         console.log(response[0]);
+    //         for(var i = 0; i < response.length; i++){
+    //             function(response) { 
+    //                 db.transaction(function (tx) {  
+    //                 tx.executeSql('INSERT INTO Actions (ID) VALUES (?)',  response[i]['id']);
+    //               });
+    //             }(i);
+    //             //actionstoDB(response[i]['id'], response[i]['action'], response[i]['description'], response[i]['reduction'], response[i]['category'], response[i]['max']);
+    //         };
+    //     }
+    //   }
+    // xmlhttp.open("GET","http://carbon.jamescobbett.co.uk/services/getactions.php");
+    // xmlhttp.send();
     //currentactionstoDB();
     //completedactionstoDB();
 
@@ -130,7 +130,7 @@ function login(id, first_name, last_name, email){
 
     // return false;
 
-    footprintToDatabase(id, house, meat, organic, local, compost, total_clothes, total_electronics, total_shopping, car_engine, car_miles, train, bus, domestic_flights, short_flights, long_flights, total);
+    //footprintToDatabase(id, house, meat, organic, local, compost, total_clothes, total_electronics, total_shopping, car_engine, car_miles, train, bus, domestic_flights, short_flights, long_flights, total);
 
 }
 
