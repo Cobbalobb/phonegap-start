@@ -1,3 +1,5 @@
+var db = window.openDatabase("User", "1.0", "User DB", 1000000);
+
 function logout(){
     function dropDB(tx) {
     tx.executeSql('DROP TABLE IF EXISTS User');
@@ -26,7 +28,7 @@ function logout(){
         alert("success!");
         document.location.href = 'index.html';
     }
-    db = window.openDatabase("Footprint", "1.0", "User DB", 1000000);
+    //db = window.openDatabase("Footprint", "1.0", "User DB", 1000000);
     db.transaction(dropFP, errorFP, successFP);
 }
 
@@ -45,63 +47,88 @@ function login(id, first_name, last_name, email){
         alert("success!");
         document.location.href = 'index.html';
     }
-    var db = window.openDatabase("User", "1.0", "User DB", 1000000);
+    //var db = window.openDatabase("User", "1.0", "User DB", 1000000);
     db.transaction(populateDB, errorCB, successCB);
     //document.location.href = 'index.html';
+    
+    //GET ACTIONS FROM SERVER TO LOCAL DB
+    //actionstoDB();
+    xmlhttp=new XMLHttpRequest();
+    xmlhttp.onreadystatechange=function()
+      {
+      if (xmlhttp.readyState==4 && xmlhttp.status==200)
+        {
+            //console.log(xmlhttp.responseText);
+            var response = JSON.parse(xmlhttp.responseText);
+            console.log(response[0]);
+            for(var i = 0; i < response.length; i++){
+                function(response) { 
+                    db.transaction(function (tx) {  
+                    tx.executeSql('INSERT INTO Actions (ID) VALUES (?)',  response[i]['id']);
+                  });
+                }(i);
+                //actionstoDB(response[i]['id'], response[i]['action'], response[i]['description'], response[i]['reduction'], response[i]['category'], response[i]['max']);
+            };
+        }
+      }
+    xmlhttp.open("GET","http://carbon.jamescobbett.co.uk/services/getactions.php");
+    xmlhttp.send();
+    //currentactionstoDB();
+    //completedactionstoDB();
 
     // GET FOOTPRINT FROM DB
     // declaring variables to be used
-    var xhr, target, changeListener, url, data;
-    //setting url to the php code to add comments to the db
-    url = "http://carbon.jamescobbett.co.uk/services/getfootprint.php";
-    var data = new FormData();
+    // var xhr, target, changeListener, url, data;
+    // //setting url to the php code to add comments to the db
+    // url = "http://carbon.jamescobbett.co.uk/services/getfootprint.php";
+    // var data = new FormData();
 
-    data.append("id", id);
-    alert(id);
-    console.log("Sending", data);
-    console.log(this.test);
-    // create a request object
-    xhr = new XMLHttpRequest();
+    // data.append("id", id);
+    // alert(id);
+    // console.log("Sending", data);
+    // console.log(this.test);
+    // // create a request object
+    // xhr = new XMLHttpRequest();
 
-    changeListener = function () {
-        if (xhr.readyState == 4) {
-            if (xhr.status == 200) {
-                console.log("Response", this.responseText);
-                var response = this.responseText;
-                var s = "success";
-                var message = response.indexOf("exception");
-                console.log(message);
-                if (message == -1){
-                    //$('#succesfully-added').slideToggle("slow");                    
-                    //document.getElementById("failure").style.display = "block";
-                    //document.getElementById("success-message").innerHTML = "Succesfully added to your list.";
-                    alert('success');
-                    var response = JSON.parse(this.responseText);
-                    console.log(response);
-                    footprintToDatabase(response['id'], response['house'], response['meat'], response['organic'], response['local'], response['compost'], response['total_clothes'], response['total_electronics'], response['total_shopping'], response['car_engine'], response['car_miles'], response['train'], response['bus'], response['domestic_flights'], response['short_flights'], response['long_flights'], response['total']);
-                }
-                else {
-                    //$('#success').slideDown("slow");                    
-                    //document.getElementById("failure").style.display = "none";
-                    //document.getElementById("firstName").innerHTML ='<div id="newN"><h6>'+name+'</h6></div><div id="newAL">'+age+', '+location+'</div>';
-                    //alert('failure');
-                }
-                //result = JSON.parse(this.responseText);
-                //injectContent(result.id, form);
-            }
-        }
-    };
+    // changeListener = function () {
+    //     if (xhr.readyState == 4) {
+    //         if (xhr.status == 200) {
+    //             console.log("Response", this.responseText);
+    //             var response = this.responseText;
+    //             var s = "success";
+    //             var message = response.indexOf("exception");
+    //             console.log(message);
+    //             if (message == -1){
+    //                 //$('#succesfully-added').slideToggle("slow");                    
+    //                 //document.getElementById("failure").style.display = "block";
+    //                 //document.getElementById("success-message").innerHTML = "Succesfully added to your list.";
+    //                 alert('success');
+    //                 var response = JSON.parse(this.responseText);
+    //                 console.log(response['house']);
+    //                 footprintToDatabase(response['id'], response['house'], response['meat'], response['organic'], response['local'], response['compost'], response['total_clothes'], response['total_electronics'], response['total_shopping'], response['car_engine'], response['car_miles'], response['train'], response['bus'], response['domestic_flights'], response['short_flights'], response['long_flights'], response['total']);
+    //             }
+    //             else {
+    //                 //$('#success').slideDown("slow");                    
+    //                 //document.getElementById("failure").style.display = "none";
+    //                 //document.getElementById("firstName").innerHTML ='<div id="newN"><h6>'+name+'</h6></div><div id="newAL">'+age+', '+location+'</div>';
+    //                 //alert('failure');
+    //             }
+    //             //result = JSON.parse(this.responseText);
+    //             //injectContent(result.id, form);
+    //         }
+    //     }
+    // };
 
-    // initialise a request, specifying the HTTP method
-    // to be used and the URL to be connected to.
-    xhr.onreadystatechange = changeListener;
-    xhr.open('POST', url, true);
-    //xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhr.send(data);
+    // // initialise a request, specifying the HTTP method
+    // // to be used and the URL to be connected to.
+    // xhr.onreadystatechange = changeListener;
+    // xhr.open('POST', url, true);
+    // //xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    // xhr.send(data);
 
 
 
-    return false;
+    // return false;
 
     footprintToDatabase(id, house, meat, organic, local, compost, total_clothes, total_electronics, total_shopping, car_engine, car_miles, train, bus, domestic_flights, short_flights, long_flights, total);
 
@@ -133,7 +160,7 @@ function getCurrentUsersName() {
         document.location.href = 'login.html';
     }
 
-    var db = window.openDatabase("User", "1.0", "User DB", 1000000);
+    //var db = window.openDatabase("User", "1.0", "User DB", 1000000);
     db.transaction(queryDB, errorCB);
     //tx.executeSql('SELECT first_name FROM User', [], function (tx, results) {
     //alert(results.rows.item(i).first_name);
@@ -190,6 +217,8 @@ function getCurrentUsersID() {
         var num = results.rows.length;
         // this will be true since it was a select statement and so rowsAffected was 0
         if (!results.rowsAffected) {
+            var orignal_footprint = results.rows.item(num-1).total; //original footprint
+
             $('#footprint').append("<h1 class='dynamic'>"+results.rows.item(num-1).total+" KG");
             return false;
         } else {
@@ -204,7 +233,7 @@ function getCurrentUsersID() {
         //document.location.href = 'login.html';
     }
 
-    var db = window.openDatabase("Footprint", "1.0", "Footprint DB", 1000000);
+    //var db = window.openDatabase("Footprint", "1.0", "Footprint DB", 1000000);
     db.transaction(queryDB, errorCB);
     //tx.executeSql('SELECT first_name FROM User', [], function (tx, results) {
     //alert(results.rows.item(i).first_name);
@@ -224,10 +253,12 @@ function getCurrentUsersID() {
     }
 
     function successCB() {
-        alert("success!");
+        alert("success footprint added!");
         //document.location.href = 'index.html';
     }
-    var db = window.openDatabase("Footprint", "1.0", "User DB", 1000000);
+    // var dbfp = window.openDatabase("Footprint", "1.0", "User DB", 1000000);
+    // dbfp.transaction(populateDB, errorCB, successCB);
+    //var db = window.openDatabase("User", "1.0", "User DB", 1000000);
     db.transaction(populateDB, errorCB, successCB);
     //document.location.href = 'index.html';
  }
@@ -393,4 +424,147 @@ function addActionToList(actionid){
 
 
     return false;
+}
+
+function completeAction(actionid){
+    // declaring variables to be used
+    var xhr, target, changeListener, url, data;
+    //setting url to the php code to add comments to the db
+    url = "http://carbon.jamescobbett.co.uk/services/completeAction.php";
+    var data = new FormData();
+
+    data.append("userid", getCurrentUsersID());
+    data.append("actionid", actionid);
+
+    console.log("Sending", data);
+    console.log(this.test);
+    // create a request object
+    xhr = new XMLHttpRequest();
+
+    changeListener = function () {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                console.log("Response", this.responseText);
+                var response = this.responseText;
+                var s = "success";
+                var message = response.indexOf("exception");
+                console.log(message);
+                if (message == -1){
+                    $('#succesfully-added').slideToggle("slow");                    
+                    //document.getElementById("failure").style.display = "block";
+                    document.getElementById("success-message").innerHTML = "Well done, you have completed the action.";
+                    //alert('success');
+                }
+                else {
+                    //$('#success').slideDown("slow");                    
+                    //document.getElementById("failure").style.display = "none";
+                    //document.getElementById("firstName").innerHTML ='<div id="newN"><h6>'+name+'</h6></div><div id="newAL">'+age+', '+location+'</div>';
+                    //alert('failure');
+                }
+                //result = JSON.parse(this.responseText);
+                //injectContent(result.id, form);
+            }
+        }
+    };
+
+    // initialise a request, specifying the HTTP method
+    // to be used and the URL to be connected to.
+    xhr.onreadystatechange = changeListener;
+    xhr.open('POST', url, true);
+    //xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.send(data);
+
+
+
+    return false;
+}
+
+//Add actions to phone DB
+function actionstoDB(id, action, description, reduction, category, max){
+    alert(action);
+                    function populateDB(tx) {
+                        //tx.executeSql('DROP TABLE IF EXISTS Actions');
+                        alert('attempt');
+                        tx.executeSql('CREATE TABLE IF NOT EXISTS Actions (id unique, action, description, reduction, category, max)');
+                        tx.executeSql('INSERT INTO Actions (id, action, description, reduction, category, max) VALUES (?,?,?,?,?,?)',[id, action, description, reduction, category, max]);
+                        }(i);
+
+                        function errorCB(err) {
+                            alert("Error processing SQL: "+err.code);
+                        }
+
+                        function successCB() {
+                            alert("success adding actions");
+                        }
+                        //var dbact = window.openDatabase("Actions", "1.0", "Actions DB", 1000000);
+                        db.transaction(populateDB, errorCB, successCB);
+}
+
+//Add listed actions to phone DB
+function currentactionstoDB(){
+    xmlhttp=new XMLHttpRequest();
+    xmlhttp.onreadystatechange=function()
+      {
+      if (xmlhttp.readyState==4 && xmlhttp.status==200)
+        {
+            //console.log(xmlhttp.responseText);
+            var response = JSON.parse(xmlhttp.responseText);
+            console.log(response[0]);
+            for(var i = 0; i < response.length; i++){
+
+                    function populateDB(tx) {
+                        tx.executeSql('DROP TABLE IF EXISTS current_actions');
+                        tx.executeSql('CREATE TABLE IF NOT EXISTS current_actions (user_id, action_id)');
+                        tx.executeSql('INSERT INTO current_actions (user_id, action_id) VALUES (?,?)',[response[i]['user_id'], response[i]['action_id']]);
+                        }
+
+                        function errorCB(err) {
+                            alert("Error processing SQL: "+err.code);
+                        }
+
+                        function successCB() {
+                            alert("success adding current_actions");
+                        }
+                        var db = window.openDatabase("current_actions", "1.0", "current_actions DB", 1000000);
+                        db.transaction(populateDB, errorCB, successCB);
+
+            };
+        }
+      }
+    xmlhttp.open("GET","http://carbon.jamescobbett.co.uk/services/getlistactions.php");
+    xmlhttp.send();
+}
+
+//Add listed actions to phone DB
+function completedactionstoDB(){
+    xmlhttp=new XMLHttpRequest();
+    xmlhttp.onreadystatechange=function()
+      {
+      if (xmlhttp.readyState==4 && xmlhttp.status==200)
+        {
+            //console.log(xmlhttp.responseText);
+            var response = JSON.parse(xmlhttp.responseText);
+            console.log(response[0]);
+            for(var i = 0; i < response.length; i++){
+
+                    function populateDB(tx) {
+                        tx.executeSql('DROP TABLE IF EXISTS completed_actions');
+                        tx.executeSql('CREATE TABLE IF NOT EXISTS current_actions (user_id, action_id, date)');
+                        tx.executeSql('INSERT INTO completed_actions (user_id, action_id, date) VALUES (?,?)',[response[i]['user_id'], response[i]['action_id'], response[i]['date']]);
+                        }
+
+                        function errorCB(err) {
+                            alert("Error processing SQL: "+err.code);
+                        }
+
+                        function successCB() {
+                            alert("success adding completed actions");
+                        }
+                        var db = window.openDatabase("completed_actions", "1.0", "completed_actions DB", 1000000);
+                        db.transaction(populateDB, errorCB, successCB);
+            };
+        }
+      }
+    xmlhttp.open("GET","http://carbon.jamescobbett.co.uk/services/getcompletedactions.php");
+    xmlhttp.send();
 }

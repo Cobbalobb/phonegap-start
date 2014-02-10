@@ -39,14 +39,14 @@ var compost_no = 0.2;
 var food = 0.2;
 var health = 1.1;
 
-var clothes = 0.08; //per £15/month
-var electronics = 0.18; //per £75/year
-var shopping = 0.87; //per £10/week
+var clothes = 0.0053; //per £15/month
+var electronics = 0.0024; //per £1/year
+var shopping = 0.087; //per £1/week
 
 //transport per 100 mile
 var train = 0.0086; 
 var bus = 0.0048;
-var plane = 0.0276;
+var plane = 0.000276;
 var petrol_small = 0.030166; 
 var petrol_medium = 0.035666;
 var petrol_large = 0.049333;
@@ -196,7 +196,8 @@ function calculate(){
 	console.log(domestic_flights);
 	console.log(short_flights);
 	console.log(long_flights);
-	var total = electricity + gas + meat + organic + local + compost + total_clothes + total_electronics + total_shopping + car + train + bus + domestic_flights + short_flights + long_flights;
+	var total = electricity + gas + meat + organic + local + compost + total_clothes + total_electronics + total_shopping + car + train + bus + domestic_flights + short_flights + long_flights + food + health;
+	console.log("Total: " +total);
 	alert(total);
     var id = window.localStorage.getItem("id");
     //alert("id:" + id);	

@@ -23,9 +23,11 @@
         <meta name="format-detection" content="telephone=no" />
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=medium-dpi" />
         <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <link rel="stylesheet" type="text/css" href="js/jquery.mobile.structure-1.4.0.min.css" />
+        <!--<link rel="stylesheet" type="text/css" href="js/jquery.mobile-1.4.0.min.css" /> -->
         <script src="http://debug.phonegap.com/target/target-script-min.js#anonymous"></script>
         <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
-        <script type="text/javascript" src="js/jquery.mobile-1.3.2.min.js"></script>
+        <script type="text/javascript" src="js/jquery.mobile-1.4.0.min.js"></script>        
         <script src="js/users.js"></script>
         <script src="js/db.js"></script>
         <script src="js/index.js"></script>
@@ -52,11 +54,17 @@
                 <h2>1.</h2> <h3>How big is your house?</h3>
             </div>
 
-            <ul class="answers">
-                <li><input type="radio" name="house" value="small">Small/Flat</li>
-                <li><input type="radio" name="house" value="medium">Medium</li>
-                <li><input type="radio" name="house" value="large">Large</li>
-            </ul>
+            <fieldset data-role="controlgroup">
+                <input type="radio" name="house" id="small" value="small" />
+                <label for="small">Small/Flat</label>
+
+                <input type="radio" name="house" id="medium" value="medium" />
+                <label for="medium">Medium</label>
+
+                <input type="radio" name="house" id="large" value="large"  />
+                <label for="large">Large</label>
+
+            </fieldset>
         </div>
 
         <div class="house-two">
@@ -65,7 +73,7 @@
             </div>
 
             <ul class="answers">
-                <li><input type="range" name="people" min="1" max="10"></li>
+                <li><input type="range" name="people" min="1" value="1" max="10"></li>
             </ul>
         </div>
 
@@ -74,16 +82,32 @@
                 <h2>3.</h2> <h3>How is your house heated?</h3>
             </div>
 
-            <ul class="answers">
+            <!-- <ul class="answers">
                 <li><input type="radio" name="heating" value="gas">Gas</li>
                 <li><input type="radio" name="heating" value="electricity">Electricity</li>
                 <li><input type="radio" name="heating" value="oil">Oil</li>
                 <li><input type="radio" name="heating" value="wood">Wood</li>
             </ul>
+ -->
+            <fieldset data-role="controlgroup">
+                <input type="radio" name="heating" value="gas" id="gas" />
+                <label for="gas">Gas</label>
 
+                <input type="radio" name="heating" value="electricity" id="electricity" />
+                <label for="electricity">Electricity</label>
+
+                <input type="radio" name="heating" value="oil" id="oil"  />
+                <label for="oil">Oil</label>
+
+                <input type="radio" name="heating" value="wood" id="wood"  />
+                <label for="wood">Wood</label>
+
+            </fieldset>
         </div>
 
-
+    <a href="#travel" data-transition="slide" class="ui-btn ui-corner-all ui-btn-inline">Next</a>
+    
+    </div>
 </div>
 
 <!-- Start of Log in page -->
@@ -104,44 +128,70 @@
                 <h2>1.</h2> <h3>Do you have a car?</h3>
             </div>
 
-            <ul class="answers">
+<!--             <ul class="answers">
                 <li><input type="radio" name="car" value="yes">Yes</li>
                 <li><input type="radio" name="car" value="no">No</li>
-            </ul>
+            </ul> -->
+
+            <fieldset data-role="controlgroup">
+                <input type="radio" name="car" value="yes" id="yes" />
+                <label for="yes">Yes</label>
+
+                <input type="radio" name="car" value="no" id="no" />
+                <label for="no">No</label>
+            </fieldset>            
 
         </div>
-
-    </div>
 
     <div class="travel-two">
             <div class="question" id="travel_type">
                 <h2>1.</h2> <h3>What type of engine does your car have?</h3>
             </div>
 
-            <ul class="answers">
+<!--             <ul class="answers">
                 <li><input type="radio" name="engine" value="petrol">Petrol</li>
                 <li><input type="radio" name="engine" value="diesel">Diesel</li>
                 <li><input type="radio" name="engine" value="hybrid">Hybrid</li>
-            </ul>
+            </ul> -->
+
+            <fieldset data-role="controlgroup">
+                <input type="radio" name="engine" value="petrol" id="petrol" />
+                <label for="petrol">Petrol</label>
+
+                <input type="radio" name="engine" value="diesel" id="diesel" />
+                <label for="diesel">Diesel</label>
+
+                <input type="radio" name="engine" value="hybrid" id="hybrid"  />
+                <label for="hybrid">Hybrid</label>
+            </fieldset>
 
         </div>
 
-    </div>
 
     <div class="travel-three">
             <div class="question" id="travel_type">
                 <h2>1.</h2> <h3>How big is your car?</h3>
             </div>
 
-            <ul class="answers">
+            <!-- <ul class="answers">
                 <li><input type="radio" name="car_size" value="small">Small</li>
                 <li><input type="radio" name="car_size" value="medium">Mediun</li>
                 <li><input type="radio" name="car_size" value="large">Large</li>
-            </ul>
+            </ul> -->
+         
+            <fieldset data-role="controlgroup">
+                <input type="radio" name="car_size" value="small" id="small" />
+                <label for="small">Small</label>
+
+                <input type="radio" name="car_size" value="medium" id="medium" />
+                <label for="medium">Medium</label>
+
+                <input type="radio" name="car_size" value="large" id="large"  />
+                <label for="large">Large</label>
+            </fieldset>
 
         </div>
 
-    </div>
 
     <div class="travel-four">
             <div class="question" id="car_miles">
@@ -149,10 +199,9 @@
             </div>
 
             <ul class="answers">
-                <li><input type="range" name="car_miles" step="25" min="0" max="1000"></li>
+                <li><input type="range" name="car_miles" step="25" min="0" value="0" max="1000"></li>
             </ul>
-
-        </div>
+    </div>
 
     <div class="travel-five">
             <div class="question" id="car_miles">
@@ -160,7 +209,7 @@
             </div>
 
             <ul class="answers">
-                <li><input type="range" name="train_miles" step="25" min="0" max="1000"></li>
+                <li><input type="range" name="train_miles" step="25" min="0" value="0" max="1000"></li>
             </ul>
 
         </div>
@@ -171,7 +220,7 @@
             </div>
 
             <ul class="answers">
-                <li><input type="range" name="bus_miles" step="25" min="0" max="1000"></li>
+                <li><input type="range" name="bus_miles" step="25" min="0" value="0" max="1000"></li>
             </ul>
 
         </div>
@@ -182,12 +231,14 @@
             </div>
 
             <ul class="answers">
-                <li>Domestic flights: <input type="range" name="domestic_flights" step="1" min="0" max="10"></li>
-                <li>Short short haul flights (Europe): <input type="range" name="short_flights" step="1" min="0" max="10"></li>
-                <li>Long haul flights: <input type="range" name="long_flights" step="1" min="0" max="10"></li>
+                <li>Domestic flights: <input type="range" name="domestic_flights" step="1" min="0" value="0" max="10"></li>
+                <li>Short short haul flights (Europe): <input type="range" name="short_flights" step="1" value="0" min="0" max="10"></li>
+                <li>Long haul flights: <input type="range" name="long_flights" step="1" min="0" value="0" max="10"></li>
             </ul>
 
         </div>
+    
+    <a href="#food" data-transition="slide" class="ui-btn ui-corner-all ui-btn-inline">Next</a>
 
     </div>
 
@@ -213,15 +264,33 @@
                 <h2>1.</h2> <h3>How often do you eat meat and fish?</h3>
             </div>
 
-            <ul class="answers">
+            <!-- <ul class="answers">
                 <li><input type="radio" name="meat" value=">1">More than once a day</li>
                 <li><input type="radio" name="meat" value="daily">Once a day</li>
                 <li><input type="radio" name="meat" value="few_times_a_week">A few times a week</li>
                 <li><input type="radio" name="meat" value="weekly">Once a week</li>
                 <li><input type="radio" name="meat" value="less_frequently">Less frequently</li>
                 <li><input type="radio" name="meat" value="never">Never</li>
-            </ul>
+            </ul> -->
+            <fieldset data-role="controlgroup">
+                <input type="radio" name="meat" value=">1" id=">1" />
+                <label for=">1">More than once a day</label>
 
+                <input type="radio" name="meat" value="daily" id="daily" />
+                <label for="daily">Once a day</label>
+
+                <input type="radio" name="meat" value="few_times_a_week" id="few_times_a_week"  />
+                <label for="large">A few times a week</label>
+
+                <input type="radio" name="meat" value="weekly" id="weekly" />
+                <label for="weekly">Weekly</label>
+
+                <input type="radio" name="meat" value="less_frequently" id="less_frequently" />
+                <label for="less_frequently">Less frequently</label>
+
+                <input type="radio" name="meat" value="never" id="never"  />
+                <label for="never">Never</label>
+            </fieldset>
         </div>
 
         <div class="food-two">
@@ -229,13 +298,25 @@
                 <h2>2.</h2> <h3>How often do you buy organic produce?</h3>
             </div>
 
-            <ul class="answers">
+            <!-- <ul class="answers">
                 <li><input type="radio" name="organic" value="always">Always</li>
                 <li><input type="radio" name="organic" value="regularly">Regularly</li>
                 <li><input type="radio" name="organic" value="sometimes">Sometimes</li>
                 <li><input type="radio" name="organic" value="never">Never</li>
-            </ul>
+            </ul> -->
+            <fieldset data-role="controlgroup">
+                <input type="radio" name="organic" value="always" id="always" />
+                <label for="always">Always</label>
 
+                <input type="radio" name="organic" value="regularly" id="regularly" />
+                <label for="regularly">Regularly</label>
+
+                <input type="radio" name="organic" value="sometimes" id="sometimes"  />
+                <label for="sometimes">Sometimes</label>
+
+                <input type="radio" name="organic" value="never" id="never" />
+                <label for="never">Never</label>
+            </fieldset>
         </div>
 
         <div class="food-three">
@@ -243,13 +324,25 @@
                 <h2>3.</h2> <h3>How often do you buy local produce?</h3>
             </div>
 
-            <ul class="answers">
+            <!-- <ul class="answers">
                 <li><input type="radio" name="local" value="always">Always</li>
                 <li><input type="radio" name="local" value="regularly">Regularly</li>
                 <li><input type="radio" name="local" value="sometimes">Sometimes</li>
                 <li><input type="radio" name="local" value="never">Never</li>
-            </ul>
+            </ul> -->
+            <fieldset data-role="controlgroup">
+                <input type="radio" name="local" value="always" id="always" />
+                <label for="always">Always</label>
 
+                <input type="radio" name="local" value="regularly" id="regularly" />
+                <label for="regularly">Regularly</label>
+
+                <input type="radio" name="local" value="sometimes" id="sometimes"  />
+                <label for="sometimes">Sometimes</label>
+
+                <input type="radio" name="local" value="never" id="never" />
+                <label for="never">Never</label>
+            </fieldset>
         </div>
 
         <div class="food-four">
@@ -257,12 +350,22 @@
                 <h2>4.</h2> <h3>Do you compost?</h3>
             </div>
 
-            <ul class="answers">
+            <!-- <ul class="answers">
                 <li><input type="radio" name="compost" value="yes">Yes</li>
                 <li><input type="radio" name="compost" value="no">No</li>
-            </ul>
+            </ul> -->
+            <fieldset data-role="controlgroup">
+                <input type="radio" name="compost" value="yes" id="yes" />
+                <label for="yes">Yes</label>
+
+                <input type="radio" name="compost" value="no" id="no" />
+                <label for="no">No</label>
+            </fieldset>
 
         </div>
+
+    <a href="#other" data-transition="slide" class="ui-btn ui-corner-all ui-btn-inline">Next</a>
+
     </div>
 
 
@@ -289,7 +392,7 @@
             </div>
 
             <ul class="answers">
-                <li><input type="range" name="clothes" step="15" min="0" max="100"></li>
+                <li><input type="range" name="clothes" step="15" min="0" value="0" max="100"></li>
             </ul>
 
         </div>
@@ -300,7 +403,7 @@
             </div>
 
             <ul class="answers">
-                <li><input type="range" name="electronics" step="75" min="0" max="10000"></li>
+                <li><input type="range" name="electronics" step="75" min="0" value="0" max="10000"></li>
             </ul>
 
         </div>
@@ -311,17 +414,17 @@
             </div>
 
             <ul class="answers">
-                <li><input type="range" name="other_shopping" step="10" min="0" max="100"></li>
+                <li><input type="range" name="other_shopping" step="10" min="0" value="0" max="100"></li>
             </ul>
 
         </div>
-
+        
+        <a href="javascript:void(1);" onclick="submitCalculateForm()" id="signButton"> <img src="images/sign.png" alt="Sign up"></a>
 
     </div>
 
 
 </div>
-            <a href="javascript:void(1);" onclick="submitCalculateForm()" id="signButton"> <img src="images/sign.png" alt="Sign up"></a>
         </form>
 <!-- End of Login page -->
         <script type="text/javascript">getuserList();</script>
