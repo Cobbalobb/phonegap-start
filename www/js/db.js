@@ -33,9 +33,20 @@ function logout(){
 }
 
 function login(id, first_name, last_name, email){
+    var data = new FormData();
+
+    data.append("id", id);
+    alert(id);
+
     function populateDB(tx) {
     tx.executeSql('DROP TABLE IF EXISTS User');
     tx.executeSql('CREATE TABLE IF NOT EXISTS User (id unique, first_name, last_name, email)');
+    tx.executeSql('DROP TABLE IF EXISTS Actions');
+    tx.executeSql('CREATE TABLE IF NOT EXISTS Actions (id, action, description, reduction, category)');
+    tx.executeSql('DROP TABLE IF EXISTS current_actions');
+    tx.executeSql('CREATE TABLE IF NOT EXISTS current_actions (user_id, action_id)');
+    tx.executeSql('DROP TABLE IF EXISTS completed_actions');
+    tx.executeSql('CREATE TABLE IF NOT EXISTS completed_actions (user_id, action_id)');
     tx.executeSql('INSERT INTO User (id, first_name, last_name, email) VALUES (?,?,?,?)',[id, first_name, last_name, email]);
     }
 
@@ -53,38 +64,85 @@ function login(id, first_name, last_name, email){
     
     //GET ACTIONS FROM SERVER TO LOCAL DB
     //actionstoDB();
-    // xmlhttp=new XMLHttpRequest();
-    // xmlhttp.onreadystatechange=function()
-    //   {
-    //   if (xmlhttp.readyState==4 && xmlhttp.status==200)
-    //     {
-    //         //console.log(xmlhttp.responseText);
-    //         var response = JSON.parse(xmlhttp.responseText);
-    //         console.log(response[0]);
-    //         for(var i = 0; i < response.length; i++){
-    //             function(response) { 
-    //                 db.transaction(function (tx) {  
-    //                 tx.executeSql('INSERT INTO Actions (ID) VALUES (?)',  response[i]['id']);
-    //               });
-    //             }(i);
-    //             //actionstoDB(response[i]['id'], response[i]['action'], response[i]['description'], response[i]['reduction'], response[i]['category'], response[i]['max']);
-    //         };
-    //     }
-    //   }
-    // xmlhttp.open("GET","http://carbon.jamescobbett.co.uk/services/getactions.php");
-    // xmlhttp.send();
-    //currentactionstoDB();
-    //completedactionstoDB();
+    xmlhttp=new XMLHttpRequest();
+    xmlhttp.onreadystatechange=function()
+      {
+      if (xmlhttp.readyState==4 && xmlhttp.status==200)
+        {
+            //console.log(xmlhttp.responseText);
+            var response = JSON.parse(xmlhttp.responseText);
+            console.log(response);
+                //function(response) { 
+                    db.transaction(function (tx) {  
+                    for(var i = 0; i < response.length; i++){
+                        //alert(response[i]['action']);
+                        tx.executeSql('INSERT INTO Actions (id, action, description, reduction, category) VALUES (?,?,?,?,?)', [response[i]['id'],response[i]['action'],response[i]['description'],response[i]['reduction'],response[i]['category']]);
+                    };
+                  });
+               // }(i);
+                //actionstoDB(response[i]['id'], response[i]['action'], response[i]['description'], response[i]['reduction'], response[i]['category'], response[i]['max']);
+        }
+      }
+    xmlhttp.open("GET","http://carbon.jamescobbett.co.uk/services/getactions.php");
+    xmlhttp.send();
+
+    //GET ACTIONS IN LIST FROM SERVER TO LOCAL DB
+    xmhttp=new XMLHttpRequest();
+    xmhttp.onreadystatechange=function()
+      {
+      if (xmhttp.readyState==4 && xmhttp.status==200)
+        {
+            //console.log(xmlhttp.responseText);
+            var response = JSON.parse(xmhttp.responseText);
+            console.log("list actions: " + response);
+                //function(response) { 
+                    db.transaction(function (tx) {  
+                    for(var i = 0; i < response.length; i++){
+                        console.log('HERE');
+                        console.log(response[i]);
+                        tx.executeSql('INSERT INTO current_actions (user_id, action_id) VALUES (?,?)',[response[i]['user_id'], response[i]['action_id']]);                    
+                    };
+                  });
+               // }(i);
+                //actionstoDB(response[i]['id'], response[i]['action'], response[i]['description'], response[i]['reduction'], response[i]['category'], response[i]['max']);
+        }
+      }
+    xmhttp.open("POST","http://carbon.jamescobbett.co.uk/services/getactionsl.php");
+    xmhttp.send(data);
+
+    //GET COMPLETED ACTIONS FROM SERVER TO LOCAL DB
+    cxmhttp=new XMLHttpRequest();
+    cxmhttp.onreadystatechange=function()
+      {
+      if (cxmhttp.readyState==4 && cxmhttp.status==200)
+        {
+            //console.log(xmlhttp.responseText);
+            var response = JSON.parse(cxmhttp.responseText);
+            console.log("list actions: " + response);
+                //function(response) { 
+                    db.transaction(function (tx) {  
+                    for(var i = 0; i < response.length; i++){
+                        //  console.log('HERE');
+                        //console.log(response[i]);
+                        tx.executeSql('INSERT INTO completed_actions (user_id, action_id) VALUES (?,?)',[response[i]['user_id'], response[i]['action_id']]);                    
+                    };
+                  });
+               // }(i);
+                //actionstoDB(response[i]['id'], response[i]['action'], response[i]['description'], response[i]['reduction'], response[i]['category'], response[i]['max']);
+        }
+      }
+    cxmhttp.open("POST","http://carbon.jamescobbett.co.uk/services/getactionsc.php");
+    cxmhttp.send(data);
 
     // GET FOOTPRINT FROM DB
     // declaring variables to be used
     var xhr, target, changeListener, url, data;
     //setting url to the php code to add comments to the db
     url = "http://carbon.jamescobbett.co.uk/services/getfootprint.php";
-    var data = new FormData();
+    // var data = new FormData();
 
-    data.append("id", id);
-    alert(id);
+    // data.append("id", id);
+    // alert(id);
     console.log("Sending", data);
     console.log(this.test);
     // create a request object
@@ -128,6 +186,7 @@ function login(id, first_name, last_name, email){
     xhr.send(data);
 
 
+    setInterval(function(){document.location.href = 'index.html';},2000);
 
     return false;
 
@@ -242,6 +301,31 @@ function getCurrentUsersID() {
     //$('#name').append(data.items.first_name + ',');
  }
 
+ function getCurrentUsersActionsNo() {
+
+    function queryDB(tx) {
+        //tx.executeSql('DROP TABLE IF EXISTS User');
+        tx.executeSql('SELECT * FROM current_actions', [], querySuccess, errorCB);
+    }
+
+    function querySuccess(tx, results) {
+        console.log("Returned rows = " + results.rows.length);
+        var num = results.rows.length;
+        $('#actions').append("<h1 class='dynamic'>"+num);
+    }
+
+    function errorCB(err) {
+        alert("Error processing SQL: "+err.code);
+        //document.location.href = 'login.html';
+    }
+
+    //var db = window.openDatabase("Footprint", "1.0", "Footprint DB", 1000000);
+    db.transaction(queryDB, errorCB);
+    //tx.executeSql('SELECT first_name FROM User', [], function (tx, results) {
+    //alert(results.rows.item(i).first_name);
+    //$('#name').append(data.items.first_name + ',');
+ }
+
  function footprintToDatabase(id, house, meat, organic, local, compost, total_clothes, total_electronics, total_shopping, car_engine, car_miles, train, bus, domestic_flights, short_flights, long_flights, total){
     alert("id: " + id);
     function populateDB(tx) {
@@ -256,7 +340,7 @@ function getCurrentUsersID() {
 
     function successCB() {
         alert("success footprint added!");
-        document.location.href = 'index.html';
+        //document.location.href = 'index.html';
     }
     // var dbfp = window.openDatabase("Footprint", "1.0", "User DB", 1000000);
     // dbfp.transaction(populateDB, errorCB, successCB);
@@ -318,7 +402,7 @@ function footprintToServerDatabase(){
             //document.location.href = 'login.html';
         }
 
-        var db = window.openDatabase("Footprint", "1.0", "Footprint DB", 1000000);
+        //var db = window.openDatabase("Footprint", "1.0", "Footprint DB", 1000000);
         db.transaction(queryDB, errorCB);
 
     //var html = document.getElementById("source").innerHTML;
@@ -373,16 +457,35 @@ function getUserInfo(){
    getCurrentUsersID();
    getCurrentUsersName();
    getCurrentUsersFootprint();
+   getCurrentUsersActionsNo();
 }
 
 function addActionToList(actionid){
+
+    var id = localStorage.getItem('id');
+
+    function populateDB(tx) {
+        tx.executeSql('INSERT INTO current_actions (user_id, action_id) VALUES (?,?)',[id, actionid]);                    
+    };
+
+    function errorCB(err) {
+        alert("Error processing SQL: "+err.code);
+    }
+
+    function successCB() {
+        alert("success adding actions");
+    }
+    
+    db.transaction(populateDB, errorCB, successCB);
+
+
     // declaring variables to be used
     var xhr, target, changeListener, url, data;
     //setting url to the php code to add comments to the db
     url = "http://carbon.jamescobbett.co.uk/services/addActionToList.php";
     var data = new FormData();
 
-    data.append("userid", getCurrentUsersID());
+    data.append("userid", id);
     data.append("actionid", actionid);
 
     console.log("Sending", data);
@@ -423,19 +526,34 @@ function addActionToList(actionid){
     //xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.send(data);
 
-
-
     return false;
 }
 
 function completeAction(actionid){
+
+    var id = localStorage.getItem('id');
+
+    function populateDB(tx) {
+        tx.executeSql('INSERT INTO completed_actions (user_id, action_id) VALUES (?,?)',[id, actionid]);                    
+    };
+
+    function errorCB(err) {
+        alert("Error processing SQL: "+err.code);
+    }
+
+    function successCB() {
+        alert("success adding actions");
+    }
+    
+    db.transaction(populateDB, errorCB, successCB);
+
     // declaring variables to be used
     var xhr, target, changeListener, url, data;
     //setting url to the php code to add comments to the db
     url = "http://carbon.jamescobbett.co.uk/services/completeAction.php";
     var data = new FormData();
 
-    data.append("userid", getCurrentUsersID());
+    data.append("userid",   localStorage.getItem('id'));
     data.append("actionid", actionid);
 
     console.log("Sending", data);

@@ -446,3 +446,17 @@ border-style: solid;
     background-color: #eee;
     margin: 0 auto;
 }
+
+#action-links{
+    position: absolute;
+    bottom: 0;
+    background-color: #eee;
+    width: 100%;
+    height: 40px;
+}
+
+#action-links li{
+    width: 30%;
+    float: left;
+    list-style: none;
+}

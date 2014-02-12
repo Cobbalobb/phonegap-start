@@ -24,7 +24,7 @@ function getActions(){
 
 function getListActions(){
 	var data = new FormData();
-	var id = localStorage.getItem('id')-1;
+	var id = localStorage.getItem('id');
     data.append("id", id);
 	xmlhttp=new XMLHttpRequest();
 	xmlhttp.onreadystatechange=function()
@@ -53,7 +53,7 @@ function getListActions(){
 
 function getCompletedActions(){
 	var data = new FormData();
-	var id = localStorage.getItem('id')-1;
+	var id = localStorage.getItem('id');
     data.append("id", id);
 	xmlhttp=new XMLHttpRequest();
 	xmlhttp.onreadystatechange=function()
@@ -84,7 +84,6 @@ function getCompletedActions(){
 //GET ACTIONS FROM LOCAL
 function getActionsL(){
 	function queryDB(tx) {
-        //tx.executeSql('DROP TABLE IF EXISTS User');
         tx.executeSql('SELECT * FROM Actions', [], querySuccess, errorCB);
     }
 
@@ -93,24 +92,32 @@ function getActionsL(){
         var num = results.rows.length;
         // this will be true since it was a select statement and so rowsAffected was 0
         if (!results.rowsAffected) {
-            $('#name').append(results.rows.item(num-1).first_name + ',');
-            var action = "<div class='action'><div class='action-title'>"+results.rows.item(num-1).action+"</div><div class='action-description'>"+results.rows.item(num-1).description+"</div><div class='action-category'>"+results.rows.item(num-1).category+"</div>";
-			 var action = action + "<a onclick='addActionToList("+results.rows.item(num-1).id+")' href='#'>Add to list</a> <a href='#'>Mark as completed</a></div>";
-			 document.getElementById("action-list").innerHTML=document.getElementById("action-list").innerHTML + action;
-            return false;
+        	for(var i = 0; i < results.rows.length; i++){
+	    		var action = "<div class='action'><div class='action-title'>"+results.rows.item(i).action+"</div><div class='action-description'>"+results.rows.item(i).description+"</div><div class='action-category'>"+results.rows.item(1).category+"</div>";
+			 	var action = action + "<a onclick='addActionToList("+results.rows.item(i).id+")' href='#'>Add to list</a> <a href='#'>Mark as completed</a></div>";
+			 	document.getElementById("action-list").innerHTML=document.getElementById("action-list").innerHTML + action;
+			 	//document.getElementById("actions").innerHTML=document.getElementById("actions").innerHTML + response[i]['action'];
+			 	//document.getElementById("actions").innerHTML=document.getElementById("actions").innerHTML + response[i]['description'];
+			 	//document.getElementById("actions").innerHTML=document.getElementById("actions").innerHTML + response[i]['category'];
+			};
+   //          //$('#name').append(results.rows.item(num-1).first_name + ',');
+   //          var action = "<div class='action'><div class='action-title'>"+results.rows.item(num-1).action+"</div><div class='action-description'>"+results.rows.item(num-1).description+"</div><div class='action-category'>"+results.rows.item(num-1).category+"</div>";
+			// var action = action + "<a onclick='addActionToList("+results.rows.item(num-1).id+")' href='#'>Add to list</a> <a href='#'>Mark as completed</a></div>";
+			// document.getElementById("action-list").innerHTML=document.getElementById("action-list").innerHTML + action;
+   //          return false;
         } else {
             console.log('No rows affected!');
         }
         // for an insert statement, this property will return the ID of the last inserted row
-        console.log("Last inserted row ID = " + results.insertId);
+        //console.log("Last inserted row ID = " + results.insertId);
     }
 
     function errorCB(err) {
-        alert("Error processing SQL: "+err.code);
+        //alert("Error processing SQL: "+err.code);
         //document.location.href = 'login.html';
     }
 
-    var db = window.openDatabase("Actions", "1.0", "Actions DB", 1000000);
+    //var db = window.openDatabase("Actions", "1.0", "Actions DB", 1000000);
     db.transaction(queryDB, errorCB);
 
 

@@ -47,15 +47,20 @@
         <div id="welcome">
 
        </div>
-
-        <script type="text/javascript">getActions();</script>
+      <script type="text/javascript">
+                setTimeout(function(){getActionsL()},1000);
+        </script>
         <div id="succesfully-added">
             <div id="success-message">
             </div>
             <a href="#" onclick="closeSuccessMessage();">Ok</a>
         </div>
         <div id="action-list"></div>
-    </div>
+        <ul id="action-links">
+            <li><a onclick="goToAll();" href="#">All</a></li>
+            <li><a onclick="goToCurrent();" href="#">Current</a></li>
+            <li><a onclick="goToCompleted();" href="#">Complete</a><li>
+        </ul>
 
 
 </div>
