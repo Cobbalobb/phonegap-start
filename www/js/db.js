@@ -186,12 +186,46 @@ function login(id, first_name, last_name, email){
     xhr.send(data);
 
 
-    setInterval(function(){document.location.href = 'index.html';},2000);
+    setTimeout(function(){redirect();},2000);
 
     return false;
 
     //footprintToDatabase(id, house, meat, organic, local, compost, total_clothes, total_electronics, total_shopping, car_engine, car_miles, train, bus, domestic_flights, short_flights, long_flights, total);
 
+}
+
+function redirect(){
+    function queryDB(tx) {
+        //tx.executeSql('DROP TABLE IF EXISTS User');
+        tx.executeSql('SELECT total FROM Footprint', [], querySuccess, errorCB);
+    }
+
+    function querySuccess(tx, results) {
+        console.log("Returned rows = " + results.rows.length);
+        var num = results.rows.length;
+        // this will be true since it was a select statement and so rowsAffected was 0
+        if (!results.rowsAffected) {
+            var original_footprint = results.rows.item(num-1).total; //original footprint
+            if (original_footprint == 'undefined'){
+                document.location.href = 'calculator.html';
+            } else {
+                document.location.href = 'index.html';
+            }
+            return false;
+        } else {
+            console.log('No rows affected!');
+        }
+        // for an insert statement, this property will return the ID of the last inserted row
+        console.log("Last inserted row ID = " + results.insertId);
+    }
+
+    function errorCB(err) {
+        alert("Error processing SQL: "+err.code);
+        //document.location.href = 'login.html';
+    }
+
+    //var db = window.openDatabase("Footprint", "1.0", "Footprint DB", 1000000);
+    db.transaction(queryDB, errorCB);
 }
 
 function getCurrentUsersName() {

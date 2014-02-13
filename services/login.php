@@ -23,7 +23,7 @@ $user = array();
 $statement = $con->prepare("select * from user where email = :email");
 $statement->execute(array(':email' => $email));
 $row = $statement->fetch();
-if ($row['id'] == null) {
+if ($row['id'] == null) {	
      echo $con->errorInfo();
      echo "Login failed: Wrong email address"; 
  } else {
@@ -31,9 +31,9 @@ if ($row['id'] == null) {
  	if($password == $row['password']){
 		$user['id'] = $row['id'];
 	 	$user['first_name'] = $row['first_name'];
-	 	$user['last_name'] = $row['first_name'];
-	 	$user['email'] = $row['first_name'];
-	 	echo "success ".'{"items":'. json_encode($user) .'}';
+	 	$user['last_name'] = $row['last_name'];
+	 	$user['email'] = $row['email'];
+		echo json_encode($user); 
  	} else {
  		echo "Login failed: Incorrect Password";
  	}
