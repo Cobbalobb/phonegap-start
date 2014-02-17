@@ -82,7 +82,7 @@
             <h1 class="head">Footprint</h1> <!--<h1 class="dynamic">8,609 KG</h1>-->
         </div>  </a>    
         <div class="home_but" id="reductions">
-            <h1 class="head">Reductions</h1> <h1 class="dynamic">15%</h1>
+            <h1 class="head">Reductions</h1> <!--<h1 class="dynamic">15%</h1>-->
         </div>        
         <a href="#" rel="external" onclick="goToCurrent();"><div class="home_but" id="actions">
             <h1 class="head">Actions</h1> <!--<h1 class="dynamic">8</h1>-->
@@ -110,6 +110,12 @@
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript">
             app.initialize();
+            $(document).on('mobileinit', function() {
+                  FB.init({
+                    appId : auth.fbId,
+                    nativeInterface : CDV.FB,
+                    useCachedDialogs : false
+                  });
         </script>
     </body>
 </html>

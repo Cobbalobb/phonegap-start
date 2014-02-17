@@ -50,22 +50,25 @@ function submitSignForm(){
                     //document.getElementById("failure").style.display = "block";
                     //document.getElementById("failure").innerHTML ="<div id='failureText'><img src='images/cross.png' id='cross'> <h1>Oops! " + response + "</h1></div>";
                     alert('success');
+                    var response = JSON.parse(this.responseText);
+                    console.log(response['email']);
+                    login(response['id'], response['first_name'], response['last_name'], response['email']);
                     //set email in local temp storage - use this to query db -HOW?
-                      $.ajax({       
-                       type : 'POST',   
-                       url : 'http://carbon.jamescobbett.co.uk/services/getuser.php?email=',
-                       dataType:'json',
-                       success : function(data) {       
-                          console.log(data.items);
-                          login(data.items.id, data.items.first_name, data.items.last_name, data.items.email);
-                          //document.location.href = 'index.html';
-                         // $('#name').append(data.items.first_name + ',');
+                      // $.ajax({       
+                      //  type : 'POST',   
+                      //  url : 'http://carbon.jamescobbett.co.uk/services/getuser.php?email=',
+                      //  dataType:'json',
+                      //  success : function(data) {       
+                      //     console.log(data.items);
+                      //     login(data.items.id, data.items.first_name, data.items.last_name, data.items.email);
+                      //     //document.location.href = 'index.html';
+                      //    // $('#name').append(data.items.first_name + ',');
 
-                              },
-                       error : function(xhr, type) { 
+                      //         },
+                      //  error : function(xhr, type) { 
                         
-                       }  
-                      }); 
+                      //  }  
+                      // }); 
                 }
                 else {
                     //$('#success').slideDown("slow");                    

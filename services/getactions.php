@@ -14,6 +14,7 @@ while($row = mysqli_fetch_array($results)){
 	$actions[$i]['action'] = $row['action'];
 	$actions[$i]['category'] = $row['category'];
 	$actions[$i]['description'] = $row['description'];
+	$actions[$i]['reduction'] = $row['reduction'];
 	$i++;
 }
 echo json_encode($actions); 

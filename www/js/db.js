@@ -163,7 +163,7 @@ function login(id, first_name, last_name, email){
                     alert('success adding FP');
                     var response = JSON.parse(this.responseText);
                     console.log(response['house']);
-                    footprintToDatabase(response['id'], response['house'], response['meat'], response['organic'], response['local'], response['compost'], response['total_clothes'], response['total_electronics'], response['total_shopping'], response['car_engine'], response['car_miles'], response['train'], response['bus'], response['domestic_flights'], response['short_flights'], response['long_flights'], response['total']);
+                    footprintToDatabase(response['id'], response['house'], response['meat'], response['organic'], response['local'], response['compost'], response['total_clothes'], response['total_electronics'], response['total_shopping'], response['car_engine'], response['car_miles'], response['train'], response['bus'], response['domestic_flights'], response['short_flights'], response['long_flights'], response['total'], response['current']);
                 }
                 else {
                     alert('no FP');
@@ -304,7 +304,7 @@ function getCurrentUsersID() {
 
     function queryDB(tx) {
         //tx.executeSql('DROP TABLE IF EXISTS User');
-        tx.executeSql('SELECT total FROM Footprint', [], querySuccess, errorCB);
+        tx.executeSql('SELECT current FROM Footprint', [], querySuccess, errorCB);
     }
 
     function querySuccess(tx, results) {
@@ -314,7 +314,43 @@ function getCurrentUsersID() {
         if (!results.rowsAffected) {
             var orignal_footprint = results.rows.item(num-1).total; //original footprint
 
-            $('#footprint').append("<h1 class='dynamic'>"+results.rows.item(num-1).total+" KG");
+            $('#footprint').append("<h1 class='dynamic'>"+results.rows.item(num-1).current+" KG");
+            return false;
+        } else {
+            console.log('No rows affected!');
+        }
+        // for an insert statement, this property will return the ID of the last inserted row
+        console.log("Last inserted row ID = " + results.insertId);
+    }
+
+    function errorCB(err) {
+        alert("Error processing SQL: "+err.code);
+        //document.location.href = 'login.html';
+    }
+
+    //var db = window.openDatabase("Footprint", "1.0", "Footprint DB", 1000000);
+    db.transaction(queryDB, errorCB);
+    //tx.executeSql('SELECT first_name FROM User', [], function (tx, results) {
+    //alert(results.rows.item(i).first_name);
+    //$('#name').append(data.items.first_name + ',');
+ }
+
+ function getCurrentUsersReduction() {
+
+    function queryDB(tx) {
+        //tx.executeSql('DROP TABLE IF EXISTS User');
+        tx.executeSql('SELECT * FROM Footprint', [], querySuccess, errorCB);
+    }
+
+    function querySuccess(tx, results) {
+        console.log("Returned rows = " + results.rows.length);
+        var num = results.rows.length;
+        // this will be true since it was a select statement and so rowsAffected was 0
+        if (!results.rowsAffected) {
+            var orignal_footprint = results.rows.item(num-1).total; //original footprint
+            var current_footprint = results.rows.item(num-1).current;
+            var reductions = orignal_footprint - current_footprint;
+            $('#reductions').append("<h1 class='dynamic'>"+reductions+" KG");
             return false;
         } else {
             console.log('No rows affected!');
@@ -360,12 +396,12 @@ function getCurrentUsersID() {
     //$('#name').append(data.items.first_name + ',');
  }
 
- function footprintToDatabase(id, house, meat, organic, local, compost, total_clothes, total_electronics, total_shopping, car_engine, car_miles, train, bus, domestic_flights, short_flights, long_flights, total){
+ function footprintToDatabase(id, house, meat, organic, local, compost, total_clothes, total_electronics, total_shopping, car_engine, car_miles, train, bus, domestic_flights, short_flights, long_flights, total, current){
     alert("id: " + id);
     function populateDB(tx) {
     tx.executeSql('DROP TABLE IF EXISTS Footprint');
-    tx.executeSql('CREATE TABLE IF NOT EXISTS Footprint (id unique, house, meat, organic, local, compost, total_clothes, total_electronics, total_shopping, car_engine, car_miles, train, bus, domestic_flights, short_flights, long_flights, total)');
-    tx.executeSql('INSERT INTO Footprint (id, house, meat, organic, local, compost, total_clothes, total_electronics, total_shopping, car_engine, car_miles, train, bus, domestic_flights, short_flights, long_flights, total) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',[id, house, meat, organic, local, compost, total_clothes, total_electronics, total_shopping, car_engine, car_miles, train, bus, domestic_flights, short_flights, long_flights, total]);
+    tx.executeSql('CREATE TABLE IF NOT EXISTS Footprint (id unique, house, meat, organic, local, compost, total_clothes, total_electronics, total_shopping, car_engine, car_miles, train, bus, domestic_flights, short_flights, long_flights, total, current)');
+    tx.executeSql('INSERT INTO Footprint (id, house, meat, organic, local, compost, total_clothes, total_electronics, total_shopping, car_engine, car_miles, train, bus, domestic_flights, short_flights, long_flights, total, current) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',[id, house, meat, organic, local, compost, total_clothes, total_electronics, total_shopping, car_engine, car_miles, train, bus, domestic_flights, short_flights, long_flights, total, current]);
     }
 
     function errorCB(err) {
@@ -492,6 +528,7 @@ function getUserInfo(){
    getCurrentUsersName();
    getCurrentUsersFootprint();
    getCurrentUsersActionsNo();
+   getCurrentUsersReduction();
 }
 
 function addActionToList(actionid){
@@ -563,7 +600,7 @@ function addActionToList(actionid){
     return false;
 }
 
-function completeAction(actionid){
+function completeAction(actionid, reduction){
 
     var id = localStorage.getItem('id');
 
@@ -589,6 +626,7 @@ function completeAction(actionid){
 
     data.append("userid",   localStorage.getItem('id'));
     data.append("actionid", actionid);
+    data.append("reduction", reduction);
 
     console.log("Sending", data);
     console.log(this.test);
@@ -631,6 +669,22 @@ function completeAction(actionid){
 
 
     return false;
+
+    //UPDATE FOOTPRINT
+    function populateDB(tx) {
+        //tx.executeSql('INSERT INTO completed_actions (user_id, action_id) VALUES (?,?)',[id, actionid]);                    
+        tx.executeSql('UPDATE Footprint SET current = current - '+reduction+'');                    
+    };
+
+    function errorCB(err) {
+        alert("Error processing SQL: "+err.code);
+    }
+
+    function successCB() {
+        alert("success adding actions");
+    }
+    
+    db.transaction(populateDB, errorCB, successCB);
 }
 
 //Add actions to phone DB

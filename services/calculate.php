@@ -27,7 +27,6 @@ $electronics = $_POST['electronics'];
 $shopping = $_POST['other_shopping'];
 $total = $_POST['total'];
 
-
 // Create connection
 //$con=mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
 //$con=mysqli_connect('10.168.1.52','carbonja_carbon','GSwMAYuNyVzSguTf','carbonja_carb');
@@ -35,7 +34,7 @@ $con = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
 $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 // query
-$sql = "INSERT INTO footprint (id, house, meat, organic, local, compost, car_engine, car_size, car_miles, train_miles, bus_miles, domestic_flights, short_flights, long_flights, clothes, electronics, other_shopping, total) VALUES ('$id', '$house', '$meat', '$organic', '$local', '$compost', '$engine', '$car_size', '$car_miles', '$train_miles', '$bus_miles', '$domestic_flights', '$short_flights', '$long_flights', '$clothes', '$electronics', '$shopping', '$total')";
+$sql = "INSERT INTO footprint (id, house, meat, organic, local, compost, car_engine, car_size, car_miles, train_miles, bus_miles, domestic_flights, short_flights, long_flights, clothes, electronics, other_shopping, total, current) VALUES ('$id', '$house', '$meat', '$organic', '$local', '$compost', '$engine', '$car_size', '$car_miles', '$train_miles', '$bus_miles', '$domestic_flights', '$short_flights', '$long_flights', '$clothes', '$electronics', '$shopping', '$total', '$total')";
 $q = $con->prepare($sql);
 $q->execute(array(':id'=>$id,
                   ':house'=>$house,
@@ -54,7 +53,8 @@ $q->execute(array(':id'=>$id,
                   ':clothes'=>$clothes,
                   ':electronics'=>$electronics,
                   ':other_shopping'=>$other_shopping,
-                  ':total'=>$total
+                  ':total'=>$total,
+                  ':current'=>$total,
                   ));
 
  if (!$q->errorCode() != 0) {

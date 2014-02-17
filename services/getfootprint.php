@@ -29,6 +29,7 @@ if (isset($id)) {
 			$footprint['electronics'] = $row['electronics'];
 			$footprint['shopping'] = $row['other_shopping'];
 			$footprint['total'] = $row['total'];
+			$footprint['current'] = $row['current'];
 		};
 	echo json_encode($footprint); 
 } else {
