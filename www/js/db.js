@@ -776,3 +776,229 @@ function completedactionstoDB(){
     xmlhttp.open("GET","http://carbon.jamescobbett.co.uk/services/getcompletedactions.php");
     xmlhttp.send();
 }
+
+function facebookLogin(){
+     FB.api('/me', {fields: 'first_name, last_name, email'}, function(response) {
+      console.log(response);
+      var first_name = response['first_name'];
+      var last_name = response['email'];
+      var email = response['email'];
+      //GOT FIRST,LAST NAMES AND EMAIL
+      // Now to check email address with db, if doesn't exist pass paramaters to signup function to sign user up and add to table.
+      //If email does exist, log in as that user.
+
+    var xhr, target, changeListener, url, data;
+    //setting url to the php code to add comments to the db
+    url = "http://carbon.jamescobbett.co.uk/services/checkUsers.php";
+    var data = new FormData();
+
+    data.append("email", response['email']);
+
+    console.log("Sending", data);
+    console.log(this.test);
+    // create a request object
+    xhr = new XMLHttpRequest();
+
+    changeListener = function () {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                console.log("Response", this.responseText);
+                var response = this.responseText;
+                var message = response.indexOf("new");
+                console.log(message);
+                if (message == -1){
+                    submitLoginForm(email);
+                }
+                else {
+                    // User is new so register them
+                    submitSignForm(first_name,last_name,email);
+                }
+            }
+        }
+    };
+
+    // initialise a request, specifying the HTTP method
+    // to be used and the URL to be connected to.
+    xhr.onreadystatechange = changeListener;
+    xhr.open('POST', url, true);
+    //xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.send(data);
+
+
+
+    return false;
+
+    });     
+}
+
+//SUBMIT Login FORM
+function userSearch(){
+  // declaring variables to be used
+    var xhr, target, changeListener, url, data;
+
+    //setting url to the php code to add comments to the db
+    url = "http://carbon.jamescobbett.co.uk/services/usersearch.php";
+    var form = document.getElementById("userSearchForm");
+    var data = new FormData(form);
+    console.log("Sending", data);
+    // create a request object
+    xhr = new XMLHttpRequest();
+
+    changeListener = function () {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                console.log("Response", this.responseText);
+                var response = this.responseText;
+                var s = "success";
+                var message = response.indexOf("failed:");
+                console.log(message);
+                if (response != ''){
+                    var response = JSON.parse(this.responseText);
+                    var html = "<div class='user'>";
+                    html += "<div class='username'>"+response['username']+" </div>";
+                    html += "<div class='name'>"+response['first_name']+" "+response['last_name']+ "</div>";
+                    html += "<a class='add' href='#' onclick='addFriend("+response['id']+")'>Add friend</a>";
+                    document.getElementById("friend-search-results").innerHTML = html;
+                }
+            }
+        }
+    };
+        // initialise a request, specifying the HTTP method
+    // to be used and the URL to be connected to.
+    xhr.onreadystatechange = changeListener;
+    xhr.open('POST', url, true);
+    //xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.send(data);
+
+
+
+    return false;
+}
+
+//Add friend
+function addFriend(id){
+  // declaring variables to be used
+    var xhr, target, changeListener, url, data;
+
+    //setting url to the php code to add comments to the db
+    url = "http://carbon.jamescobbett.co.uk/services/addfriend.php";
+    var data = new FormData();
+    data.append("id1",   localStorage.getItem('id'));
+    data.append("id2", id);
+    console.log("Sending", data);
+    // create a request object
+    xhr = new XMLHttpRequest();
+
+    changeListener = function () {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                console.log("Response", this.responseText);
+                var response = this.responseText;
+                var message = response.indexOf("Succesfully");
+                console.log(message);
+                if (message == '-1'){
+                     console.log('this.responseText');
+                } else {
+                     console.log('this.responseText');
+                }
+            }
+        }
+    };
+        // initialise a request, specifying the HTTP method
+    // to be used and the URL to be connected to.
+    xhr.onreadystatechange = changeListener;
+    xhr.open('POST', url, true);
+    //xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.send(data);
+
+
+
+    return false;
+}
+
+function getFriends(){
+  // declaring variables to be used
+    var xhr, target, changeListener, url, data;
+    var html = "";
+    var html2 = "";
+    //setting url to the php code to add comments to the db
+    url = "http://carbon.jamescobbett.co.uk/services/getFriends.php";
+    var data = new FormData();
+    data.append("id", localStorage.getItem('id'));
+    // create a request object
+    xhr = new XMLHttpRequest();
+
+    changeListener = function () {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                console.log("Response", this.responseText);
+                var response = JSON.parse(this.responseText);
+                console.log(response);
+                for(var  i= 0; i < response.length; i++){
+                    if(response[i]['confirmed']==0 && response[i]['sent']==0){
+                        html2 += "<div class='user'>";
+                        html2 += "<div class='username'>"+response[i]['username']+" </div>";
+                        html2 += "<div class='name'>"+response[i]['first_name']+" "+response[i]['last_name']+ "</div>";
+                        html2 += "<div class='username'><a href='#' onclick='acceptRequest("+response[i]['id']+")'>Accept friend request</a></div>";
+                        html2 += "</div>";
+                    }else if(response[i]['confirmed']==0 && response[i]['sent']==1){
+                    
+                    }else if(response[i]['confirmed']==2){
+                        html += "<div class='user'>";
+                        html += "<div class='username'>You</div>";
+                        html += "<div class='name'>"+response[i]['first_name']+" "+response[i]['last_name']+ "</div>";
+                        html += "<div class='FP'>"+response[i]['current_fp']+ "</div>";
+                        html += "</div>";
+                    }else {
+                        html += "<div class='user'>";
+                        html += "<div class='username'>"+response[i]['username']+" </div>";
+                        html += "<div class='name'>"+response[i]['first_name']+" "+response[i]['last_name']+ "</div>";
+                        html += "<div class='FP'>"+response[i]['current_fp']+ "</div>";
+                        html += "</div>";
+                    }
+                }
+                document.getElementById("friend-list").innerHTML = html;
+                document.getElementById("uncomfirmed-list").innerHTML = html2;
+            }
+        }
+    };
+        // initialise a request, specifying the HTTP method
+    // to be used and the URL to be connected to.
+    xhr.onreadystatechange = changeListener;
+    xhr.open('POST', url, true);
+    //xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.send(data);
+};
+
+function acceptRequest(id){
+    var xhr, target, changeListener, url, data;
+
+    //setting url to the php code to add comments to the db
+    url = "http://carbon.jamescobbett.co.uk/services/acceptRequest.php";
+    var data = new FormData();
+    data.append("current-id", localStorage.getItem('id'));
+    data.append("friend-id", id);
+    // create a request object
+    xhr = new XMLHttpRequest();
+
+    changeListener = function () {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                console.log("Response", this.responseText);
+                var response = this.responseText;
+                var message = response.indexOf("Succesfully");
+                console.log(message);
+                if (message != -1){
+                    alert('Accepted Friend');
+                }
+            }
+        }
+    };
+        // initialise a request, specifying the HTTP method
+    // to be used and the URL to be connected to.
+    xhr.onreadystatechange = changeListener;
+    xhr.open('POST', url, true);
+    //xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.send(data);
+}
+

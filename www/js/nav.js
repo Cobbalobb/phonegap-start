@@ -57,3 +57,13 @@ function goToCompleted(){
 	        reload: true
 	    });
 }
+
+function goToFriends(){
+	$(':mobile-pagecontainer').pagecontainer('change', 'friendslist.html', {
+	        transition: 'slide',
+	        changeHash: true,
+	        reverse: false,
+	        showLoadMsg: true,
+	        reload: true
+	    });
+}

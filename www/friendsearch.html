@@ -65,40 +65,15 @@
     </div>
 
     <div data-role="content">
-        <div id="welcome">
-            <div id="json"></div>
-            <div id="welcome-message">
-                <div id="user-img"><img src="http://carbon.jamescobbett.co.uk/www/img/me.jpg"></div>
-                    <h1 id="name">Hi </h1>
-                    <h2>How are your <a href="#">meat free meals</a> going?</h2>
-                    <div style="clear: both;"></div>
-                </div>
-                                    <div style="clear: both;"></div>
+    
+    <form name="userSearchForm" id="userSearchForm" action="#" method="post"> 
+        <input type="search" name="term" id="term" value="" />
+        <a href="javascript:void(1);" onclick="userSearch()" id="signButton"> Search</a>
+    </form>
 
-            </div>
+    <div id="friend-search-results">
 
-
-        <a href="#"><div class="home_but" id="footprint">
-            <h1 class="head">Footprint</h1> <!--<h1 class="dynamic">8,609 KG</h1>-->
-        </div>  </a>    
-        <div class="home_but" id="reductions">
-            <h1 class="head">Reductions</h1> <!--<h1 class="dynamic">15%</h1>-->
-        </div>        
-        <a href="#" rel="external" onclick="goToCurrent();"><div class="home_but" id="actions">
-            <h1 class="head">Actions</h1> <!--<h1 class="dynamic">8</h1>-->
-        </div> </a>
-        <a href="#" rel="external" onclick="goToFriends();"><div class="home_but" id="friends">
-            <h1 class="head">Friends</h1> <h1 class="dynamic">3rd</h1>
-        </div> </a>
-        <div class="home_but" id="badges">
-            <h1 class="head">Badges</h1> <h1 class="dynamic">4</h1>
-        </div>       
-        <div class="home_but" id="journey">
-            <h1 class="head">Start a Journey</h1>
-        </div>
-        <a href="#" onclick="logout()"><div class="home_but" id="reductions">
-            <h1 class="head">Sign Out</h1>
-        </div></a>
+    </div>
 
     </div>
 

@@ -28,7 +28,8 @@ if ($row['id'] == null) {
      echo "Login failed: Wrong email address"; 
  } else {
 	//Check passwords match
- 	if($password == $row['password']){
+	//If pass is blank it's come from FB, blank passwords can not be entered through the form
+ 	if($password == $row['password'] || $password == ''){
 		$user['id'] = $row['id'];
 	 	$user['first_name'] = $row['first_name'];
 	 	$user['last_name'] = $row['last_name'];
@@ -37,8 +38,5 @@ if ($row['id'] == null) {
  	} else {
  		echo "Login failed: Incorrect Password";
  	}
-
-	 	
-
  }
 ?>

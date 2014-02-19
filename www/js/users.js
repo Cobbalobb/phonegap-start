@@ -22,14 +22,26 @@ var users;
 
 
 //SUBMIT REGISTRATION FORM
-function submitSignForm(){
+function submitSignForm(first_name, last_name, email){
   // declaring variables to be used
     var xhr, target, changeListener, url, data;
 
     //setting url to the php code to add comments to the db
     url = "http://carbon.jamescobbett.co.uk/services/signup.php";
-    var form = document.getElementById("signForm");
-    var data = new FormData(form);
+    
+    if (typeof email === 'undefined') {
+      var form = document.getElementById("signForm");
+      var data = new FormData(form);
+      var data = new FormData();
+    } else {
+      data.append("first_name", first_name);
+      data.append("last_name", last_name);
+      data.append("email", email);
+      data.append("user_name", first_name+last_name);
+      data.append("password", '');
+    }
+    //var form = document.getElementById("signForm");
+    //var data = new FormData(form);
     //var html = document.getElementById("source").innerHTML;
   //data = 'html='+escape(document.getElementById("source").innerHTML);
     console.log("Sending", data);
@@ -95,14 +107,23 @@ function submitSignForm(){
   }
 
 //SUBMIT Login FORM
-function submitLoginForm(){
+function submitLoginForm(email){
   // declaring variables to be used
     var xhr, target, changeListener, url, data;
 
     //setting url to the php code to add comments to the db
     url = "http://carbon.jamescobbett.co.uk/services/login.php?email=   ";
-    var form = document.getElementById("loginForm");
-    var data = new FormData(form);
+    if (typeof email != 'undefined') {
+      var data = new FormData();
+      data.append("email", email);
+      data.append("password", '');
+
+    } else {
+      var form = document.getElementById("loginForm");
+      var data = new FormData(form);
+    }
+    //var form = document.getElementById("loginForm");
+    //var data = new FormData(form);
     //var html = document.getElementById("source").innerHTML;
   //data = 'html='+escape(document.getElementById("source").innerHTML);
     console.log("Sending", data);
