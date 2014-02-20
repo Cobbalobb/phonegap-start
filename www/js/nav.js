@@ -59,7 +59,7 @@ function goToCompleted(){
 }
 
 function goToFriends(){
-	$(':mobile-pagecontainer').pagecontainer('change', 'friendslist.html', {
+	$(':mobile-pagecontainer').pagecontainer('change', 'friendlist.html', {
 	        transition: 'slide',
 	        changeHash: true,
 	        reverse: false,
