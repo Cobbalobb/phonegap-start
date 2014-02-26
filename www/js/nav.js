@@ -5,7 +5,8 @@ function goToActions(){
 	        reverse: false,
 	        showLoadMsg: true,
 	        reload: true
-	    });}
+	    });
+}
 
 function goToSignup(){
 	// $(':mobile-pagecontainer').pagecontainer('change', 'signup.html', {
@@ -60,6 +61,16 @@ function goToCompleted(){
 
 function goToFriends(){
 	$(':mobile-pagecontainer').pagecontainer('change', 'friendlist.html', {
+	        transition: 'slide',
+	        changeHash: true,
+	        reverse: false,
+	        showLoadMsg: true,
+	        reload: true
+	    });
+}
+
+function goToBadges(){
+	$(':mobile-pagecontainer').pagecontainer('change', 'badges.html', {
 	        transition: 'slide',
 	        changeHash: true,
 	        reverse: false,

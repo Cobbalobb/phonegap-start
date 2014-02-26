@@ -65,7 +65,7 @@ function getCompletedActions(){
 	    	console.log(response[0]);
 	    	for(var i = 0; i < response.length; i++){
 	    		console.log(response);
-	    		var action = "<div class='action'><div class='action-title'>"+response[i]['action']+"</div><div class='action-description'>"+response[i]['description']+"</div><div class='action-category'>"+response[i]['category']+"</div>";
+	    		var action = "<div class='action'><div class='action-category'>"+response[i]['category']+"</div><div class='action-title'>"+response[i]['action']+"</div><div class='action-description'>"+response[i]['description']+"</div>";
 			 	/*var action = action + "<a onclick='completeAction("+response[i]['id']+")' href='#'>Remove from list</a> <a href='#'>Mark as completed</a></div>";*/
 			 	document.getElementById("action-list").innerHTML=document.getElementById("action-list").innerHTML + action;
 			 	//document.getElementById("actions").innerHTML=document.getElementById("actions").innerHTML + response[i]['action'];
@@ -93,8 +93,8 @@ function getActionsL(){
         // this will be true since it was a select statement and so rowsAffected was 0
         if (!results.rowsAffected) {
         	for(var i = 0; i < results.rows.length; i++){
-	    		var action = "<div class='action'><div class='action-title'>"+results.rows.item(i).action+"</div><div class='action-description'>"+results.rows.item(i).description+"</div><div class='action-category'>"+results.rows.item(1).category+"</div>";
-			 	var action = action + "<a onclick='addActionToList("+results.rows.item(i).id+")' href='#'>Add to list</a> <a href='#'>Mark as completed</a></div>";
+	    		var action = "<div class='action'><div class='action-category "+results.rows.item(1).category+"'>"+results.rows.item(1).category+"</div><div class='action-title'>"+results.rows.item(i).action+"</div><div class='action-description'>"+results.rows.item(i).description+"</div>";
+			 	var action = action + "<div class='action-links-container'><div class='action-links'><a class='action-add' onclick='addActionToList("+results.rows.item(i).id+")' href='#'>Add to list</a> <a href='#' class='action-complete' onclick='completeAction("+results.rows.item(i).id+","+results.rows.item(i).reduction+")'>Mark as completed</a></div></div></div>";
 			 	document.getElementById("action-list").innerHTML=document.getElementById("action-list").innerHTML + action;
 			 	//document.getElementById("actions").innerHTML=document.getElementById("actions").innerHTML + response[i]['action'];
 			 	//document.getElementById("actions").innerHTML=document.getElementById("actions").innerHTML + response[i]['description'];
@@ -135,8 +135,8 @@ function getListActionsL(){
         if (!results.rowsAffected) {
         	for(var i = 0; i < results.rows.length; i++){
         		console.log(results.rows.item(i));
-			    var action = "<div class='action'><div class='action-title'>"+results.rows.item(i).action+"</div><div class='action-description'>"+results.rows.item(i).description+"</div><div class='action-category'>"+results.rows.item(1).category+"</div>";
-				var action = action + "<a onclick='addActionToList("+results.rows.item(i).id+")' href='#'>Remove from list</a> <a href='#' onclick='completeAction("+results.rows.item(i).id+","+results.rows.item(i).reduction+")'>Mark as completed</a></div>";
+			    var action = "<div class='action'><div class='action-category "+results.rows.item(1).category+"'>"+results.rows.item(1).category+"</div><div class='action-title'>"+results.rows.item(i).action+"</div><div class='action-description'>"+results.rows.item(i).description+"</div>";
+				var action = action + "<div class='action-links-container'><div class='action-links'><a class='action-remove' onclick='removeActionFromList("+results.rows.item(i).id+")' href='#'>Remove from list</a> <a href='#' class='action-complete' onclick='completeAction("+results.rows.item(i).id+","+results.rows.item(i).reduction+")'>Mark as completed</a></div></div></div>";
 				document.getElementById("action-list").innerHTML=document.getElementById("action-list").innerHTML + action;
 					};
         } else {
@@ -145,6 +145,66 @@ function getListActionsL(){
     }
 
     function errorCB(err) {
+    }
+
+    db.transaction(queryDB, errorCB);
+};
+
+//GET LIST ACTIONS FROM LOCAL
+function getCompletedActionsL(){
+	function queryDB(tx) {
+        //tx.executeSql('SELECT action_id FROM current_actions', [], querySuccess, errorCB);
+        tx.executeSql('SELECT completed_actions.action_id, Actions.id, Actions.action, Actions.description, Actions.reduction, Actions.category FROM completed_actions INNER JOIN Actions ON completed_actions.action_id=Actions.id', [], querySuccess, errorCB);
+    }
+
+    function querySuccess(tx, results) {
+        console.log("Returned rows from current_actions = " + results.rows.length);
+        var num = results.rows.length;
+        // this will be true since it was a select statement and so rowsAffected was 0
+        if (!results.rowsAffected) {
+        	for(var i = 0; i < results.rows.length; i++){
+        		console.log(results.rows.item(i));
+			    var action = "<div class='action'><div class='action-category "+results.rows.item(1).category+"'>"+results.rows.item(1).category+"</div><div class='action-title'>"+results.rows.item(i).action+"</div><div class='action-description'>"+results.rows.item(i).description+"</div>";
+				//var action = action + "<div class='action-links'><a onclick='addActionToList("+results.rows.item(i).id+")' href='#'>Remove from list</a> <a href='#' onclick='completeAction("+results.rows.item(i).id+","+results.rows.item(i).reduction+")'>Mark as completed</a></div></div>";
+				document.getElementById("action-list").innerHTML=document.getElementById("action-list").innerHTML + action;
+					};
+        } else {
+            console.log('No rows affected!');
+        }
+    }
+
+    function errorCB(err) {
+    }
+
+    db.transaction(queryDB, errorCB);
+};
+
+
+
+//GET COMPLETED BADGES FROM LOCAL
+function getCompletedBadges(){
+	function queryDB(tx) {
+        //tx.executeSql('SELECT action_id FROM current_actions', [], querySuccess, errorCB);
+        tx.executeSql('SELECT completed_badges.badge_id, badges.id, badges.badge FROM completed_badges INNER JOIN badges ON completed_badges.badge_id=badges.id', [], querySuccess, errorCB);
+    }
+
+    function querySuccess(tx, results) {
+        console.log("Returned rows from current_actions = " + results.rows.length);
+        var num = results.rows.length;
+        // this will be true since it was a select statement and so rowsAffected was 0
+        if (!results.rowsAffected) {
+        	for(var i = 0; i < results.rows.length; i++){
+        		console.log(results.rows.item(i));
+			    var html = "<div class='badges'>"+results.rows.item(i).badge+"</div>";
+				document.getElementById("badges-list").innerHTML=document.getElementById("badges-list").innerHTML + html;
+					};
+        } else {
+            console.log('No rows affected!');
+        }
+    }
+
+    function errorCB(err) {
+    	console.log("error: "+err);
     }
 
     db.transaction(queryDB, errorCB);

@@ -36,17 +36,27 @@
     <body>
 <!-- Start of Log in page -->
 <div data-role="page" id="login">
-
+    <div data-role="panel" id="menu">
+        <ul id="menu-list">
+            <li class="active"><a onclick="goToCurrent();" href="#" class="contentLink"><h1>Home</h1> </a></li>
+            <li><a onclick="goToCurrent();" href="#" class="contentLink"><h1>Actions</h1> </a></li>
+            <li><a onclick="goToFriends();" href="#" class="contentLink"><h1>Friends</h1> </a></li>
+            <li><a onclick="goToBadges();" href="#" class="contentLink"><h1>Badges</h1> </a></li>
+            <li><a href="#" class="contentLink"><h1>Journey</h1> </a></li>
+        </ul>
+        </div><!-- /panel -->
     <div class="header" data-role="header">
-    
-        <h1>Carbon Cutter</h1>
+        <a href="#menu" class="showMenu"></a>
+        <h1>Actions</h1>
     
     </div>
 
     <div data-role="content">
-        <div id="welcome">
-
-       </div>
+        <ul id="action-links">
+            <li><a onclick="goToAll();" href="#"><div class="active-action" id="all-actions">All</div></a></li>
+            <li><a onclick="goToCurrent();" href="#"><div id="current-actions">Current</div></a></li>
+            <li><a onclick="goToCompleted();" href="#"><div id="completed-actions">Complete</div></a><li>
+        </ul>
       <script type="text/javascript">
                 setTimeout(function(){getActionsL()},1000);
         </script>
@@ -56,12 +66,6 @@
             <a href="#" onclick="closeSuccessMessage();">Ok</a>
         </div>
         <div id="action-list"></div>
-        <ul id="action-links">
-            <li><a onclick="goToAll();" href="#">All</a></li>
-            <li><a onclick="goToCurrent();" href="#">Current</a></li>
-            <li><a onclick="goToCompleted();" href="#">Complete</a><li>
-        </ul>
-
 
 </div>
 <!-- End of Login page -->

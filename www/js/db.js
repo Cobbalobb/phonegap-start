@@ -10,7 +10,7 @@ function logout(){
     }
 
     function successCB() {
-        alert("success!");
+        //alert("success!");
         //document.location.href = 'index.html';
     }
     var db = window.openDatabase("User", "1.0", "User DB", 1000000);
@@ -25,7 +25,7 @@ function logout(){
     }
 
     function successFP() {
-        alert("success!");
+        //alert("success!");
         document.location.href = 'index.html';
     }
     //db = window.openDatabase("Footprint", "1.0", "User DB", 1000000);
@@ -47,6 +47,10 @@ function login(id, first_name, last_name, email){
     tx.executeSql('CREATE TABLE IF NOT EXISTS current_actions (user_id, action_id)');
     tx.executeSql('DROP TABLE IF EXISTS completed_actions');
     tx.executeSql('CREATE TABLE IF NOT EXISTS completed_actions (user_id, action_id)');
+    tx.executeSql('DROP TABLE IF EXISTS completed_badges');
+    tx.executeSql('CREATE TABLE IF NOT EXISTS completed_badges (user_id, badge_id)');    
+    tx.executeSql('DROP TABLE IF EXISTS badges');
+    tx.executeSql('CREATE TABLE IF NOT EXISTS badges (id, badge)');
     tx.executeSql('INSERT INTO User (id, first_name, last_name, email) VALUES (?,?,?,?)',[id, first_name, last_name, email]);
     }
 
@@ -55,7 +59,7 @@ function login(id, first_name, last_name, email){
     }
 
     function successCB() {
-        alert("success!");
+        //alert("success!");
         //document.location.href = 'index.html';
     }
     //var db = window.openDatabase("User", "1.0", "User DB", 1000000);
@@ -86,6 +90,29 @@ function login(id, first_name, last_name, email){
     xmlhttp.open("GET","http://carbon.jamescobbett.co.uk/services/getactions.php");
     xmlhttp.send();
 
+    //GET ACTIONS FROM SERVER TO LOCAL DB
+    baxmlhttp=new XMLHttpRequest();
+    baxmlhttp.onreadystatechange=function()
+      {
+      if (baxmlhttp.readyState==4 && baxmlhttp.status==200)
+        {
+            //console.log(xmlhttp.responseText);
+            var response = JSON.parse(baxmlhttp.responseText);
+            console.log("badges all: " + response);
+                //function(response) { 
+                    db.transaction(function (tx) {  
+                    for(var i = 0; i < response.length; i++){
+                        //alert(response[i]['action']);
+                        tx.executeSql('INSERT INTO Badges (id, badge) VALUES (?,?)', [response[i]['id'],response[i]['badge']]);
+                    };
+                  });
+               // }(i);
+                //actionstoDB(response[i]['id'], response[i]['action'], response[i]['description'], response[i]['reduction'], response[i]['category'], response[i]['max']);
+        }
+      }
+    baxmlhttp.open("GET","http://carbon.jamescobbett.co.uk/services/getallbadges.php");
+    baxmlhttp.send();
+
     //GET ACTIONS IN LIST FROM SERVER TO LOCAL DB
     xmhttp=new XMLHttpRequest();
     xmhttp.onreadystatechange=function()
@@ -94,7 +121,7 @@ function login(id, first_name, last_name, email){
         {
             //console.log(xmlhttp.responseText);
             var response = JSON.parse(xmhttp.responseText);
-            console.log("list actions: " + response);
+            console.log("completed actions: " + response);
                 //function(response) { 
                     db.transaction(function (tx) {  
                     for(var i = 0; i < response.length; i++){
@@ -134,6 +161,30 @@ function login(id, first_name, last_name, email){
     cxmhttp.open("POST","http://carbon.jamescobbett.co.uk/services/getactionsc.php");
     cxmhttp.send(data);
 
+    //GET COMPLETED BADGES FROM SERVER TO LOCAL DB
+    bxmhttp=new XMLHttpRequest();
+    bxmhttp.onreadystatechange=function()
+      {
+      if (bxmhttp.readyState==4 && bxmhttp.status==200)
+        {
+            //console.log(xmlhttp.responseText);
+            var response = JSON.parse(bxmhttp.responseText);
+            console.log("badges: " + response);
+                //function(response) { 
+                    db.transaction(function (tx) {  
+                    for(var i = 0; i < response.length; i++){
+                        //  console.log('HERE');
+                        //console.log(response[i]);
+                        tx.executeSql('INSERT INTO completed_badges (user_id, badge_id) VALUES (?,?)',[response[i]['user_id'], response[i]['badge_id']]);                    
+                    };
+                  });
+               // }(i);
+                //actionstoDB(response[i]['id'], response[i]['action'], response[i]['description'], response[i]['reduction'], response[i]['category'], response[i]['max']);
+        }
+      }
+    bxmhttp.open("POST","http://carbon.jamescobbett.co.uk/services/getbadges.php");
+    bxmhttp.send(data);
+
     // GET FOOTPRINT FROM DB
     // declaring variables to be used
     var xhr, target, changeListener, url, data;
@@ -160,7 +211,7 @@ function login(id, first_name, last_name, email){
                     //$('#succesfully-added').slideToggle("slow");                    
                     //document.getElementById("failure").style.display = "block";
                     //document.getElementById("success-message").innerHTML = "Succesfully added to your list.";
-                    alert('success adding FP');
+                    //alert('success adding FP');
                     var response = JSON.parse(this.responseText);
                     console.log(response['house']);
                     footprintToDatabase(response['id'], response['house'], response['meat'], response['organic'], response['local'], response['compost'], response['total_clothes'], response['total_electronics'], response['total_shopping'], response['car_engine'], response['car_miles'], response['train'], response['bus'], response['domestic_flights'], response['short_flights'], response['long_flights'], response['total'], response['current']);
@@ -186,7 +237,7 @@ function login(id, first_name, last_name, email){
     xhr.send(data);
 
 
-    setTimeout(function(){redirect();},2000);
+    setTimeout(function(){redirect();},2500);
 
     return false;
 
@@ -313,8 +364,8 @@ function getCurrentUsersID() {
         // this will be true since it was a select statement and so rowsAffected was 0
         if (!results.rowsAffected) {
             var orignal_footprint = results.rows.item(num-1).total; //original footprint
-
-            $('#footprint').append("<h1 class='dynamic'>"+results.rows.item(num-1).current+" KG");
+            document.getElementById("footprint").innerHTML="<h1 class='dynamic'>"+results.rows.item(num-1).current+" KG<br />" + document.getElementById("footprint").innerHTML;
+            //$('#footprint').append("<h1 class='dynamic'>"+results.rows.item(num-1).current+" KG");
             return false;
         } else {
             console.log('No rows affected!');
@@ -350,7 +401,8 @@ function getCurrentUsersID() {
             var orignal_footprint = results.rows.item(num-1).total; //original footprint
             var current_footprint = results.rows.item(num-1).current;
             var reductions = orignal_footprint - current_footprint;
-            $('#reductions').append("<h1 class='dynamic'>"+reductions+" KG");
+            document.getElementById("reductions").innerHTML="<h1 class='dynamic'>"+reductions+" KG<br />" + document.getElementById("reductions").innerHTML;
+            //$('#reductions').append("<h1 class='dynamic'>"+reductions+" KG");
             return false;
         } else {
             console.log('No rows affected!');
@@ -395,6 +447,33 @@ function getCurrentUsersID() {
     //alert(results.rows.item(i).first_name);
     //$('#name').append(data.items.first_name + ',');
  }
+
+
+ function getCurrentUsersBadgesNo() {
+
+    function queryDB(tx) {
+        //tx.executeSql('DROP TABLE IF EXISTS User');
+        tx.executeSql('SELECT * FROM completed_badges', [], querySuccess, errorCB);
+    }
+
+    function querySuccess(tx, results) {
+        console.log("Returned rows = " + results.rows.length);
+        var num = results.rows.length;
+        $('#badges').append("<h1 class='dynamic'>"+num);
+    }
+
+    function errorCB(err) {
+        alert("Error processing SQL: "+err.code);
+        //document.location.href = 'login.html';
+    }
+
+    //var db = window.openDatabase("Footprint", "1.0", "Footprint DB", 1000000);
+    db.transaction(queryDB, errorCB);
+    //tx.executeSql('SELECT first_name FROM User', [], function (tx, results) {
+    //alert(results.rows.item(i).first_name);
+    //$('#name').append(data.items.first_name + ',');
+ }
+
 
  function footprintToDatabase(id, house, meat, organic, local, compost, total_clothes, total_electronics, total_shopping, car_engine, car_miles, train, bus, domestic_flights, short_flights, long_flights, total, current){
     alert("id: " + id);
@@ -528,6 +607,7 @@ function getUserInfo(){
    getCurrentUsersName();
    getCurrentUsersFootprint();
    getCurrentUsersActionsNo();
+   getCurrentUsersBadgesNo();
    getCurrentUsersReduction();
 }
 
@@ -597,6 +677,38 @@ function addActionToList(actionid){
     //xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.send(data);
 
+    function queryDB(tx) {
+            tx.executeSql('SELECT * FROM current_actions', [], querySuccess, errorCB);
+        }
+
+    function querySuccess(tx, results) {
+        console.log("Returned rows = " + results.rows.length);
+        var num = results.rows.length;
+        var badge;
+        if(num === 1){
+            //award badge
+            badge = 3;
+            alert('Badge earned: 1st action added');
+            completebadge(badge);
+        } else if (num === 10){
+            badge = 4;
+            alert('Badge earned: 10th action completed');
+            completebadge(badge);
+        } else {
+            console.log('No rows affected!');
+        }
+        // for an insert statement, this property will return the ID of the last inserted row
+        //console.log("Last inserted row ID = " + results.insertId);
+    }
+
+    function errorCB(err) {
+        //alert("Error processing SQL: "+err.code);
+        //document.location.href = 'login.html';
+    }
+
+    //var db = window.openDatabase("Actions", "1.0", "Actions DB", 1000000);
+    db.transaction(queryDB, errorCB);
+
     return false;
 }
 
@@ -604,19 +716,19 @@ function completeAction(actionid, reduction){
 
     var id = localStorage.getItem('id');
 
-    function populateDB(tx) {
+    function populateD(tx) {
         tx.executeSql('INSERT INTO completed_actions (user_id, action_id) VALUES (?,?)',[id, actionid]);                    
     };
 
-    function errorCB(err) {
+    function errorC(err) {
         alert("Error processing SQL: "+err.code);
     }
 
-    function successCB() {
-        alert("success adding actions");
+    function successC() {
+        alert("success completed actions");
     }
     
-    db.transaction(populateDB, errorCB, successCB);
+    db.transaction(populateD, errorC, successC);
 
     // declaring variables to be used
     var xhr, target, changeListener, url, data;
@@ -666,9 +778,106 @@ function completeAction(actionid, reduction){
     //xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.send(data);
 
+    // Check action to see if badge should be given
+    // 1) Check number of actions taken
+    function queryDB(tx) {
+        tx.executeSql('SELECT * FROM completed_actions', [], querySucceed, errorCB);
+    }
 
+    function querySucceed(tx, results) {
+        console.log("Returned rows = " + results.rows.length);
+        var num = results.rows.length;
+        var badge;
+        if(num === 1){
+            //award badge
+            badge = 3;
+            alert('Badge earned: 1st action completed');
+            completebadge(badge);
+        } else if (num === 5){
+            badge = 4;
+            alert('Badge earned: 5th action completed');
+            completebadge(badge);
+        } else if (num === 10){
+            badge = 5;
+            alert('Badge earned: 10th action completed');
+            completebadge(badge);
+        } else if (num === 15){
+            badge = 10;
+            alert('Badge earned: 15th action completed');
+            completebadge(badge);
+        } else if (num === 20){
+            badge = 6;
+            alert('Badge earned: 20th action completed');
+            completebadge(badge);
+        } else if (num === 30){
+            badge = 7;
+            alert('Badge earned: 30th action completed');
+            completebadge(badge);
+        } else if (num === 40){
+            badge = 8;
+            alert('Badge earned: 40th action completed');
+            completebadge(badge);
+        } else if (num === 60){
+            badge = 9;
+            alert('Badge earned: 60th action completed');
+            completebadge(badge);
+        } else {
+            console.log('No rows affected!');
+        }
+        // for an insert statement, this property will return the ID of the last inserted row
+        //console.log("Last inserted row ID = " + results.insertId);
+    }
 
+    function errorCB(err) {
+        //alert("Error processing SQL: "+err.code);
+        //document.location.href = 'login.html';
+    }
+
+    //var db = window.openDatabase("Actions", "1.0", "Actions DB", 1000000);
+    db.transaction(queryDB, errorCB);
+    // 2) Check reduction %
+    function queryFP(tx) {
+        //tx.executeSql('DROP TABLE IF EXISTS User');
+        tx.executeSql('SELECT * FROM Footprint', [], querySuccess, errorCB);
+    }
+
+    function querySuccess(tx, results) {
+        console.log("Returned rows = " + results.rows.length);
+        var number = results.rows.length;
+        var badge;
+        // this will be true since it was a select statement and so rowsAffected was 0
+        if (!results.rowsAffected) {
+            var orignal_footprint = results.rows.item(number-1).total; //original footprint
+            var current_footprint = results.rows.item(number-1).current;
+            var reductions = orignal_footprint - current_footprint;
+            var percentage = orignal_footprint / reductions;
+            if (percentage >= 15){
+                badge = 18;
+                percentcheck(badge);
+            } else if (percentage >= 10){
+                badge = 17;
+                percentcheck(badge);
+            } else if (percentage >= 5){
+                badge = 16;
+                percentcheck(badge);
+            } else if (percentage >= 2){
+                badge = 15;
+                percentcheck(badge);
+            }
+        } else {
+            console.log('No rows affected!');
+        }
+    }
+
+    function errorFP(err) {
+        alert("Error processing SQL: "+err.code);
+        //document.location.href = 'login.html';
+    }
+
+    //var db = window.openDatabase("Footprint", "1.0", "Footprint DB", 1000000);
+    db.transaction(queryFP, errorFP);
     return false;
+
 
     //UPDATE FOOTPRINT
     function populateDB(tx) {
@@ -685,6 +894,84 @@ function completeAction(actionid, reduction){
     }
     
     db.transaction(populateDB, errorCB, successCB);
+}
+
+function percentcheck(badge){
+    function queryDB(tx) {
+        tx.executeSql('SELECT badge_id FROM completed_badges WHERE badge_id = ?', [badge], querySuccess, errorCB);
+    }
+
+    function querySuccess(tx, results) {
+        console.log("Returned rows from current_actions = " + results.rows.length);
+        var num = results.rows.length;
+        // this will be true since it was a select statement and so rowsAffected was 0
+        if (!results.rowsAffected) {
+            completebadge(badge);
+        } else {
+            console.log('No rows affected!');
+        }
+    }
+
+    function errorCB(err) {
+    }
+
+    db.transaction(queryDB, errorCB);
+
+}
+
+function completebadge(badge){
+    var id = localStorage.getItem('id');
+
+    function populateBadge(tx) {
+        tx.executeSql('INSERT INTO completed_badges (user_id, badge_id) VALUES (?,?)',[id, badge]);                    
+    };
+
+    function errorBadge(err) {
+        alert("Error processing SQL: "+err.code);
+    }
+
+    function successBadge() {
+        alert("success adding badge");
+        // declaring variables to be used
+        var xhr, target, changeListener, url, data;
+        //setting url to the php code to add comments to the db
+        url = "http://carbon.jamescobbett.co.uk/services/completeBadge.php";
+        var data = new FormData();
+
+        data.append("userid", localStorage.getItem('id'));
+        data.append("badgeid", badge);
+
+        console.log("Sending", data);
+        console.log(this.test);
+        // create a request object
+        xhr = new XMLHttpRequest();
+
+        changeListener = function () {
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    console.log("Response", this.responseText);
+                    var response = this.responseText;
+                    var s = "success";
+                    var message = response.indexOf("exception");
+                    console.log(message);
+                    if (message == -1){
+                    }
+                    else {
+                    }
+                }
+            }
+        };
+
+        // initialise a request, specifying the HTTP method
+        // to be used and the URL to be connected to.
+        xhr.onreadystatechange = changeListener;
+        xhr.open('POST', url, true);
+        //xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.send(data);
+        return false;
+    }
+    
+    db.transaction(populateBadge, errorBadge, successBadge);
 }
 
 //Add actions to phone DB
