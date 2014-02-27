@@ -47,6 +47,7 @@ body {
     );
     background-attachment:fixed;*/
     font-family: "roboto",'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
+    text-rendering: optimizelegibility;
     font-size:12px;
     height:100%;
     margin:0px;
@@ -135,6 +136,11 @@ h1 {
 
 .header{
     background-color: #297fb8 !important;
+    height: 50px;
+}
+.ui-title{
+    text-shadow: none !important;
+    font-size: 1.5em !important;
 }
 .ui-content {
     border-width: 0;
@@ -150,6 +156,9 @@ h1 {
     /* border-width: 1px 0; */
     border-style: none !important;
     position: relative;
+}
+.ui-body-a, .ui-page-theme-a .ui-body-inherit, html .ui-bar-a .ui-body-inherit, html .ui-body-a .ui-body-inherit, html body .ui-group-theme-a .ui-body-inherit, html .ui-panel-page-container-a {
+    text-shadow: none;
 }
 
 .showMenu{
@@ -238,7 +247,40 @@ h1 {
     /*text-align: left;*/
     padding-bottom: 15px;
 }
-
+.newsuserimage{
+    width: 58px;
+    height: 52px;
+}
+.news-image{
+    float: left;
+}
+.status{
+    padding-left: 67px;
+    font-size: 15px;
+}
+.time{
+    font-size: 12px;
+    font-style: italic;
+    padding-top: 3px;
+}
+#newstitle{
+    width: 80%;
+    margin: 10px auto;
+    text-decoration: underline;
+}
+.news{
+    width: 80%;
+    margin: 0 auto;
+    height: 55px;
+}
+.line{
+    width: 90%;
+    border-bottom: solid 1px #dbdbdb;
+    height: 1px;
+    margin: 0 auto;
+    margin-top: 8px;
+    margin-bottom: 10px;
+}
 #footprint{
     background-color: #1e6a9d;
     width: 50%;
@@ -513,7 +555,8 @@ border-style: solid;
 #action-links{
     background-color: #1e6a9d;
     height: 70px;
-    padding-left: 0px
+    padding-left: 0px;
+    margin-top: 0 !important;
 }
 #action-links a{
     color: #fff;
@@ -598,4 +641,18 @@ border-style: solid;
     background: url(../img/delete.png) no-repeat;
     height: 32px;
     padding: 10px 38px;
+}
+.successful-added{
+    background: url(../img/complete.png) no-repeat;
+    padding: 6px 0 6px 40px;
+    font-size: 1.5em;
+    margin: 0 auto;
+    width: 199px;
+}
+.successful-completed{
+    background: url(../img/complete.png) no-repeat;
+    padding: 6px 0 6px 37px;
+    font-size: 1.5em;
+    margin: 0 auto;
+    width: 223px;
 }

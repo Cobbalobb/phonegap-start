@@ -10,7 +10,8 @@
 //$fname = $_GET['firstname'];
 $email = $_POST['email'];
 $password = $_POST['password'];
-
+$image = $_POST['image'];
+$image = (string)$image;
 // Create connection
 //$con=mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
 //$con=mysqli_connect('10.168.1.52','carbonja_carbon','GSwMAYuNyVzSguTf','carbonja_carb');
@@ -34,6 +35,14 @@ if ($row['id'] == null) {
 	 	$user['first_name'] = $row['first_name'];
 	 	$user['last_name'] = $row['last_name'];
 	 	$user['email'] = $row['email'];
+	 	$user['image'] = $row['image'];
+	 	if($image != null){
+		 	$sql = "UPDATE user SET image = :image WHERE email = :email";
+			$q = $con->prepare($sql);
+			$q->execute(array(':image' => $image, 
+				':email' => $email));
+		}
+
 		echo json_encode($user); 
  	} else {
  		echo "Login failed: Incorrect Password";

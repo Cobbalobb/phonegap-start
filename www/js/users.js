@@ -22,7 +22,7 @@ var users;
 
 
 //SUBMIT REGISTRATION FORM
-function submitSignForm(first_name, last_name, email){
+function submitSignForm(first_name, last_name, email, image){
   // declaring variables to be used
     var xhr, target, changeListener, url, data;
 
@@ -39,6 +39,7 @@ function submitSignForm(first_name, last_name, email){
       data.append("email", email);
       data.append("user_name", first_name+last_name);
       data.append("password", '');
+      data.append("image", image);
     }
     //var form = document.getElementById("signForm");
     //var data = new FormData(form);
@@ -64,7 +65,7 @@ function submitSignForm(first_name, last_name, email){
                     alert('success');
                     var response = JSON.parse(this.responseText);
                     console.log(response['email']);
-                    login(response['id'], response['first_name'], response['last_name'], response['email']);
+                    login(response['id'], response['first_name'], response['last_name'], response['email'], response['image']);
                     //set email in local temp storage - use this to query db -HOW?
                       // $.ajax({       
                       //  type : 'POST',   
@@ -107,7 +108,7 @@ function submitSignForm(first_name, last_name, email){
   }
 
 //SUBMIT Login FORM
-function submitLoginForm(email){
+function submitLoginForm(email, image){
   // declaring variables to be used
     var xhr, target, changeListener, url, data;
 
@@ -117,6 +118,7 @@ function submitLoginForm(email){
       var data = new FormData();
       data.append("email", email);
       data.append("password", '');
+      data.append("image", image);
 
     } else {
       var form = document.getElementById("loginForm");
@@ -145,7 +147,11 @@ function submitLoginForm(email){
                     alert('success');
                     var response = JSON.parse(this.responseText);
                     console.log(response['email']);
-                    login(response['id'], response['first_name'], response['last_name'], response['email']);
+                    if (typeof image != 'undefined') {
+                      login(response['id'], response['first_name'], response['last_name'], response['email'], image);
+                    } else {
+                      login(response['id'], response['first_name'], response['last_name'], response['email'], response['image']);
+                    }
                     //set email in local temp storage - use this to query db -HOW?
                       // $.ajax({       
                       //  type : 'POST',   

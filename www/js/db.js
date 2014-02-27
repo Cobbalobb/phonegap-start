@@ -32,7 +32,7 @@ function logout(){
     db.transaction(dropFP, errorFP, successFP);
 }
 
-function login(id, first_name, last_name, email){
+function login(id, first_name, last_name, email, image){
     var data = new FormData();
 
     data.append("id", id);
@@ -40,18 +40,18 @@ function login(id, first_name, last_name, email){
 
     function populateDB(tx) {
     tx.executeSql('DROP TABLE IF EXISTS User');
-    tx.executeSql('CREATE TABLE IF NOT EXISTS User (id unique, first_name, last_name, email)');
+    tx.executeSql('CREATE TABLE IF NOT EXISTS User (id unique, first_name, last_name, email, image)');
     tx.executeSql('DROP TABLE IF EXISTS Actions');
     tx.executeSql('CREATE TABLE IF NOT EXISTS Actions (id, action, description, reduction, category)');
-    tx.executeSql('DROP TABLE IF EXISTS current_actions');
-    tx.executeSql('CREATE TABLE IF NOT EXISTS current_actions (user_id, action_id)');
-    tx.executeSql('DROP TABLE IF EXISTS completed_actions');
-    tx.executeSql('CREATE TABLE IF NOT EXISTS completed_actions (user_id, action_id)');
+   
+    tx.executeSql('DROP TABLE IF EXISTS user_actions');
+    tx.executeSql('CREATE TABLE IF NOT EXISTS user_actions (user_id, action_id, status, timestamp)');
+    
     tx.executeSql('DROP TABLE IF EXISTS completed_badges');
     tx.executeSql('CREATE TABLE IF NOT EXISTS completed_badges (user_id, badge_id)');    
     tx.executeSql('DROP TABLE IF EXISTS badges');
     tx.executeSql('CREATE TABLE IF NOT EXISTS badges (id, badge)');
-    tx.executeSql('INSERT INTO User (id, first_name, last_name, email) VALUES (?,?,?,?)',[id, first_name, last_name, email]);
+    tx.executeSql('INSERT INTO User (id, first_name, last_name, email, image) VALUES (?,?,?,?,?)',[id, first_name, last_name, email, image]);
     }
 
     function errorCB(err) {
@@ -114,30 +114,30 @@ function login(id, first_name, last_name, email){
     baxmlhttp.send();
 
     //GET ACTIONS IN LIST FROM SERVER TO LOCAL DB
-    xmhttp=new XMLHttpRequest();
-    xmhttp.onreadystatechange=function()
-      {
-      if (xmhttp.readyState==4 && xmhttp.status==200)
-        {
-            //console.log(xmlhttp.responseText);
-            var response = JSON.parse(xmhttp.responseText);
-            console.log("completed actions: " + response);
-                //function(response) { 
-                    db.transaction(function (tx) {  
-                    for(var i = 0; i < response.length; i++){
-                        console.log('HERE');
-                        console.log(response[i]);
-                        tx.executeSql('INSERT INTO current_actions (user_id, action_id) VALUES (?,?)',[response[i]['user_id'], response[i]['action_id']]);                    
-                    };
-                  });
-               // }(i);
-                //actionstoDB(response[i]['id'], response[i]['action'], response[i]['description'], response[i]['reduction'], response[i]['category'], response[i]['max']);
-        }
-      }
-    xmhttp.open("POST","http://carbon.jamescobbett.co.uk/services/getactionsl.php");
-    xmhttp.send(data);
+    // xmhttp=new XMLHttpRequest();
+    // xmhttp.onreadystatechange=function()
+    //   {
+    //   if (xmhttp.readyState==4 && xmhttp.status==200)
+    //     {
+    //         //console.log(xmlhttp.responseText);
+    //         var response = JSON.parse(xmhttp.responseText);
+    //         console.log("completed actions: " + response);
+    //             //function(response) { 
+    //                 db.transaction(function (tx) {  
+    //                 for(var i = 0; i < response.length; i++){
+    //                     console.log('HERE');
+    //                     console.log(response[i]);
+    //                     tx.executeSql('INSERT INTO current_actions (user_id, action_id) VALUES (?,?)',[response[i]['user_id'], response[i]['action_id']]);                    
+    //                 };
+    //               });
+    //            // }(i);
+    //             //actionstoDB(response[i]['id'], response[i]['action'], response[i]['description'], response[i]['reduction'], response[i]['category'], response[i]['max']);
+    //     }
+    //   }
+    // xmhttp.open("POST","http://carbon.jamescobbett.co.uk/services/getactionsl.php");
+    // xmhttp.send(data);
 
-    //GET COMPLETED ACTIONS FROM SERVER TO LOCAL DB
+    //GET USER ACTIONS FROM SERVER TO LOCAL DB
     cxmhttp=new XMLHttpRequest();
     cxmhttp.onreadystatechange=function()
       {
@@ -151,14 +151,14 @@ function login(id, first_name, last_name, email){
                     for(var i = 0; i < response.length; i++){
                         //  console.log('HERE');
                         //console.log(response[i]);
-                        tx.executeSql('INSERT INTO completed_actions (user_id, action_id) VALUES (?,?)',[response[i]['user_id'], response[i]['action_id']]);                    
+                        tx.executeSql('INSERT INTO user_actions (user_id, action_id, status, timestamp) VALUES (?,?,?,?)',[response[i]['user_id'], response[i]['action_id'], response[i]['status'], response[i]['timestamp']]);                    
                     };
                   });
                // }(i);
                 //actionstoDB(response[i]['id'], response[i]['action'], response[i]['description'], response[i]['reduction'], response[i]['category'], response[i]['max']);
         }
       }
-    cxmhttp.open("POST","http://carbon.jamescobbett.co.uk/services/getactionsc.php");
+    cxmhttp.open("POST","http://carbon.jamescobbett.co.uk/services/getuseractions.php");
     cxmhttp.send(data);
 
     //GET COMPLETED BADGES FROM SERVER TO LOCAL DB
@@ -271,7 +271,7 @@ function redirect(){
     }
 
     function errorCB(err) {
-        alert("Error processing SQL: "+err.code);
+        alert("FP Error processing SQL: "+err.code);
         //document.location.href = 'login.html';
     }
 
@@ -301,9 +301,43 @@ function getCurrentUsersName() {
     }
 
     function errorCB(err) {
-        alert("Error processing SQL: "+err.code);
+        alert("Name Error processing SQL: "+err.code);
         //goToLogin();
         document.location.href = 'login.html';
+    }
+
+    //var db = window.openDatabase("User", "1.0", "User DB", 1000000);
+    db.transaction(queryDB, errorCB);
+    //tx.executeSql('SELECT first_name FROM User', [], function (tx, results) {
+    //alert(results.rows.item(i).first_name);
+    //$('#name').append(data.items.first_name + ',');
+ }
+
+function getCurrentUsersImage() {
+
+    function queryDB(tx) {
+        //tx.executeSql('DROP TABLE IF EXISTS User');
+        tx.executeSql('SELECT image FROM User', [], querySuccess, errorCB);
+    }
+
+    function querySuccess(tx, results) {
+        console.log("Returned rows = " + results.rows.length);
+        var num = results.rows.length;
+        // this will be true since it was a select statement and so rowsAffected was 0
+        if (!results.rowsAffected) {
+            document.getElementById("user-img").innerHTML = "<img alt='user-image' src='"+results.rows.item(num-1).image+"'</img>";
+            return false;
+        } else {
+            console.log('No rows affected!');
+        }
+        // for an insert statement, this property will return the ID of the last inserted row
+        console.log("Last inserted row ID = " + results.insertId);
+    }
+
+    function errorCB(err) {
+        alert("Image Error processing SQL: "+err.code);
+        //goToLogin();
+        //document.location.href = 'login.html';
     }
 
     //var db = window.openDatabase("User", "1.0", "User DB", 1000000);
@@ -340,7 +374,7 @@ function getCurrentUsersID() {
     }
 
     function errorCB(err) {
-        alert("Error processing SQL: "+err.code);
+        alert("ID Error processing SQL: "+err.code);
         //document.location.href = 'login.html';
     }
 
@@ -375,7 +409,7 @@ function getCurrentUsersID() {
     }
 
     function errorCB(err) {
-        alert("Error processing SQL: "+err.code);
+        alert("FP Error processing SQL: "+err.code);
         //document.location.href = 'login.html';
     }
 
@@ -412,7 +446,7 @@ function getCurrentUsersID() {
     }
 
     function errorCB(err) {
-        alert("Error processing SQL: "+err.code);
+        alert("Reduction Error processing SQL: "+err.code);
         //document.location.href = 'login.html';
     }
 
@@ -437,7 +471,7 @@ function getCurrentUsersID() {
     }
 
     function errorCB(err) {
-        alert("Error processing SQL: "+err.code);
+        alert("Actions Error processing SQL: "+err.code);
         //document.location.href = 'login.html';
     }
 
@@ -463,7 +497,7 @@ function getCurrentUsersID() {
     }
 
     function errorCB(err) {
-        alert("Error processing SQL: "+err.code);
+        alert("BadgesError processing SQL: "+err.code);
         //document.location.href = 'login.html';
     }
 
@@ -606,17 +640,18 @@ function getUserInfo(){
    getCurrentUsersID();
    getCurrentUsersName();
    getCurrentUsersFootprint();
-   getCurrentUsersActionsNo();
-   getCurrentUsersBadgesNo();
+   //getCurrentUsersActionsNo();
+   //getCurrentUsersBadgesNo();
    getCurrentUsersReduction();
+   getCurrentUsersImage();
 }
 
 function addActionToList(actionid){
 
     var id = localStorage.getItem('id');
 
-    function populateDB(tx) {
-        tx.executeSql('INSERT INTO current_actions (user_id, action_id) VALUES (?,?)',[id, actionid]);                    
+    function updateAction(tx) {
+        tx.executeSql('UPDATE user_actions SET status = ? WHERE action_id = ?',['1', actionid.toString()]);                    
     };
 
     function errorCB(err) {
@@ -624,10 +659,10 @@ function addActionToList(actionid){
     }
 
     function successCB() {
-        alert("success adding actions");
+        document.getElementById(actionid+"success").innerHTML ='<div class="successful-added">Action added to your list.</div>';
     }
     
-    db.transaction(populateDB, errorCB, successCB);
+    db.transaction(updateAction, errorCB, successCB);
 
 
     // declaring variables to be used
@@ -653,9 +688,9 @@ function addActionToList(actionid){
                 var message = response.indexOf("exception");
                 console.log(message);
                 if (message == -1){
-                    $('#succesfully-added').slideToggle("slow");                    
+                    //$('#succesfully-added').slideToggle("slow");                    
                     //document.getElementById("failure").style.display = "block";
-                    document.getElementById("success-message").innerHTML = "Succesfully added to your list.";
+                    //document.getElementById("success-message").innerHTML = "Succesfully added to your list.";
                     //alert('success');
                 }
                 else {
@@ -714,10 +749,10 @@ function addActionToList(actionid){
 
 function completeAction(actionid, reduction){
 
-    var id = localStorage.getItem('id');
+    var id = localStorage.getItem('id');               
 
     function populateD(tx) {
-        tx.executeSql('INSERT INTO completed_actions (user_id, action_id) VALUES (?,?)',[id, actionid]);                    
+        tx.executeSql('UPDATE user_actions SET status = 2 WHERE action_id=?',[actionid.toString()]);                    
     };
 
     function errorC(err) {
@@ -725,7 +760,7 @@ function completeAction(actionid, reduction){
     }
 
     function successC() {
-        alert("success completed actions");
+        document.getElementById(actionid+"success").innerHTML ='<div class="successful-completed">Well done! Action complete!</div>';
     }
     
     db.transaction(populateD, errorC, successC);
@@ -754,9 +789,9 @@ function completeAction(actionid, reduction){
                 var message = response.indexOf("exception");
                 console.log(message);
                 if (message == -1){
-                    $('#succesfully-added').slideToggle("slow");                    
+                    //$('#succesfully-added').slideToggle("slow");                    
                     //document.getElementById("failure").style.display = "block";
-                    document.getElementById("success-message").innerHTML = "Well done, you have completed the action.";
+                    //document.getElementById("success-message").innerHTML = "Well done, you have completed the action.";
                     //alert('success');
                 }
                 else {
@@ -1065,11 +1100,22 @@ function completedactionstoDB(){
 }
 
 function facebookLogin(){
-     FB.api('/me', {fields: 'first_name, last_name, email'}, function(response) {
-      console.log(response);
-      var first_name = response['first_name'];
+     FB.api('/me', {fields: 'first_name, last_name, email, picture'}, function(response) {
+        var first_name = response['first_name'];
       var last_name = response['email'];
       var email = response['email'];
+        FB.api(
+        "/me/picture",
+        {
+            "redirect": false,
+            "height": "88",
+            "type": "normal",
+            "width": "98"
+        },
+        function (response) {
+          if (response && !response.error) {
+                  console.log(response);
+      var image = response['data']['url'];
       //GOT FIRST,LAST NAMES AND EMAIL
       // Now to check email address with db, if doesn't exist pass paramaters to signup function to sign user up and add to table.
       //If email does exist, log in as that user.
@@ -1094,11 +1140,11 @@ function facebookLogin(){
                 var message = response.indexOf("new");
                 console.log(message);
                 if (message == -1){
-                    submitLoginForm(email);
+                    submitLoginForm(email, image);
                 }
                 else {
                     // User is new so register them
-                    submitSignForm(first_name,last_name,email);
+                    submitSignForm(first_name,last_name,email,image);
                 }
             }
         }
@@ -1114,6 +1160,11 @@ function facebookLogin(){
 
 
     return false;
+          }
+        }
+    );
+
+
 
     });     
 }
@@ -1289,3 +1340,60 @@ function acceptRequest(id){
     xhr.send(data);
 }
 
+function newsfeed(){
+    // declaring variables to be used
+    var xhr, target, changeListener, url, data;
+    var html = "";
+    //setting url to the php code to add comments to the db
+    url = "http://carbon.jamescobbett.co.uk/services/newsfeed.php";
+    var data = new FormData();
+    data.append("id", localStorage.getItem('id'));
+    // create a request object
+    xhr = new XMLHttpRequest();
+
+    changeListener = function () {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                console.log("Response", this.responseText);
+                var response = JSON.parse(this.responseText);
+                console.log(response);
+                for(var  i= 0; i < response.length; i++){
+                    if(response[i]['type']==1 && response[i]['status']==1){
+                        html += "<div class='news'>";
+                        html += "<div class='news-image'><img class='newsuserimage' src='"+response[i]['image']+"'</src></div>";
+                        html += "<div class='status'>"+response[i]['user_name']+" added "+response[i]['action_name']+" to their list.";
+                        html += "<div class='time'>"+response[i]['timestamp']+"</div></div>";
+                        html += "</div>";
+                    }else if(response[i]['type']==1 && response[i]['status']==2){
+                        html += "<div class='news'>";
+                        html += "<div class='news-image'><img class='newsuserimage' src='"+response[i]['image']+"'</src></div>";
+                        html += "<div class='status'>"+response[i]['user_name']+" completed "+response[i]['action_name']+".";
+                        html += "<div class='time'>"+response[i]['timestamp']+"</div></div>";
+                        html += "</div>";
+                    }else if(response[i]['type']==2 && response[i]['status']==1){
+                        html += "<div class='news'>";
+                        html += "<div class='news-image'><img class='newsuserimage' src='"+response[i]['image']+"'</src></div>";
+                        html += "<div class='status'>You are now friends with "+response[i]['user_name']+".";
+                        html += "<div class='time'>"+response[i]['timestamp']+"</div></div>";
+                        html += "</div>";
+                    }else if(response[i]['type']==2 && response[i]['status']==0){
+                        html += "<div class='news'>";
+                        html += "<div class='news-image'><img class='newsuserimage' src='"+response[i]['image']+"'</src></div>";
+                        html += "<div class='status'>"+response[i]['user_name']+" sent you a friend request.";
+                        html += "<div class='time'>"+response[i]['timestamp']+"</div></div>";
+                        html += "</div>";
+                    }
+                    html += "<div class='line'></div>";
+                    html += "<div style='clear: both;'></div>";
+                }
+                document.getElementById("newsfeed").innerHTML = "<h3 id='newstitle'>News Feed</h3>" +html;
+            }
+        }
+    };
+        // initialise a request, specifying the HTTP method
+    // to be used and the URL to be connected to.
+    xhr.onreadystatechange = changeListener;
+    xhr.open('POST', url, true);
+    //xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.send(data);
+}

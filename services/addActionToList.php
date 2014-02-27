@@ -9,6 +9,7 @@
 
 $userid = $_POST['userid'];
 $actionid = $_POST['actionid'];
+$status = 1;
 
 // Create connection
 //$con=mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
@@ -17,15 +18,24 @@ $con = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
 $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 // query
-$sql = "INSERT INTO current_actions (user_id, action_id) VALUES ('$userid', '$actionid')";
+$sql = "UPDATE user_actions SET status = '$status' WHERE user_id = '$userid' AND action_id = '$actionid'";
 $q = $con->prepare($sql);
-$q->execute(array(':user-id'=>$userid,
-                  ':action-id'=>$actionid,
-                  ));
+$q->execute(array($status));
 
  if (!$q->errorCode() != 0) {
      echo $con->errorInfo();
  } else {
  	echo "success";
  }	 	
+// $sql = "INSERT INTO current_actions (user_id, action_id) VALUES ('$userid', '$actionid')";
+// $q = $con->prepare($sql);
+// $q->execute(array(':user-id'=>$userid,
+//                   ':action-id'=>$actionid,
+//                   ));
+
+//  if (!$q->errorCode() != 0) {
+//      echo $con->errorInfo();
+//  } else {
+//  	echo "success";
+//  }	 	
 ?>

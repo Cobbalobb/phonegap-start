@@ -13,6 +13,7 @@ $lname = $_POST['lastname'];
 $username = $_POST['username'];
 $email = $_POST['email'];
 $password = $_POST['password'];
+$image = $_POST['image'];
 
 // Create connection
 //$con=mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
@@ -21,13 +22,14 @@ $con = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
 $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 // query
-$sql = "INSERT INTO user (first_name, last_name, username, email, password) VALUES ('$fname', '$lname', '$username', '$email', '$password')";
+$sql = "INSERT INTO user (first_name, last_name, username, email, password, image) VALUES ('$fname', '$lname', '$username', '$email', '$password', '$image')";
 $q = $con->prepare($sql);
 $q->execute(array(':fname'=>$fname,
                   ':lname'=>$lname,
                   ':username'=>$username,
                   ':email'=>$email,
-                  ':password'=>$password,));
+                  ':password'=>$password,
+                  ':image'=>$image));
 
  if (!$q->errorCode() != 0) {
      echo $con->errorInfo();
@@ -46,28 +48,23 @@ $q->execute(array(':fname'=>$fname,
 	 	$user['first_name'] = $row['first_name'];
 	 	$user['last_name'] = $row['first_name'];
 	 	$user['email'] = $row['first_name'];
+	 	$user['image'] = $row['image'];
 	// };
  	echo "success ".'{"items":'. json_encode($user) .'}';
  }
+$id = $user['id'];
+// POPULATE user_actions table
+$con2=mysqli_connect('10.168.1.52','carbonja_carbon','GSwMAYuNyVzSguTf','carbonja_carb');
 
+$results = mysqli_query($con2,"SELECT * FROM actions");
+while($row = mysqli_fetch_array($results)){
+	$action_id = $row['id'];
+	$sql = "INSERT INTO user_actions (user_id, action_id, status) VALUES ('$id', '$action_id', '0')";
+	$q = $con->prepare($sql);
+	$q->execute(array(':id'=>$id,
+	                  ':action_id'=>$action_id,
+	                  ':status'=>'0',
+	               	));
 
-// $result = mysqli_query($con,"INSERT INTO user (first_name, last_name, username, email, password)
-// VALUES ('$fname', '$lname', '$username', '$email', '$password')");
-// if (!$result) {
-//     echo mysql_error();
-// }
-
-
-//Log user in
-// $user = array();
-// $results = mysqli_query($con,"SELECT * FROM user WHERE email='$email' ");
-// while($row = mysqli_fetch_array($results)){
-// 	$user['id'] = $row['id'];
-// 	$user['first_name'] = $row['first_name'];
-// 	$user['last_name'] = $row['first_name'];
-// 	$user['email'] = $row['first_name'];
-// };
-// echo '{"items":'. json_encode($user) .'}'; 
-
-
+}
 ?>

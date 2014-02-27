@@ -10,6 +10,7 @@
 $userid = $_POST['userid'];
 $actionid = $_POST['actionid'];
 $reduction = $_POST['reduction'];
+$status = 2;
 
 // Create connection
 //$con=mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
@@ -23,11 +24,9 @@ $q = $con->prepare($sql2);
 $q->execute(array($reduction));
 
 // query
-$sql = "INSERT INTO completed_actions (user_id, action_id) VALUES ('$userid', '$actionid')";
+$sql = "UPDATE user_actions SET status = '$status' WHERE user_id = '$userid' AND action_id = '$actionid";
 $q = $con->prepare($sql);
-$q->execute(array(':user-id'=>$userid,
-                  ':action-id'=>$actionid,
-                  ));
+$q->execute(array($status));
 
  if (!$q->errorCode() != 0) {
      echo $con->errorInfo();
