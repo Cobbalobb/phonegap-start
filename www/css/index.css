@@ -158,9 +158,26 @@ h1 {
     position: relative;
 }
 .ui-body-a, .ui-page-theme-a .ui-body-inherit, html .ui-bar-a .ui-body-inherit, html .ui-body-a .ui-body-inherit, html body .ui-group-theme-a .ui-body-inherit, html .ui-panel-page-container-a {
-    text-shadow: none;
+    text-shadow: none !important;
 }
-
+input, input[type="password"]{
+    border: none;
+    border-bottom: solid 1px #333232;
+}
+input{
+    width: 100%;
+    font-size: 14px;
+    font-size: 14px;
+    margin: 15px auto;
+}
+#loginForm{
+    width: 60% !important;
+    margin: 0 auto !important;
+}
+.ui-shadow-inset{
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+}
 .showMenu{
     background: url(../img/menu.png) !important;
     width: 45px !important;
@@ -196,6 +213,13 @@ h1 {
     color: #fff;
 }
 
+#profile-welcome{
+    padding: 20px 0 0 0;  
+    overflow: auto;
+    background-color: #fff !important;
+    color: #000;
+}
+
 #user-img{
     padding-left: 15px;
     float: left;
@@ -206,8 +230,33 @@ h1 {
     display: block
 }
 
-#welcome-message{
+#profile-img {
+    width: 123px;
+    height: 88px;
+    padding-left: 15px;
+    float: left;
+    padding-right: 10px;
+}
+#profile-img img{
+    width: 123px;
+    height: 88px;
+}
+
+#profile-welcome-message{
+    width: 85%;
+    margin: 0 auto 15px auto;
     margin-bottom: 15px;
+}
+
+#welcome-message{
+    width: 85%;
+    margin: 0 auto 15px auto;
+    margin-bottom: 15px;
+}
+
+#profile-welcome-message h1{
+    color: #000;
+    text-align: left;
 }
 
 #welcome-message h1{
@@ -235,14 +284,25 @@ h1 {
     font-family: "roboto-condensed",'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
     font-size: 2.6em;
   /*  padding-top: 14px;*/
-  padding: 15px;
+    padding: 15px;
 }
 
-.head{
-    /*float: left;*/
-   /* padding-top: 21px; */
+.profile-dynamic{
+    text-align: right;
+    font-family: "roboto-condensed",'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
+    font-size: 2.6em;
+    margin-top: -3px;
+    float: right;
 }
 
+.profile-head{
+    text-align: left;
+    float: left;
+}
+.profile-stat{
+    height: 30px;
+    padding: 40px 20px;
+}
 .home_but h1{
     /*text-align: left;*/
     padding-bottom: 15px;
@@ -267,11 +327,16 @@ h1 {
     width: 80%;
     margin: 10px auto;
     text-decoration: underline;
+    font-weight: lighter;
+    font-size: 18px;
 }
 .news{
     width: 80%;
-    margin: 0 auto;
-    height: 55px;
+    margin: 0 auto 5px auto;
+}
+a {
+color: #df5a49;
+text-decoration: none;
 }
 .line{
     width: 90%;
@@ -316,6 +381,25 @@ h1 {
     background-color: #334d5c;
 }
 
+
+#profile-footprint{
+    background-color: #339fe6;
+}
+#profile-reductions{
+    background-color: #3293d3;
+}
+#profile-actions{
+    background-color: #2980b9;
+}
+#profile-friends{
+    background-color: #1e6a9d;
+}
+#profile-badges{
+    background-color: #185680;
+}
+#profile-journey{
+    background-color: #334d5c;
+}
 /*CALCULATOR PAGE*/
 .ui-checkbox input, .ui-radio input {
 position: absolute;
@@ -655,4 +739,91 @@ border-style: solid;
     font-size: 1.5em;
     margin: 0 auto;
     width: 223px;
+}
+
+/* FRIENDS */
+.user{
+    border: solid 1px #dbdbdb;
+    margin: 15px;
+    padding: 20px 10px 20px 10px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+.FP{
+    float: right;
+    margin-top: -32px;
+    font-size: 30px;
+}
+.rank{
+    float: left;
+    color: #dbdbdb;
+    font-size: 50px;
+}
+.friends-image {
+    float: left;
+    padding-left: 10px;
+}
+.name{
+    padding-top: 14px;
+    font-size: 24px;
+    padding-left: 106px;
+}
+.name a{
+    color: #000;
+}
+#friend-list h3, #uncomfirmed-list h3{
+    text-align: center;
+    font-size: 17px;
+}
+#friend-search{
+    background: url(../img/search.png) 50% 12px no-repeat;
+    height: 70px;
+    padding-top: 47px;
+    text-align: center;
+    border-right: solid 1px #297fb8;
+   -moz-box-sizing:    border-box;
+   -webkit-box-sizing: border-box;
+    box-sizing:        border-box;
+}
+#fb{
+    background: url(../img/fb.png) 50% 12px no-repeat;
+    height: 70px;
+    padding-top: 47px;
+    text-align: center;
+    border-right: solid 1px #297fb8;
+   -moz-box-sizing:    border-box;
+   -webkit-box-sizing: border-box;
+    box-sizing:        border-box;
+}
+
+
+.addfriend{
+    background: url(../img/add.png) no-repeat;
+    height: 32px;
+    padding: 10px 38px; 
+}
+
+.acceptfriend{
+    background: url(../img/complete.png) no-repeat;
+    height: 32px;
+    padding: 10px 38px; 
+}
+
+/* BADGES */
+.badges{
+    border: solid 1px #dbdbdb;
+    margin: 15px;
+}
+.badge0{
+    color: #dbdbdb;
+}
+.badge1{
+    color: #000;
+}
+.badge-title {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 20px;
 }

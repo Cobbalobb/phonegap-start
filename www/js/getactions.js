@@ -189,7 +189,7 @@ function getCompletedActionsL(){
 function getCompletedBadges(){
 	function queryDB(tx) {
         //tx.executeSql('SELECT action_id FROM current_actions', [], querySuccess, errorCB);
-        tx.executeSql('SELECT completed_badges.badge_id, badges.id, badges.badge FROM completed_badges INNER JOIN badges ON completed_badges.badge_id=badges.id', [], querySuccess, errorCB);
+        tx.executeSql('SELECT completed_badges.badge_id, completed_badges.completed, badges.id, badges.badge FROM completed_badges INNER JOIN badges ON completed_badges.badge_id=badges.id', [], querySuccess, errorCB);
     }
 
     function querySuccess(tx, results) {
@@ -199,7 +199,7 @@ function getCompletedBadges(){
         if (!results.rowsAffected) {
         	for(var i = 0; i < results.rows.length; i++){
         		console.log(results.rows.item(i));
-			    var html = "<div class='badges'>"+results.rows.item(i).badge+"</div>";
+			    var html = "<div class='badges badge"+results.rows.item(i).completed+"'><div class='badge-title'>"+results.rows.item(i).badge+"</div></div>";
 				document.getElementById("badges-list").innerHTML=document.getElementById("badges-list").innerHTML + html;
 					};
         } else {

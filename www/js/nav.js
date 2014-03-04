@@ -69,6 +69,17 @@ function goToFriends(){
 	    });
 }
 
+function goToSearch(){
+	$(':mobile-pagecontainer').pagecontainer('change', 'friendsearch.html', {
+	        transition: 'slide',
+	        changeHash: true,
+	        reverse: false,
+	        showLoadMsg: true,
+	        reload: true
+	    });
+}
+
+
 function goToBadges(){
 	$(':mobile-pagecontainer').pagecontainer('change', 'badges.html', {
 	        transition: 'slide',
@@ -77,4 +88,16 @@ function goToBadges(){
 	        showLoadMsg: true,
 	        reload: true
 	    });
+}
+
+function goToProfile(id){
+	$(':mobile-pagecontainer').pagecontainer('change', 'profile.html', {
+	        transition: 'slide',
+	        changeHash: true,
+	        reverse: false,
+	        showLoadMsg: true,
+	        reload: true,
+	    });
+	getProfileInfo(id);
+	//alert('test');
 }

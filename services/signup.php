@@ -67,4 +67,17 @@ while($row = mysqli_fetch_array($results)){
 	               	));
 
 }
+
+// POPULATE badges table
+$results = mysqli_query($con2,"SELECT * FROM badges");
+while($row = mysqli_fetch_array($results)){
+	$badge_id = $row['id'];
+	$sql = "INSERT INTO completed_badges (user_id, badge_id, completed) VALUES ('$id', '$badge_id', '0')";
+	$q = $con->prepare($sql);
+	$q->execute(array(':id'=>$id,
+	                  ':badge_id'=>$badge_id,
+	                  ':status'=>'0',
+	               	));
+
+}
 ?>

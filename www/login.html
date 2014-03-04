@@ -65,7 +65,7 @@
       // (2) it is a bad experience to be continually prompted to login upon page load.
       FB.login(function(response) {
    // handle the response
- }, {scope: 'email'});
+ }, {scope: 'email, publish_actions'});
     } else {
       // In this case, the person is not logged into Facebook, so we call the login() 
       // function to prompt them to do so. Note that at this stage there is no indication
@@ -74,7 +74,7 @@
       // The same caveats as above apply to the FB.login() call here.
       FB.login(function(response) {
    // handle the response
- }, {scope: 'email'});
+ }, {scope: 'email, publish_actions'});
     }
   });
   };
@@ -113,9 +113,9 @@
        </div>
 
         <form name="loginForm" id="loginForm" action="#" method="post">
-            E-mail: <input type="email" name="email">
-            Password: <input type="password" name="password">
-            <a href="javascript:void(1);" onclick="submitLoginForm()" id="signButton"> <img src="images/sign.png" alt="Sign up"></a>
+          <input type="email" name="email" placeholder="Email">
+          <input type="password" name="password" placeholder="Password">
+          <a href="javascript:void(1);" onclick="submitLoginForm()" id="signButton"> <img src="images/sign.png" alt="Sign up"></a>
         </form>
     <a href="#" rel="external" onclick="goToSignup();">Sign Up</a>
 

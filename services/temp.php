@@ -9,19 +9,33 @@
 
 $con = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
 $con2=mysqli_connect('10.168.1.52','carbonja_carbon','GSwMAYuNyVzSguTf','carbonja_carb');
+$id=1;
 
-$image = 3;
-$email = 'mavs5@hotmail.co.uk';
-$sql = "UPDATE user SET image = :image WHERE email = :email";
-		$q = $con->prepare($sql);
-		$q->execute(array(':image' => $image, 
-			':email' => $email));
+$results = mysqli_query($con2,"SELECT * FROM badges");
+while($row = mysqli_fetch_array($results)){
+	$badge_id = $row['id'];
+	$sql = "INSERT INTO completed_badges (user_id, badge_id, completed) VALUES ('$id', '$badge_id', '0')";
+	$q = $con->prepare($sql);
+	$q->execute(array(':id'=>$id,
+	                  ':badge_id'=>$badge_id,
+	                  ':status'=>'0',
+	               	));
 
-if (!$q->errorCode() != 0) {
-     echo $con->errorInfo();
- } else {
- 	echo "success";
- }	 
+}
+
+
+// $image = 3;
+// $email = 'mavs5@hotmail.co.uk';
+// $sql = "UPDATE user SET image = :image WHERE email = :email";
+// 		$q = $con->prepare($sql);
+// 		$q->execute(array(':image' => $image, 
+// 			':email' => $email));
+
+// if (!$q->errorCode() != 0) {
+//      echo $con->errorInfo();
+//  } else {
+//  	echo "success";
+//  }	 
 
 // $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 // $id = 4;

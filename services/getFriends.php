@@ -16,7 +16,7 @@ while($row = mysqli_fetch_array($results)){
 	$id2=$row['id2'];
 	$confirmed = $row['confirmed'];
 	if($id1 != $id){
-	$results1 = mysqli_query($con,"SELECT user.id, user.username, user.first_name, user.last_name, footprint.total, footprint.current FROM user INNER JOIN footprint ON user.id=footprint.id WHERE user.id = '$id1'");
+	$results1 = mysqli_query($con,"SELECT user.id, user.username, user.first_name, user.last_name, user.image, footprint.total, footprint.current FROM user INNER JOIN footprint ON user.id=footprint.id WHERE user.id = '$id1'");
 	while($row = mysqli_fetch_array($results1)){
 		$user[$i]['id'] = $row['id'];
 		$user[$i]['username'] = $row['username'];
@@ -24,12 +24,13 @@ while($row = mysqli_fetch_array($results)){
 		$user[$i]['last_name'] = $row['last_name'];
 		$user[$i]['original_fp'] = $row['total'];
 		$user[$i]['current_fp'] = $row['current'];
+		$user[$i]['image'] = $row['image'];
 		$user[$i]['confirmed'] = $confirmed;
 		$user[$i]['sent'] = '0';
 		$i++;
 	}
 	}elseif($id2 != $id){
-	$results2 = mysqli_query($con,"SELECT user.id, user.username, user.first_name, user.last_name, footprint.total, footprint.current FROM user INNER JOIN footprint ON user.id=footprint.id WHERE user.id = '$id2'");
+	$results2 = mysqli_query($con,"SELECT user.id, user.username, user.first_name, user.last_name, user.image, footprint.total, footprint.current FROM user INNER JOIN footprint ON user.id=footprint.id WHERE user.id = '$id2'");
 	while($row = mysqli_fetch_array($results2)){
 		$user[$i]['id'] = $row['id'];
 		$user[$i]['username'] = $row['username'];
@@ -37,6 +38,7 @@ while($row = mysqli_fetch_array($results)){
 		$user[$i]['last_name'] = $row['last_name'];
 		$user[$i]['original_fp'] = $row['total'];
 		$user[$i]['current_fp'] = $row['current'];
+		$user[$i]['image'] = $row['image'];
 		$user[$i]['confirmed'] = $confirmed;
 		$user[$i]['sent'] = '1';
 		$i++;
@@ -44,7 +46,7 @@ while($row = mysqli_fetch_array($results)){
 }
 	}
 
-	$results3 = mysqli_query($con,"SELECT user.id, user.username, user.first_name, user.last_name, footprint.total, footprint.current FROM user INNER JOIN footprint ON user.id=footprint.id WHERE user.id = '$id'");
+	$results3 = mysqli_query($con,"SELECT user.id, user.username, user.first_name, user.last_name, user.image, footprint.total, footprint.current FROM user INNER JOIN footprint ON user.id=footprint.id WHERE user.id = '$id'");
 	while($row = mysqli_fetch_array($results3)){
 		$user[$i]['id'] = $row['id'];
 		$user[$i]['username'] = $row['username'];
@@ -52,6 +54,7 @@ while($row = mysqli_fetch_array($results)){
 		$user[$i]['last_name'] = $row['last_name'];
 		$user[$i]['original_fp'] = $row['total'];
 		$user[$i]['current_fp'] = $row['current'];
+		$user[$i]['image'] = $row['image'];
 		$user[$i]['confirmed'] = '2';
 		$user[$i]['sent'] = '1';	
 	};

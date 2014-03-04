@@ -31,6 +31,7 @@
         <script src="js/nav.js"></script>
         <script src="js/getactions.js"></script>
         <script src="js/db.js"></script>
+        <script src="js/scripts.js"></script>
         <!--<script src="js/index.js"></script>-->
 
         <script type="text/javascript" charset="utf-8">
@@ -55,11 +56,20 @@
         <title>Hello World</title>
     </head>
     <body>
+    <!-- Side menu -->
+    <!-- <div id="menu">
+    <h3>Menu</h3>
+        <ul id="menu-list">
+            <li class="active"><a onclick="goToCurrent();" href="#home" class="contentLink"><h1>Home</h1> </a></li>
+            <li><a onclick="goToCurrent();" href="#home" class="contentLink"><h1>Actions</h1> </a></li>
+            <li><a onclick="goToFriends();" href="#home" class="contentLink"><h1>Friends</h1> </a></li>
+            <li><a onclick="goToBadges();" href="#home" class="contentLink"><h1>Badges</h1> </a></li>
+            <li><a href="#home" class="contentLink"><h1>Journey</h1> </a></li>
+        </ul>
+    </div> -->
 <!-- Start of Home page -->
 <div data-role="page" id="home">
-
-    <div class="header" data-role="header">
-        <div data-role="panel" id="menu">
+    <div data-role="panel" id="menu">
         <ul id="menu-list">
             <li class="active"><a onclick="goToCurrent();" href="#" class="contentLink"><h1>Home</h1> </a></li>
             <li><a onclick="goToCurrent();" href="#" class="contentLink"><h1>Actions</h1> </a></li>
@@ -69,33 +79,53 @@
             <li><a href="#" onclick="logout()" class="contentLink"><h1>Sign Out</h1> </a></li>
         </ul>
         </div><!-- /panel -->
-    <script type="text/javascript">
-        setTimeout(function(){getFriends()},1000);
-    </script>
+    <div class="header" data-role="header">
+    <!--     <a href="#"class="showMenu"></a>
+ -->    <a href="#menu" class="showMenu"></a>
         <h1>Carbon Cutter</h1>
     
     </div>
 
     <div data-role="content">
-        <ul id="action-links">
-            <li><a onclick="goToAll();" href="#"><div class="active-action" id="all-actions">Leaderboard</div></a></li>
-            <li><a onclick="goToSearch();" href="#"><div id="friend-search">Search</div></a></li>
-            <li><a onclick="goToCompleted();" href="#"><div id="fb">Facebook</div></a><li>
-        </ul>
-   <div id="uncomfirmed-list">
+        <div id="profile-welcome">
+            <div id="json"></div>
+            <div id="profile-welcome-message">
+                <div id="profile-img"></div>
+                    <h1 id="profile-name"></h1>
+                    <div id="profile-friend"></div>
+                    <div style="clear: both;"></div>
+                </div>
+                                    <div style="clear: both;"></div>
 
-    </div>
-    <div id="friend-list">
+        </div>
 
-    </div>
- 
+
+
+
+
+        <a href="#"><div class="profile-stat" id="profile-footprint">
+            <h1 class="profile-head">Footprint</h1>
+        </div>  </a>    
+        <div class="profile-stat" id="profile-reductions">
+            <h1 class="profile-head">Reductions</h1> 
+        </div>        
+        <a href="#"  rel="external" onclick="goToCurrent();"><div class="profile-stat" id="profile-actions">
+            <h1 class="profile-head">Actions</h1> 
+        </div> </a>
+        <a href="#" rel="external" onclick="goToFriends();"><div class="profile-stat" id="profile-friends">
+            <h1 class="profile-head">Friends</h1>
+        </div> </a>
+        <a href="#" rel="external" onclick="goToBadges();"><div class="profile-stat" id="profile-badges">
+            <h1 class="profile-head">Badges</h1> 
+        </div>      </a>
 
     </div>
 
 
 </div>
 <!-- End of Home page -->
-        <script type="text/javascript">getUserInfo();</script>
+        <script type="text/javascript">$( document ).ready(getUserInfo());</script>
+        <script type="text/javascript">newsfeed();</script>
         <script type="text/javascript" src="phonegap.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript">
