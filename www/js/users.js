@@ -121,6 +121,35 @@ function submitLoginForm(email, image){
       data.append("image", image);
 
     } else {
+      //FORM VALIDATION
+      var x=document.forms["loginForm"]["email"].value;
+      if (x==null || x=="")
+      {
+          //document.getElementById("failure").innerHTML ="<div id='failureText'><img src='images/cross.png' id='cross'> <h1>Oops! You haven't eventered an email address.<h1></div>";      
+          //$('#failure').slideDown("slow");    
+          //$('#emailerror').slideDown("slow");  
+          alert('email error');
+          return false;
+      }
+      var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+      var address = document.forms["loginForm"]["email"].value;
+      if(reg.test(address) == false) {
+      //    document.getElementById("failure").innerHTML ="<div id='failureText'><img src='images/cross.png' id='cross'> <h1>Oops! That's not a valaid email address.<h1></div>";      
+      //    $('#failure').slideDown("slow");                    
+          //$('#emailerror').slideDown("slow");  
+          alert('not a valid email address');
+          return false;
+      }
+      var x=document.forms["loginForm"]["password"].value;
+      if (x==null || x=="")
+      {
+          //document.getElementById("failure").innerHTML ="<div id='failureText'><img src='images/cross.png' id='cross'> <h1>Oops! You haven't eventered an email address.<h1></div>";      
+          //$('#failure').slideDown("slow");    
+          //$('#emailerror').slideDown("slow");  
+          alert('password error');
+          return false;
+      }
+
       var form = document.getElementById("loginForm");
       var data = new FormData(form);
     }

@@ -163,16 +163,14 @@ h1 {
 input, input[type="password"]{
     border: none;
     border-bottom: solid 1px #333232;
+    height: 30px;
+    padding: 5px 10px;
 }
 input{
-    width: 100%;
+    width: 93%;
     font-size: 14px;
     font-size: 14px;
-    margin: 15px auto;
-}
-#loginForm{
-    width: 60% !important;
-    margin: 0 auto !important;
+    margin: 5px auto;
 }
 .ui-shadow-inset{
     box-shadow: none !important;
@@ -826,4 +824,65 @@ border-style: solid;
     padding-left: 10px;
     padding-right: 10px;
     font-size: 20px;
+}
+
+/*LOGIN PAGE */
+#login, #login-content{
+    background-color: #297fb8;
+}
+#loginForm h2{
+    text-align: center;
+    color: #fff;
+    font-size: 18px;
+    width: 100%; 
+   text-align: center; 
+   border-bottom: 2px solid #fff; 
+   line-height: 0.1em;
+   margin: 33px 0 20px;
+}
+#loginForm h2 span{
+    background:#297fb8; 
+    padding:0 15px; 
+}
+#loginForm{
+    width: 60% !important;
+    margin: 20% auto 0 auto !important;
+}
+#loginForm h1{
+    padding-bottom: 10px;
+}
+#logo{
+    background: url(../img/logo.png) no-repeat;
+    width: 129px;
+    height: 48px;
+    margin: 0 auto;
+}
+#signButton{
+    background-color: #16b312;
+    color: white;
+    padding: 10px 30px;
+    font-size: 18px;
+}
+#logbutt{
+    margin: 20px auto;
+    text-align: center; 
+}
+#fb-sign{
+    text-align: center;
+}
+#signupstrip{
+    bottom: 0;
+    position: absolute;
+    background-color: #c64b3c;
+    width: 100%;
+    padding: 10px 0;
+    color: #fff;
+    text-align: center;
+    font-size: 18px;
+}
+.bold{
+    font-weight: bold;
+}
+.ui-loader-default{
+    display: none;
 }

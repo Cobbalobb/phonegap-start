@@ -1,3 +1,41 @@
+  window.fbAsyncInit = function() {
+  FB.init({
+    appId      : '483622355081269',
+    status     : true, // check login status
+    cookie     : true, // enable cookies to allow the server to access the session
+    xfbml      : true  // parse XFBML
+  });
+
+FB.Event.subscribe('auth.authResponseChange', function(response) {
+    if (response.status === 'connected') {
+      console.log('Logged in');
+    } else {
+            FB.login(function(response) {
+       // handle the response
+     }, {scope: 'email, publish_actions'});
+    }
+  });
+};
+
+
+  // Load the SDK asynchronously
+  (function(d){
+   var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+   if (d.getElementById(id)) {return;}
+   js = d.createElement('script'); js.id = id; js.async = true;
+   js.src = "//connect.facebook.net/en_US/all.js";
+   ref.parentNode.insertBefore(js, ref);
+  }(document));
+
+  // Here we run a very simple test of the Graph API after login is successful. 
+  // This testAPI() function is only called in those cases. 
+  function testAPI() {
+    console.log('Welcome!  Fetching your information.... ');
+    FB.api('/me', function(response) {
+      console.log('Good to see you, ' + response.name + '.');
+    });
+  }
+
 var db = window.openDatabase("User", "1.0", "User DB", 1000000);
 
 function logout(){
@@ -26,7 +64,16 @@ function logout(){
 
     function successFP() {
         //alert("success!");
-        document.location.href = 'index.html';
+
+        FB.getLoginStatus(function(response) {
+
+            FB.api("/me/permissions", "delete", function(response){ 
+                document.location.href = 'index.html';
+            });
+
+        });
+
+        //document.location.href = 'index.html';
     }
     //db = window.openDatabase("Footprint", "1.0", "User DB", 1000000);
     db.transaction(dropFP, errorFP, successFP);
@@ -1102,7 +1149,7 @@ function completedactionstoDB(){
 function facebookLogin(){
      FB.api('/me', {fields: 'first_name, last_name, email, picture'}, function(response) {
         var first_name = response['first_name'];
-      var last_name = response['email'];
+      var last_name = response['last_name'];
       var email = response['email'];
         FB.api(
         "/me/picture",
@@ -1125,7 +1172,7 @@ function facebookLogin(){
     url = "http://carbon.jamescobbett.co.uk/services/checkUsers.php";
     var data = new FormData();
 
-    data.append("email", response['email']);
+    data.append("email", email);
 
     console.log("Sending", data);
     console.log(this.test);
@@ -1452,4 +1499,9 @@ function getProfileInfo(id){
     xhr.open('POST', url, true);
     //xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.send(data);
+}
+function fblogin(){
+    FB.login(function(response) {
+       facebookLogin();
+     }, {scope: 'email, publish_actions'});
 }
