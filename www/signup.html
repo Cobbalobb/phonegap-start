@@ -37,22 +37,22 @@
 
     <div class="header" data-role="header">
     
-        <h1>Carbon Cutter</h1>
     
     </div>
 
-    <div data-role="content">
+    <div data-role="content" id="sign-content">
         <div id="welcome">
 
        </div>
+        <div id="logo"></div>
 
         <form name="signForm" id="signForm" action="#" method="post">
-            First name: <input type="text" name="firstname">
-            Last name: <input type="text" name="lastname">
-            E-mail: <input type="email" name="email">
-            Username: <input type="text" name="username">
-            Password: <input type="password" name="password">
-            <a href="javascript:void(1);" onclick="submitSignForm()" id="signButton"> <img src="images/sign.png" alt="Sign up"></a>
+            <input type="text" placeholder="First name" name="firstname">
+            <input type="text" placeholder="Last name" name="lastname">
+            <input type="email" placeholder="Email" name="email">
+            <input type="text" placeholder="Username" name="username">
+            <input type="password" placeholder="Password" name="password">
+            <div id="logbutt"><a href="javascript:void(1);" onclick="submitSignForm()" id="signButton">Sign up</a></div>
         </form>
 
        
