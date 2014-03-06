@@ -1551,14 +1551,14 @@ function getFBFriends(){
 
 function calendarevent(){
      // prep some variables
-  var startDate = new Date(2014,2,15,18,30,0,0,0); // beware: month 0 = january, 11 = december
-  var endDate = new Date(2014,2,15,19,30,0,0,0);
+  var startDate = new Date(2014,3,6,18,30,0,0,0); // beware: month 0 = january, 11 = december
+  var endDate = new Date(2014,3,6,19,30,0,0,0);
   var title = "My nice event";
   var location = "Home";
   var notes = "Some notes about this event.";
   var success = function(message) { alert("Success: " + JSON.stringify(message)); };
   var error = function(message) { alert("Error: " + message); };
-
+  alert('in function');
   // create an event interactively (only supported on Android)
   window.plugins.calendar.createEventInteractively(title,location,notes,startDate,endDate,success,error);
 }
