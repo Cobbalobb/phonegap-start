@@ -694,7 +694,7 @@ function getUserInfo(){
    getCurrentUsersImage();
 }
 
-function addActionToList(actionid){
+function addActionToList(actionid, title){
 
     var id = localStorage.getItem('id');
 
@@ -707,7 +707,7 @@ function addActionToList(actionid){
     }
 
     function successCB() {
-        document.getElementById(actionid+"success").innerHTML ='<div class="successful-added">Action added to your list.</div>';
+        document.getElementById(actionid+"success").innerHTML ='<div class="successful-added">Action added to your list.<br><a href="#" onClick="calendarevent('+title+');">Add event to calendar</a></div>';
     }
     
     db.transaction(updateAction, errorCB, successCB);
@@ -1549,17 +1549,15 @@ function getFBFriends(){
     });
 }
 
-function calendarevent(){
+function calendarevent(title){
      // prep some variables
   var startDate = new Date(2014,3,6,18,30,0,0,0); // beware: month 0 = january, 11 = december
   var endDate = new Date(2014,3,6,19,30,0,0,0);
-  var title = "My nice event";
-  var location = "Home";
-  var notes = "Some notes about this event.";
+  var title = title;
+  var location = "";
+  var notes = "";
   var success = function(message) { alert("Success: " + JSON.stringify(message)); };
   var error = function(message) { alert("Error: " + message); };
-  alert('in function');
   // create an event interactively (only supported on Android)
   window.plugins.calendar.createEventInteractively(title,location,notes,startDate,endDate,success,error);
-  alert('here');
 }
