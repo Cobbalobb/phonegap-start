@@ -1561,4 +1561,5 @@ function calendarevent(){
   alert('in function');
   // create an event interactively (only supported on Android)
   window.plugins.calendar.createEventInteractively(title,location,notes,startDate,endDate,success,error);
+  alert('here');
 }
