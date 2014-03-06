@@ -744,7 +744,13 @@ border-style: solid;
     margin: 0 auto;
     width: 223px;
 }
-
+.calendar-add{
+    background: url(../img/calendar.png) no-repeat;
+    padding: 6px 0 6px 40px;
+    font-size: 1.5em;
+    margin: 15px auto 0;
+    width: 199px;
+}
 /* FRIENDS */
 .user{
     border: solid 1px #dbdbdb;
