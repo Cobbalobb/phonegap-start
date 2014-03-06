@@ -707,7 +707,7 @@ function addActionToList(actionid, title){
     }
 
     function successCB() {
-        document.getElementById(actionid+"success").innerHTML ='<div class="successful-added">Action added to your list.</div><div class="calendar-add"><a href="#" onClick="calendarevent('+title+');">Add event to calendar</a></div>';
+        document.getElementById(actionid+"success").innerHTML ='<div class="successful-added">Action added to your list.</div><div class="calendar-add"><a href="#" onClick="calendarevent(\''+title+'\');">Add event to calendar</a></div>';
     }
     
     db.transaction(updateAction, errorCB, successCB);
