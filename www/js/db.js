@@ -445,7 +445,8 @@ function getCurrentUsersID() {
         // this will be true since it was a select statement and so rowsAffected was 0
         if (!results.rowsAffected) {
             var orignal_footprint = results.rows.item(num-1).total; //original footprint
-            document.getElementById("footprint").innerHTML="<h1 class='dynamic'>"+results.rows.item(num-1).current+" KG<br />" + document.getElementById("footprint").innerHTML;
+            var fp = results.rows.item(num-1).current;
+            document.getElementById("footprint").innerHTML="<h1 class='dynamic'>"+Math.round(fp * 100) / 100+" tonnes<br />" + document.getElementById("footprint").innerHTML;
             //$('#footprint').append("<h1 class='dynamic'>"+results.rows.item(num-1).current+" KG");
             return false;
         } else {
@@ -481,8 +482,8 @@ function getCurrentUsersID() {
         if (!results.rowsAffected) {
             var orignal_footprint = results.rows.item(num-1).total; //original footprint
             var current_footprint = results.rows.item(num-1).current;
-            var reductions = orignal_footprint - current_footprint;
-            document.getElementById("reductions").innerHTML="<h1 class='dynamic'>"+reductions+" KG<br />" + document.getElementById("reductions").innerHTML;
+            var reductions = ((orignal_footprint - current_footprint)/orignal_footprint)*100;
+            document.getElementById("reductions").innerHTML="<h1 class='dynamic'>"+Math.round(reductions)+"%<br />" + document.getElementById("reductions").innerHTML;
             //$('#reductions').append("<h1 class='dynamic'>"+reductions+" KG");
             return false;
         } else {
@@ -1398,6 +1399,13 @@ function acceptRequest(id){
     xhr.send(data);
 }
 
+function inArray(array, value) {
+    for (var i = 0; i < array.length; i++) {
+        if (array[i] == value) return true;
+    }
+    return false;
+}
+
 function newsfeed(){
     // declaring variables to be used
     var xhr, target, changeListener, url, data;
@@ -1408,37 +1416,59 @@ function newsfeed(){
     data.append("id", localStorage.getItem('id'));
     // create a request object
     xhr = new XMLHttpRequest();
-
+    //Generate random numbers
+    var arr = []
+    while(arr.length < 5){
+      var randomnumber=Math.ceil(Math.random()*20)
+      var found=false;
+      for(var i=0;i<arr.length;i++){
+        if(arr[i]==randomnumber){found=true;break}
+      }
+      if(!found)arr[arr.length]=randomnumber;
+    }
     changeListener = function () {
         if (xhr.readyState == 4) {
             if (xhr.status == 200) {
                 console.log("Response", this.responseText);
                 var response = JSON.parse(this.responseText);
                 console.log(response);
-                for(var  i= 0; i < response.length; i++){
-                    if(response[i]['type']==1 && response[i]['status']==1){
+                console.log(response['feed'][0]['image']);
+                console.log(response['news']);
+                var n = 0;
+                for(var  i= 0; i < response['feed'].length; i++){
+                    //IF NUMBER IN NUMBER ARRAY
+                    if (inArray(arr, i)) {
                         html += "<div class='news'>";
-                        html += "<div class='news-image'><a href='#' onClick='goToProfile("+response[i]['user_id']+")'><img class='newsuserimage' src='"+response[i]['image']+"'</src></a></div>";
-                        html += "<div class='status'><a onClick='goToProfile("+response[i]['user_id']+")' href='#'>"+response[i]['user_name']+"</a> added <a href='#'>"+response[i]['action_name']+"</a> to their list.";
-                        html += "<div class='time'>"+response[i]['timestamp']+"</div></div>";
+                        html += "<div class='news-image'><a href='#'><img class='newsuserimage' src='http://carbon.jamescobbett.co.uk/www/img/news.png'</src></a></div>";
+                        html += "<div class='status'>"+response['news'][0]['headline']+"</div>";
+                        html += "<div class='source'>"+response['news'][0]['source']+"</div>";
+                        //html += "<div class='time'>"+response['feed'][i]['timestamp']+"</div></div>";
                         html += "</div>";
-                    }else if(response[i]['type']==1 && response[i]['status']==2){
+                        n++;
+                    }
+                     else if(response['feed'][i]['type']==1 && response['feed'][i]['status']==1){
                         html += "<div class='news'>";
-                        html += "<div class='news-image'><a onClick='goToProfile("+response[i]['user_id']+")' href='#'><img class='newsuserimage' src='"+response[i]['image']+"'</src></a></div>";
-                        html += "<div class='status'><a onClick='goToProfile("+response[i]['user_id']+")' href='#'>"+response[i]['user_name']+"</a> completed <a href='#'>"+response[i]['action_name']+"</a>.";
-                        html += "<div class='time'>"+response[i]['timestamp']+"</div></div>";
+                        html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='"+response['feed'][i]['image']+"'</src></a></div>";
+                        html += "<div class='status'><a onClick='goToProfile("+response['feed'][i]['user_id']+")' href='#'>"+response['feed'][i]['user_name']+"</a> added <a href='#'>"+response['feed'][i]['action_name']+"</a> to their list.";
+                        html += "<div class='time'>"+response['feed'][i]['timestamp']+"</div></div>";
                         html += "</div>";
-                    }else if(response[i]['type']==2 && response[i]['status']==1){
+                    }else if(response['feed'][i]['type']==1 && response['feed'][i]['status']==2){
                         html += "<div class='news'>";
-                        html += "<div class='news-image'><a onClick='goToProfile("+response[i]['user_id']+")' href='#'><img class='newsuserimage' src='"+response[i]['image']+"'</src></a></div>";
-                        html += "<div class='status'>You are now friends with <a onClick='goToProfile("+response[i]['user_id']+")' href='#'>"+response[i]['user_name']+"</a>.";
-                        html += "<div class='time'>"+response[i]['timestamp']+"</div></div>";
+                        html += "<div class='news-image'><a onClick='goToProfile("+response['feed'][i]['user_id']+")' href='#'><img class='newsuserimage' src='"+response['feed'][i]['image']+"'</src></a></div>";
+                        html += "<div class='status'><a onClick='goToProfile("+response['feed'][i]['user_id']+")' href='#'>"+response['feed'][i]['user_name']+"</a> completed <a href='#'>"+response['feed'][i]['action_name']+"</a>.";
+                        html += "<div class='time'>"+response['feed'][i]['timestamp']+"</div></div>";
                         html += "</div>";
-                    }else if(response[i]['type']==2 && response[i]['status']==0){
+                    }else if(response['feed'][i]['type']==2 && response['feed'][i]['status']==1){
                         html += "<div class='news'>";
-                        html += "<div class='news-image'><a onClick='goToProfile("+response[i]['user_id']+")' href='#'><img class='newsuserimage' src='"+response[i]['image']+"'</src></a></div>";
-                        html += "<div class='status'><a onClick='goToProfile("+response[i]['user_id']+")' href='#'>"+response[i]['user_name']+"</a> sent you a friend request.";
-                        html += "<div class='time'>"+response[i]['timestamp']+"</div></div>";
+                        html += "<div class='news-image'><a onClick='goToProfile("+response['feed'][i]['user_id']+")' href='#'><img class='newsuserimage' src='"+response['feed'][i]['image']+"'</src></a></div>";
+                        html += "<div class='status'>You are now friends with <a onClick='goToProfile("+response['feed'][i]['user_id']+")' href='#'>"+response['feed'][i]['user_name']+"</a>.";
+                        html += "<div class='time'>"+response['feed'][i]['timestamp']+"</div></div>";
+                        html += "</div>";
+                    }else if(response['feed'][i]['type']==2 && response['feed'][i]['status']==0){
+                        html += "<div class='news'>";
+                        html += "<div class='news-image'><a onClick='goToProfile("+response['feed'][i]['user_id']+")' href='#'><img class='newsuserimage' src='"+response['feed'][i]['image']+"'</src></a></div>";
+                        html += "<div class='status'><a onClick='goToProfile("+response['feed'][i]['user_id']+")' href='#'>"+response['feed'][i]['user_name']+"</a> sent you a friend request.";
+                        html += "<div class='time'>"+response['feed'][i]['timestamp']+"</div></div>";
                         html += "</div>";
                     }
                     html += "<div class='line'></div>";
@@ -1504,4 +1534,31 @@ function fblogin(){
     FB.login(function(response) {
        facebookLogin();
      }, {scope: 'email, publish_actions'});
+}
+
+function getFBFriends(){
+    FB.api('/me/friends', {fields: 'installed'}, function(response) {
+        if(response.data) {
+            console.log(response);
+            $.each(response.data,function(index,friend) {
+                console.log(friend.name + ' has id:' + friend.id);
+            });
+        } else {
+            alert("Error!");
+        }
+    });
+}
+
+function calendarevent(){
+     // prep some variables
+  var startDate = new Date(2014,2,15,18,30,0,0,0); // beware: month 0 = january, 11 = december
+  var endDate = new Date(2014,2,15,19,30,0,0,0);
+  var title = "My nice event";
+  var location = "Home";
+  var notes = "Some notes about this event.";
+  var success = function(message) { alert("Success: " + JSON.stringify(message)); };
+  var error = function(message) { alert("Error: " + message); };
+
+  // create an event interactively (only supported on Android)
+  window.plugins.calendar.createEventInteractively(title,location,notes,startDate,endDate,success,error);
 }

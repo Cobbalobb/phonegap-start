@@ -107,5 +107,7 @@
         <param name="APP_ID" value="483622355081269" />
         <param name="APP_NAME" value="Carbon Cutter" />
     </gap:plugin>
+    <gap:plugin name="nl.x-services.plugins.calendar" />
+
 
 </widget>

@@ -31,12 +31,12 @@ while($row = mysqli_fetch_array($results2)){
 			$user[$u]['image'] = $row['image'];
 			$u++;
 		}
-		$news[$n]['image'] = $row['image'];
-		$news[$n]['type'] = 2;
-		$news[$n]['user_id'] = $row['id'];
-		$news[$n]['confirmed'] = $confirmed;
-		$news[$n]['timestamp'] = $row['timestamp'];
-		$news[$n]['sent'] = 0;
+		$news['feed'][$n]['image'] = $row['image'];
+		$news['feed'][$n]['type'] = 2;
+		$news['feed'][$n]['user_id'] = $row['id'];
+		$news['feed'][$n]['confirmed'] = $confirmed;
+		$news['feed'][$n]['timestamp'] = $row['timestamp'];
+		$news['feed'][$n]['sent'] = 0;
 		$n++;
 	}
 	}elseif($id2 != $id){
@@ -48,12 +48,12 @@ while($row = mysqli_fetch_array($results2)){
 			$user[$u]['image'] = $row['image'];
 			$u++;
 		}
-		$news[$n]['image'] = $row['image'];
-		$news[$n]['type'] = 2;
-		$news[$n]['user_id'] = $row['id'];
-		$news[$n]['confirmed'] = $confirmed;
-		$news[$n]['timestamp'] = $row['timestamp'];
-		$news[$n]['sent'] = 1;
+		$news['feed'][$n]['image'] = $row['image'];
+		$news['feed'][$n]['type'] = 2;
+		$news['feed'][$n]['user_id'] = $row['id'];
+		$news['feed'][$n]['confirmed'] = $confirmed;
+		$news['feed'][$n]['timestamp'] = $row['timestamp'];
+		$news['feed'][$n]['sent'] = 1;
 		$n++;
 	}
 }
@@ -65,17 +65,27 @@ foreach ($user as $use) {
     $results = mysqli_query($con,"SELECT user_actions.user_id, user_actions.timestamp, user_actions.status, user_actions.action_id, actions.action FROM user_actions INNER JOIN actions ON user_actions.action_id=actions.id WHERE user_actions.user_id='$id' AND (user_actions.status=1 OR user_actions.status=2)");
 
 	while($row = mysqli_fetch_array($results)){
-		$news[$n]['type'] = 1;
-		$news[$n]['user_id'] = $row['user_id'];
-		$news[$n]['user_name'] = $use['first_name'];
-		$news[$n]['image'] = $use['image'];
-		$news[$n]['timestamp'] = $row['timestamp'];
-		$news[$n]['status'] = $row['status'];
-		$news[$n]['action_id'] = $row['action_id'];
-		$news[$n]['action_name'] = $row['action'];
+		$news['feed'][$n]['type'] = 1;
+		$news['feed'][$n]['user_id'] = $row['user_id'];
+		$news['feed'][$n]['user_name'] = $use['first_name'];
+		$news['feed'][$n]['image'] = $use['image'];
+		$news['feed'][$n]['timestamp'] = $row['timestamp'];
+		$news['feed'][$n]['status'] = $row['status'];
+		$news['feed'][$n]['action_id'] = $row['action_id'];
+		$news['feed'][$n]['action_name'] = $row['action'];
 		$n++;
 }
 }
+$p=0;
+$results4 = mysqli_query($con,"SELECT * FROM news");
+	while($row = mysqli_fetch_array($results4)){
+		$news['news'][$p]['headline'] = $row['headline'];
+		$news['news'][$p]['source'] = $row['source'];
+		$news['news'][$p]['url'] = $row['url'];
+		$news['news'][$p]['current'] = $row['current'];
+		$p++;
+	}
+
 //print_r($news);
 	function sort_2d_asc($array, $key) {
 	    usort($array, function($a, $b) use ($key) {
@@ -92,8 +102,9 @@ foreach ($user as $use) {
 
     return $array;
 }
+shuffle($news['news']);
 
-	$news = sort_2d_desc($news, 'timestamp');
+	$news['feed'] = sort_2d_desc($news['feed'], 'timestamp');
 	//print_r($news);
  	echo json_encode($news); 
 
