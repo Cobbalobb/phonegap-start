@@ -1551,6 +1551,7 @@ function getFBFriends(){
 
 function calendarevent(title){
      // prep some variables
+  var today = new Date();
   var startDate = new Date(2014,3,6,18,30,0,0,0); // beware: month 0 = january, 11 = december
   var endDate = new Date(2014,3,6,19,30,0,0,0);
   var title = title;
@@ -1559,5 +1560,5 @@ function calendarevent(title){
   var success = function(message) { alert("Success: " + JSON.stringify(message)); };
   var error = function(message) { alert("Error: " + message); };
   // create an event interactively (only supported on Android)
-  window.plugins.calendar.createEventInteractively(title,location,notes,startDate,endDate,success,error);
+  window.plugins.calendar.createEventInteractively(title,location,notes,today,today,success,error);
 }
