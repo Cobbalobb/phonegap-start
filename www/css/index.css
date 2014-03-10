@@ -137,6 +137,8 @@ h1 {
 .header{
     background-color: #297fb8 !important;
     height: 50px;
+    position: fixed !important;
+    width: 100%;
 }
 .ui-title{
     text-shadow: none !important;
@@ -148,6 +150,7 @@ h1 {
     overflow-x: hidden;
     padding: 0 !important;
     background-color: #fff;
+    margin-top: 50px;
 }
 .ui-bar-a, .ui-page-theme-a .ui-bar-inherit, html .ui-bar-a .ui-bar-inherit, html .ui-body-a .ui-bar-inherit, html body .ui-group-theme-a .ui-bar-inherit {
     text-shadow: 0 !important;
@@ -203,12 +206,17 @@ input{
 .ui-mobile .ui-page-active {
     background-color: #fff;
 }
+#action-list, #friend-list{
+    margin-top: 85px;
 
+}
 #welcome{
     padding: 20px 0 0 0;  
     overflow: auto;
     background-color: #297fb8 !important;
     color: #fff;
+    position: fixed;
+    width: 100%;
 }
 
 #profile-welcome{
@@ -311,6 +319,7 @@ input{
 }
 #newsfeed{
     padding-top: 5px;
+    margin-top: 240px;
 }
 .status{
     padding-left: 67px;
@@ -645,6 +654,8 @@ border-style: solid;
     height: 70px;
     padding-left: 0px;
     margin-top: 0 !important;
+    position: fixed;
+    width: 100%;
 }
 #action-links a{
     color: #fff;
@@ -705,7 +716,7 @@ border-style: solid;
 .action-links-container{
     background-color: #f2f2f2;
     display: block;
-    padding: 20px 0px;
+    padding: 20px 0px 10px;
 }
 .action-links{
     margin: 0 auto;
@@ -750,6 +761,15 @@ border-style: solid;
     font-size: 1.5em;
     margin: 15px auto 0;
     width: 199px;
+}
+.calendar-add-list{
+    background: url(../img/calendar.png) no-repeat;
+    padding: 9px 0 13px 40px;
+    margin: 26px auto 0;
+    width: 121px;
+}
+.calendar-add-list a{
+    color: #000;
 }
 /* FRIENDS */
 .user{
