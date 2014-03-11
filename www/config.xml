@@ -103,6 +103,7 @@
     <!-- 
         PLUGINS
     -->
+    <gap:plugin name="org.apache.cordova.file" />
     <gap:plugin name="org.apache.cordova.file-transfer" />
     <gap:plugin name="nl.x-services.plugins.calendar" />
     <gap:plugin name="com.phonegap.plugins.facebookconnect">
