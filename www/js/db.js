@@ -1226,6 +1226,7 @@ function userSearch(){
     url = "http://carbon.jamescobbett.co.uk/services/usersearch.php";
     var form = document.getElementById("userSearchForm");
     var data = new FormData(form);
+    data.append("userid",   localStorage.getItem('id'));
     console.log("Sending", data);
     // create a request object
     xhr = new XMLHttpRequest();
@@ -1240,11 +1241,16 @@ function userSearch(){
                 console.log(message);
                 if (response != ''){
                     var response = JSON.parse(this.responseText);
-                    var html = "<div class='user'>";
-                    html += "<div class='username'>"+response['username']+" </div>";
-                    html += "<div class='name'>"+response['first_name']+" "+response['last_name']+ "</div>";
-                    html += "<a class='add' href='#' onclick='addFriend("+response['id']+")'>Add friend</a>";
-                    document.getElementById("friend-search-results").innerHTML = html;
+                    if(response['user'] === true){
+
+                    }else{
+                        var html = "<div class='user'>";
+                        html += "<div class='friends-image'><img class='newsuserimage' src='"+response['image']+"'></div>";
+                        html += "<div class='username'>"+response['username']+" </div>";
+                        html += "<div class='name'>"+response['first_name']+" "+response['last_name']+ "</div>";
+                        html += "<a class='add' href='#' onclick='addFriend("+response['id']+")'>Add friend</a>";
+                        document.getElementById("friend-search-results").innerHTML = html;
+                    }
                 }
             }
         }
@@ -1561,4 +1567,54 @@ function calendarevent(title){
   var error = function(message) { alert("Error: " + message); };
   // create an event interactively (only supported on Android)
   window.plugins.calendar.createEventInteractively(title,location,notes,today,today,success,error);
+}
+
+function changepassword(){
+    var password = document.getElementById('password').value;
+    var passwordrepeat = document.getElementById('password-repeat').value;
+    if(password === passwordrepeat){
+           // declaring variables to be used
+        var xhr, target, changeListener, url, data;
+
+        //setting url to the php code to add comments to the db
+        url = "http://carbon.jamescobbett.co.uk/services/changepassword.php";
+        
+        var data = new FormData();
+        data.append("password", password);
+        data.append("id", localStorage.getItem('id'));
+
+        console.log("Sending", data);
+        console.log(this.test);
+        // create a request object
+        xhr = new XMLHttpRequest();
+
+        changeListener = function () {
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    console.log("Response", this.responseText);
+                    var response = this.responseText;
+                    var s = "success";
+                    var message = response.indexOf("exception");
+                    console.log(message);
+                    if (message == -1){
+                        alert('success');
+                    }
+                    else {
+                        alert('failure');
+                    }
+                }
+            }
+        };
+
+        // initialise a request, specifying the HTTP method
+        // to be used and the URL to be connected to.
+        xhr.onreadystatechange = changeListener;
+        xhr.open('POST', url, true);
+        //xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.send(data);
+
+        return false;
+    }else{
+        alert('Passwords do not match');
+    }
 }

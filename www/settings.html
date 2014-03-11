@@ -27,50 +27,37 @@
         <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
         <script type="text/javascript" src="js/jquery.mobile-1.3.2.min.js"></script>
         <script src="js/users.js"></script>
-        <script src="js/scripts.js"></script>
-        <script src="js/getactions.js"></script>
         <script src="js/db.js"></script>
+        <script src="js/nav.js"></script>
         <script src="js/index.js"></script>
         <title>Hello World</title>
     </head>
     <body>
+<!--FACEBOOK STUFF-->
+    <div id="fb-root"></div>
+
 <!-- Start of Log in page -->
 <div data-role="page" id="login">
-    <div data-role="panel" id="menu">
-        <ul id="menu-list">
-            <li class="active"><a onclick="goToCurrent();" href="#" class="contentLink"><h1>Home</h1> </a></li>
-            <li><a onclick="goToCurrent();" href="#" class="contentLink"><h1>Actions</h1> </a></li>
-            <li><a onclick="goToFriends();" href="#" class="contentLink"><h1>Friends</h1> </a></li>
-            <li><a onclick="goToBadges();" href="#" class="contentLink"><h1>Badges</h1> </a></li>
-            <li><a href="#" class="contentLink"><h1>Journey</h1> </a></li>
-        </ul>
-        </div><!-- /panel -->
+
     <div class="header" data-role="header">
-        <a href="#menu" class="showMenu"></a>
-        <h1>Actions</h1>
     
+    <h1>Carbon Cutter</h1>
     </div>
 
-    <div data-role="content" id="topmenu">
-        <ul id="action-links">
-            <li><a onclick="goToAll();" href="#"><div class="active-action" id="all-actions">All</div></a></li>
-            <li><a onclick="goToCurrent();" href="#"><div id="current-actions">Current</div></a></li>
-            <li><a onclick="goToCompleted();" href="#"><div id="completed-actions">Complete</div></a><li>
-        </ul>
-      <script type="text/javascript">
-                setTimeout(function(){getActionsL()},1000);
-        </script>
-        <div id="succesfully-added">
-            <div id="success-message">
-            </div>
-            <a href="#" onclick="closeSuccessMessage();">Ok</a>
-        </div>
-        <div id="action-list"></div>
+    <div data-role="content">
+    <ul>
+        <li><a onclick="goToChangePicture();" href="#">Change profile picture</a></li>
+        <li><a onclick="goToChangePassword();" href="#">Change password</a></li>
+        <li><a onClick="fblogin();" href="#">Link to Facebook</a></li>
+        <li><a onclick="goToCalculator();" href="#">Change Carbon Footprint Calculator answers</a></li>
+    </ul>
 
+    </div>
 </div>
 <!-- End of Login page -->
+
+       <!-- <script type="text/javascript">getuserList();</script> -->
         <script type="text/javascript" src="phonegap.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript">
             app.initialize();

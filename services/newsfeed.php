@@ -14,6 +14,7 @@ $user[0]['first_name'] = 'You';
 $u=1;
 $news = array();
 $n=0;
+$image = false;
 
 $actions = array();
 //GET FRIENDS AND ADD TO ARRAY WITH CURRENT USER
@@ -22,8 +23,15 @@ while($row = mysqli_fetch_array($results2)){
 	$id1=$row['id1'];
 	$id2=$row['id2'];
 	$confirmed = $row['confirmed'];
+	if($id1 == $id || $id2 == $id && $image===false ){
+		$results1 = mysqli_query($con,"SELECT user.image FROM user WHERE id = '$id'");
+		while($row = mysqli_fetch_array($results1)){
+			$user[0]['image'] = $row['image'];
+			$image = true;
+		}
+	}
 	if($id1 != $id){
-	$results1 = mysqli_query($con,"SELECT user.id, user.username, user.first_name, user.last_name, user.image, footprint.total, footprint.current FROM user INNER JOIN footprint ON user.id=footprint.id WHERE user.id = '$id1'");
+	$results3 = mysqli_query($con,"SELECT user.id, user.username, user.first_name, user.last_name, user.image, footprint.total, footprint.current FROM user INNER JOIN footprint ON user.id=footprint.id WHERE user.id = '$id1'");
 	while($row = mysqli_fetch_array($results1)){
 		if($confirmed==1){
 			$user[$u]['id'] = $row['id'];
@@ -40,24 +48,24 @@ while($row = mysqli_fetch_array($results2)){
 		$n++;
 	}
 	}elseif($id2 != $id){
-	$results3 = mysqli_query($con,"SELECT user.id, user.username, user.first_name, user.last_name, user.image, footprint.total, footprint.current FROM user INNER JOIN footprint ON user.id=footprint.id WHERE user.id = '$id2'");
-	while($row = mysqli_fetch_array($results3)){
-		if($confirmed==1){
-			$user[$u]['id'] = $row['id'];
-			$user[$u]['first_name'] = $row['first_name'];
-			$user[$u]['image'] = $row['image'];
-			$u++;
+		$results3 = mysqli_query($con,"SELECT user.id, user.username, user.first_name, user.last_name, user.image, footprint.total, footprint.current FROM user INNER JOIN footprint ON user.id=footprint.id WHERE user.id = '$id2'");
+		while($row = mysqli_fetch_array($results3)){
+			if($confirmed==1){
+				$user[$u]['id'] = $row['id'];
+				$user[$u]['first_name'] = $row['first_name'];
+				$user[$u]['image'] = $row['image'];
+				$u++;
+			}
+			$news['feed'][$n]['image'] = $row['image'];
+			$news['feed'][$n]['type'] = 2;
+			$news['feed'][$n]['user_id'] = $row['id'];
+			$news['feed'][$n]['confirmed'] = $confirmed;
+			$news['feed'][$n]['timestamp'] = $row['timestamp'];
+			$news['feed'][$n]['sent'] = 1;
+			$n++;
 		}
-		$news['feed'][$n]['image'] = $row['image'];
-		$news['feed'][$n]['type'] = 2;
-		$news['feed'][$n]['user_id'] = $row['id'];
-		$news['feed'][$n]['confirmed'] = $confirmed;
-		$news['feed'][$n]['timestamp'] = $row['timestamp'];
-		$news['feed'][$n]['sent'] = 1;
-		$n++;
 	}
 }
-	}
 
 //GET ACTIONS AND PUT IN NEWS ARRAY
 foreach ($user as $use) {

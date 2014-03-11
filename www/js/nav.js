@@ -101,3 +101,45 @@ function goToProfile(id){
 	getProfileInfo(id);
 	//alert('test');
 }
+
+function goToSettings(){
+	$(':mobile-pagecontainer').pagecontainer('change', 'settings.html', {
+	        transition: 'slide',
+	        changeHash: true,
+	        reverse: false,
+	        showLoadMsg: true,
+	        reload: true
+	    });
+}
+
+function goToChangePicture(){
+	$(':mobile-pagecontainer').pagecontainer('change', 'uploadphoto.html', {
+	        transition: 'slide',
+	        changeHash: true,
+	        reverse: false,
+	        showLoadMsg: true,
+	        reload: true
+	    });
+}
+
+function goToChangePassword(){
+	$(':mobile-pagecontainer').pagecontainer('change', 'changepassword.html', {
+	        transition: 'slide',
+	        changeHash: true,
+	        reverse: false,
+	        showLoadMsg: true,
+	        reload: true
+	    });
+}
+
+function goToCalculator(){
+	$(':mobile-pagecontainer').pagecontainer('change', 'calculator.html', {
+	        transition: 'slide',
+	        changeHash: true,
+	        reverse: false,
+	        showLoadMsg: true,
+	        reload: true,
+	    });
+	//getProfileInfo(id);
+	//alert('test');
+}

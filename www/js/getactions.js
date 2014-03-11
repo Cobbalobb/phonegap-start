@@ -200,7 +200,13 @@ function getCompletedBadges(){
         if (!results.rowsAffected) {
         	for(var i = 0; i < results.rows.length; i++){
         		console.log(results.rows.item(i));
-			    var html = "<div class='badges badge"+results.rows.item(i).completed+"'><div class='badge-title'>"+results.rows.item(i).badge+"</div></div>";
+			    var html = "<div class='badges badge"+results.rows.item(i).completed+"'>";
+			    if(results.rows.item(i).completed == 0){
+			    	html += "<img class='badge-image' src='img/badges/saturated/"+results.rows.item(i).badge_id+".png'>";
+			    } else {
+			    	html += "<img class='badge-image' src='img/badges/colour/"+results.rows.item(i).badge_id+".png'>";
+			    }
+			    html += "<div class='badge-title'>"+results.rows.item(i).badge+"</div></div>";
 				document.getElementById("badges-list").innerHTML=document.getElementById("badges-list").innerHTML + html;
 					};
         } else {
