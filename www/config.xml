@@ -105,7 +105,7 @@
     -->
     <gap:plugin name="org.apache.cordova.camera" />
     <gap:plugin name="org.apache.cordova.file" />
-    <gap:plugin name="org.apache.cordova.file-transfer" />
+    <!--<gap:plugin name="org.apache.cordova.file-transfer" />-->
     <gap:plugin name="nl.x-services.plugins.calendar" />
     <gap:plugin name="com.phonegap.plugins.facebookconnect">
         <param name="APP_ID" value="483622355081269" />
