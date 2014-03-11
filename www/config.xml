@@ -103,6 +103,7 @@
     <!-- 
         PLUGINS
     -->
+    <gap:plugin name="org.apache.cordova.camera" />
     <gap:plugin name="org.apache.cordova.file" />
     <gap:plugin name="org.apache.cordova.file-transfer" />
     <gap:plugin name="nl.x-services.plugins.calendar" />
