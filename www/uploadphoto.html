@@ -45,7 +45,33 @@
     </div>
 
     <div data-role="content">
-        <script type="text/javascript">
+       <script type="text/javascript">  
+function uploadFromGallery() {
+
+    // Retrieve image file location from specified source
+    navigator.camera.getPicture(uploadPhoto,
+                                function(message) { alert('get picture failed'); },
+                                { quality: 50, 
+                                destinationType: navigator.camera.DestinationType.FILE_URI,
+                                sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY }
+                                );
+
+}
+
+function uploadPhoto(imageURI) {
+    var options = new FileUploadOptions();
+    options.fileKey="file";
+    options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1)+'.png';
+    options.mimeType="text/plain";
+
+    var params = new Object();
+
+    options.params = params;
+
+    var ft = new FileTransfer();
+    ft.upload(imageURI, encodeURI("http://some.server.com/upload.php"), win, fail, options);
+}
+
 function win(r) {
     console.log("Code = " + r.responseCode);
     console.log("Response = " + r.response);
@@ -57,28 +83,8 @@ function fail(error) {
     console.log("upload error source " + error.source);
     console.log("upload error target " + error.target);
 }
-
-var uri = encodeURI("http://some.server.com/upload.php");
-
-var options = new FileUploadOptions();
-options.fileKey="file";
-options.fileName=fileURL.substr(fileURL.lastIndexOf('/')+1);
-options.mimeType="text/plain";
-
-var headers={'headerParam':'headerValue'};
-
-options.headers = headers;
-
-var ft = new FileTransfer();
-ft.onprogress = function(progressEvent) {
-    if (progressEvent.lengthComputable) {
-      loadingStatus.setPercentage(progressEvent.loaded / progressEvent.total);
-    } else {
-      loadingStatus.increment();
-    }
-};
-ft.upload(fileURL, uri, win, fail, options);
-        </script>
+</script>
+   <a data-role="button" onClick="uploadFromGallery();">Upload from Gallery</a>
 
     </div>
 
