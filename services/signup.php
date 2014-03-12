@@ -14,6 +14,7 @@ $username = $_POST['username'];
 $email = $_POST['email'];
 $password = $_POST['password'];
 $image = $_POST['image'];
+$facebookid = $_POST['facebookid'];
 
 // Create connection
 //$con=mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
@@ -22,14 +23,15 @@ $con = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
 $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 // query
-$sql = "INSERT INTO user (first_name, last_name, username, email, password, image) VALUES ('$fname', '$lname', '$username', '$email', '$password', '$image')";
+$sql = "INSERT INTO user (first_name, last_name, username, email, password, image, facebookid) VALUES ('$fname', '$lname', '$username', '$email', '$password', '$image', '$facebookid')";
 $q = $con->prepare($sql);
 $q->execute(array(':fname'=>$fname,
                   ':lname'=>$lname,
                   ':username'=>$username,
                   ':email'=>$email,
                   ':password'=>$password,
-                  ':image'=>$image));
+                  ':image'=>$image,
+                  ':facebookid'=>$facebookid));
 
  if (!$q->errorCode() != 0) {
      echo $con->errorInfo();
@@ -46,11 +48,11 @@ $q->execute(array(':fname'=>$fname,
 	//while($row){
 	 	$user['id'] = $row['id'];
 	 	$user['first_name'] = $row['first_name'];
-	 	$user['last_name'] = $row['first_name'];
-	 	$user['email'] = $row['first_name'];
+	 	$user['last_name'] = $row['last_name'];
+	 	$user['email'] = $row['email'];
 	 	$user['image'] = $row['image'];
 	// };
- 	echo "success ".'{"items":'. json_encode($user) .'}';
+ 	echo json_encode($user);
  }
 $id = $user['id'];
 // POPULATE user_actions table

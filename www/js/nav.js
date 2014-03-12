@@ -143,3 +143,13 @@ function goToCalculator(){
 	//getProfileInfo(id);
 	//alert('test');
 }
+
+function goToFBFriends(){
+	$(':mobile-pagecontainer').pagecontainer('change', 'fbfriends.html', {
+	        transition: 'slide',
+	        changeHash: true,
+	        reverse: false,
+	        showLoadMsg: true,
+	        reload: true,
+	    });
+}

@@ -32,6 +32,12 @@ $total = $_POST['total'];
 //$con=mysqli_connect('10.168.1.52','carbonja_carbon','GSwMAYuNyVzSguTf','carbonja_carb');
 $con = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
 $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$conn=mysqli_connect('10.168.1.52','carbonja_carbon','GSwMAYuNyVzSguTf','carbonja_carb');
+
+$results = mysqli_query($conn,"SELECT * FROM footprint WHERE id=$id");
+if($row = mysqli_fetch_array($results)){
+      $results2 = mysqli_query($conn,"DELETE FROM footprint WHERE id=$id");
+};
 
 // query
 $sql = "INSERT INTO footprint (id, house, meat, organic, local, compost, car_engine, car_size, car_miles, train_miles, bus_miles, domestic_flights, short_flights, long_flights, clothes, electronics, other_shopping, total, current) VALUES ('$id', '$house', '$meat', '$organic', '$local', '$compost', '$engine', '$car_size', '$car_miles', '$train_miles', '$bus_miles', '$domestic_flights', '$short_flights', '$long_flights', '$clothes', '$electronics', '$shopping', '$total', '$total')";

@@ -934,3 +934,27 @@ form h1{
 .ui-loader-default{
     display: none;
 }
+
+#cross{
+    float: left;
+}
+#failureText h1{
+    font-size: 14px;    
+    color: #fff;
+}
+
+/* SETTINGS PAGE*/
+#settings-list li{
+    list-style-type: none;
+    margin-bottom: 13px;
+}
+#settings-list a{
+    color: #000;
+    font-size: 18px;
+    margin-bottom: 13px;    
+}
+
+
+#uncomfirmed-list{
+    margin-top: 85px;
+}

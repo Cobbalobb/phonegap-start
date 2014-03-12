@@ -37,19 +37,29 @@
     <div id="fb-root"></div>
 
 <!-- Start of Log in page -->
-<div data-role="page" id="login">
-
+<div data-role="page">
+    <div data-role="panel" id="menu">
+        <ul id="menu-list">
+            <li class="active"><a onclick="goToCurrent();" href="#" class="contentLink"><h1>Home</h1> </a></li>
+            <li><a onclick="goToCurrent();" href="#" class="contentLink"><h1>Actions</h1> </a></li>
+            <li><a onclick="goToFriends();" href="#" class="contentLink"><h1>Friends</h1> </a></li>
+            <li><a onclick="goToBadges();" href="#" class="contentLink"><h1>Badges</h1> </a></li>
+            <li><a href="#" class="contentLink"><h1>Journey</h1> </a></li>
+            <li><a onclick="goToSettings();" href="#" class="contentLink"><h1>Settings</h1> </a></li>
+            <li><a href="#" onclick="logout()" class="contentLink"><h1>Sign Out</h1> </a></li>
+        </ul>
+        </div><!-- /panel -->
     <div class="header" data-role="header">
     
-    <h1>Carbon Cutter</h1>
+    <h1>Settings</h1>
     </div>
 
     <div data-role="content">
-    <ul>
+    <ul id="settings-list"> 
         <li><a onclick="goToChangePicture();" href="#">Change profile picture</a></li>
         <li><a onclick="goToChangePassword();" href="#">Change password</a></li>
         <li><a onClick="fblogin();" href="#">Link to Facebook</a></li>
-        <li><a onclick="goToCalculator();" href="#">Change Carbon Footprint Calculator answers</a></li>
+        <li><a onclick="goToCalculator();" href="#">Recalculate carbon footprint</a></li>
     </ul>
 
     </div>

@@ -1148,10 +1148,12 @@ function completedactionstoDB(){
 }
 
 function facebookLogin(){
-     FB.api('/me', {fields: 'first_name, last_name, email, picture'}, function(response) {
+     FB.api('/me', {fields: 'first_name, last_name, email, id, picture'}, function(response) {
         var first_name = response['first_name'];
       var last_name = response['last_name'];
       var email = response['email'];
+      var facebookid = response['id'];
+        console.log(first_name + " " + last_name);
         FB.api(
         "/me/picture",
         {
@@ -1185,14 +1187,14 @@ function facebookLogin(){
             if (xhr.status == 200) {
                 console.log("Response", this.responseText);
                 var response = this.responseText;
-                var message = response.indexOf("new");
+                var message = response.indexOf("New");
                 console.log(message);
                 if (message == -1){
                     submitLoginForm(email, image);
                 }
                 else {
                     // User is new so register them
-                    submitSignForm(first_name,last_name,email,image);
+                    submitSignForm(first_name,last_name,email,image,facebookid);
                 }
             }
         }
@@ -1543,11 +1545,50 @@ function fblogin(){
 }
 
 function getFBFriends(){
-    FB.api('/me/friends', {fields: 'installed'}, function(response) {
+    FB.api('/me/friends?fields=installed', {fields: 'installed'}, function(response) {
         if(response.data) {
             console.log(response);
             $.each(response.data,function(index,friend) {
                 console.log(friend.name + ' has id:' + friend.id);
+                console.log("INSTALLED :" + friend.installed);
+                if(friend.installed == true){
+                    //document.getElementById('uncomfirmed-list').innerHTML = friend.name + ' has id:' + friend.id;
+                        var xhr, target, changeListener, url, data;
+                        //setting url to the php code to add comments to the db
+                        url = "http://carbon.jamescobbett.co.uk/services/getfbfriends.php";
+                        var data = new FormData();
+                        data.append("facebookid", friend.id);
+                        data.append("id", localStorage.getItem('id'));
+                        // create a request object
+                        xhr = new XMLHttpRequest();
+
+                        changeListener = function () {
+                            if (xhr.readyState == 4) {
+                                if (xhr.status == 200) {
+                                    console.log("Response", this.responseText);
+                                    var response = JSON.parse(this.responseText);
+                                    console.log(response);
+                                    console.log(response.first_name);
+                                    if(response.first_name == undefined){
+
+                                    } else {
+                                        var html = "<div class='user'>";
+                                        html += "<div class='friends-image'><img class='newsuserimage' src='"+response['image']+"'></div>";
+                                        html += "<div class='username'>"+response['username']+" </div>";
+                                        html += "<div class='name'>"+response['first_name']+" "+response['last_name']+ "</div>";
+                                        html += "<a class='add' href='#' onclick='addFriend("+response['id']+")'>Add friend</a>";
+                                        document.getElementById('uncomfirmed-list').innerHTML += html;
+                                    }
+                                }
+                            }
+                        };
+                            // initialise a request, specifying the HTTP method
+                        // to be used and the URL to be connected to.
+                        xhr.onreadystatechange = changeListener;
+                        xhr.open('POST', url, true);
+                        //xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                        xhr.send(data);
+                }
             });
         } else {
             alert("Error!");

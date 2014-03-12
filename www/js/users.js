@@ -22,7 +22,7 @@ var users;
 
 
 //SUBMIT REGISTRATION FORM
-function submitSignForm(first_name, last_name, email, image){
+function submitSignForm(first_name, last_name, email, image,facebookid){
   // declaring variables to be used
     var xhr, target, changeListener, url, data;
 
@@ -30,16 +30,71 @@ function submitSignForm(first_name, last_name, email, image){
     url = "http://carbon.jamescobbett.co.uk/services/signup.php";
     
     if (typeof email === 'undefined') {
+      //FORM VALIDATION
+      var x=document.forms["signForm"]["firstname"].value;
+      if (x==null || x=="")
+      {
+          document.getElementById("failure").innerHTML ="<div id='failureText'><img src='http://carbon.jamescobbett.co.uk/www/img/delete.png' id='cross'> <h1>Oops! You haven't eventered your first name.<h1></div>";      
+          jQuery('#failure').slideDown("slow");    
+          //$('#emailerror').slideDown("slow");  
+          //alert('password error');
+          return false;
+      }
+      var x=document.forms["signForm"]["lastname"].value;
+      if (x==null || x=="")
+      {
+          document.getElementById("failure").innerHTML ="<div id='failureText'><img src='http://carbon.jamescobbett.co.uk/www/img/delete.png' id='cross'> <h1>Oops! You haven't eventered your last name.<h1></div>";      
+          jQuery('#failure').slideDown("slow");    
+          //$('#emailerror').slideDown("slow");  
+          //alert('password error');
+          return false;
+      }
+      var x=document.forms["signForm"]["email"].value;
+      if (x==null || x=="")
+      {
+          document.getElementById("failure").innerHTML ="<div id='failureText'><img src='http://carbon.jamescobbett.co.uk/www/img/delete.png' id='cross'><h1>Oops! You haven't entered an email address.<h1></div>";      
+        jQuery('#failure').slideDown("slow");     
+          //alert('email error');
+          return false;
+      }
+      var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+      var address = document.forms["signForm"]["email"].value;
+      if(reg.test(address) == false) {
+        document.getElementById("failure").innerHTML ="<div id='failureText'><img src='http://carbon.jamescobbett.co.uk/www/img/delete.png' id='cross'><h1>Oops! That's not a valaid email address.<h1></div>";      
+        jQuery('#failure').slideDown("slow");    
+          //alert('not a valid email address');
+          return false;
+      }
+      var x=document.forms["signForm"]["username"].value;
+      if (x==null || x=="")
+      {
+          document.getElementById("failure").innerHTML ="<div id='failureText'><img src='http://carbon.jamescobbett.co.uk/www/img/delete.png' id='cross'> <h1>Oops! You haven't eventered a username.<h1></div>";      
+          jQuery('#failure').slideDown("slow");    
+          //$('#emailerror').slideDown("slow");  
+          //alert('password error');
+          return false;
+      }
+      var x=document.forms["signForm"]["password"].value;
+      if (x==null || x=="")
+      {
+          document.getElementById("failure").innerHTML ="<div id='failureText'><img src='http://carbon.jamescobbett.co.uk/www/img/delete.png' id='cross'> <h1>Oops! You haven't eventered a password.<h1></div>";      
+          jQuery('#failure').slideDown("slow");    
+          //$('#emailerror').slideDown("slow");  
+          //alert('password error');
+          return false;
+      }
+
       var form = document.getElementById("signForm");
       var data = new FormData(form);
-      var data = new FormData();
     } else {
-      data.append("first_name", first_name);
-      data.append("last_name", last_name);
+      var data = new FormData();
+      data.append("firstname", first_name);
+      data.append("lastname", last_name);
       data.append("email", email);
-      data.append("user_name", first_name+last_name);
+      data.append("username", first_name+last_name);
       data.append("password", '');
       data.append("image", image);
+      data.append("facebookid", facebookid);
     }
     //var form = document.getElementById("signForm");
     //var data = new FormData(form);
@@ -125,28 +180,26 @@ function submitLoginForm(email, image){
       var x=document.forms["loginForm"]["email"].value;
       if (x==null || x=="")
       {
-          //document.getElementById("failure").innerHTML ="<div id='failureText'><img src='images/cross.png' id='cross'> <h1>Oops! You haven't eventered an email address.<h1></div>";      
-          //$('#failure').slideDown("slow");    
-          //$('#emailerror').slideDown("slow");  
-          alert('email error');
+          document.getElementById("failure").innerHTML ="<div id='failureText'><img src='http://carbon.jamescobbett.co.uk/www/img/delete.png' id='cross'><h1>Oops! You haven't entered an email address.<h1></div>";      
+        jQuery('#failure').slideDown("slow");     
+          //alert('email error');
           return false;
       }
       var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
       var address = document.forms["loginForm"]["email"].value;
       if(reg.test(address) == false) {
-      //    document.getElementById("failure").innerHTML ="<div id='failureText'><img src='images/cross.png' id='cross'> <h1>Oops! That's not a valaid email address.<h1></div>";      
-      //    $('#failure').slideDown("slow");                    
-          //$('#emailerror').slideDown("slow");  
-          alert('not a valid email address');
+        document.getElementById("failure").innerHTML ="<div id='failureText'><img src='http://carbon.jamescobbett.co.uk/www/img/delete.png' id='cross'><h1>Oops! That's not a valaid email address.<h1></div>";      
+        jQuery('#failure').slideDown("slow");    
+          //alert('not a valid email address');
           return false;
       }
       var x=document.forms["loginForm"]["password"].value;
       if (x==null || x=="")
       {
-          //document.getElementById("failure").innerHTML ="<div id='failureText'><img src='images/cross.png' id='cross'> <h1>Oops! You haven't eventered an email address.<h1></div>";      
-          //$('#failure').slideDown("slow");    
+          document.getElementById("failure").innerHTML ="<div id='failureText'><img src='http://carbon.jamescobbett.co.uk/www/img/delete.png' id='cross'> <h1>Oops! You haven't eventered a password.<h1></div>";      
+          jQuery('#failure').slideDown("slow");    
           //$('#emailerror').slideDown("slow");  
-          alert('password error');
+          //alert('password error');
           return false;
       }
 
