@@ -10,11 +10,12 @@ function goToActions(){
 
 function goToHome(){
 	$(':mobile-pagecontainer').pagecontainer('change', 'index.html', {
+			show: alert('test'),
 	        transition: 'slide',
 	        changeHash: true,
 	        reverse: false,
 	        showLoadMsg: true,
-	        reload: true
+	        reload: false
 	    });
 }
 

@@ -17,6 +17,7 @@ FB.Event.subscribe('auth.authResponseChange', function(response) {
   });
 };
 
+var redirecttologin = false;
 
   // Load the SDK asynchronously
   (function(d){
@@ -69,6 +70,7 @@ function logout(){
 
           //  FB.api("/me/permissions", "delete", function(response){ 
                 //document.location.href = 'index.html';
+                redirecttologin = true;
                 goToLogin();
             //});
 
@@ -306,11 +308,10 @@ function redirect(){
         if (!results.rowsAffected) {
             var original_footprint = results.rows.item(num-1).total; //original footprint
             if (original_footprint == 'undefined'){
-                document.location.href = 'calculator.html';
-                $.mobile.urlHistory.clearForward();
+                goToCalculator();
             } else {
-                document.location.href = 'index.html';
-                $.mobile.urlHistory.clearForward();
+                //document.location.href = 'index.html';
+                goToHome();
             }
             return false;
         } else {
@@ -357,6 +358,7 @@ function getCurrentUsersName() {
         //alert("Name Error processing SQL: "+err.code);
         //goToLogin();
         //document.location.href = 'login.html';
+        redirecttologin = true;
         goToLogin();
     }
 
@@ -692,6 +694,7 @@ function footprintToServerDatabase(){
 
  //Functions to run on homepage
 function getUserInfo(){
+    alert('in function');
    getCurrentUsersID();
    getCurrentUsersName();
    getCurrentUsersFootprint();
@@ -1251,7 +1254,13 @@ function userSearch(){
                 if (response != ''){
                     var response = JSON.parse(this.responseText);
                     if(response['user'] === true){
-
+                        var html = "<div class='user'>";
+                        html += "<div class='name searchname'>No results</div>";
+                        document.getElementById("friend-search-results").innerHTML = html;
+                    }else if(response['username'] === undefined){
+                        var html = "<div class='user'>";
+                        html += "<div class='name searchname'>No results</div>";
+                        document.getElementById("friend-search-results").innerHTML = html;
                     }else{
                         var html = "<div class='user'>";
                         html += "<div class='friends-image'><img class='newsuserimage newuserfriendimage' src='"+response['image']+"'></div>";
@@ -1669,17 +1678,20 @@ function changepassword(){
 
 $(document).live("pagebeforechange", function(e, ob) {
 
-    // console.log("pagebeforechange");
+    console.log("pagebeforechange");
 
-    // console.log(ob);
+    console.log(ob);
 
     if (ob.toPage[0].id === "login" && ob.options.fromPage) {
+        if(redirecttologin === true){
+            redirecttologin = false;
+        } else {
 
-        console.log("blocking the back");
+            console.log("blocking the back");
 
-        e.preventDefault();
-        history.go(1);
-
+            e.preventDefault();
+            history.go(1);
+        }
     }
 
 }); 

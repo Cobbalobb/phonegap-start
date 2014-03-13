@@ -963,6 +963,8 @@ form h1{
 /*SEARCH FRIENDS*/
 #userSearchForm{
     margin-top: 85px;
+    padding-left: 15px;
+padding-right: 15px;
 }
 .searchname{
     padding-top: 0px !important;
@@ -974,4 +976,8 @@ form h1{
 .newuserfriendimage{
     width: 72px !important;
 height: 63px !important;
+}
+.searchbox{
+    background: url(.../img/searchicon.png) 2% no-repeat !important;
+    padding-left: 40px !important;
 }

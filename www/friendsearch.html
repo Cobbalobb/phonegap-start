@@ -77,12 +77,11 @@
     <div data-role="content">
     <ul id="action-links">
             <li><a onclick="goToAll();" href="#"><div id="all-actions">Leaderboard</div></a></li>
-            <li><a onclick="goToSearch();" href="#"><div id="friend-search">Search</div></a></li>
-            <li><a onclick="goToFBFriends();" href="#"><div class="active-action" id="fb">Facebook</div></a><li>
+            <li><a onclick="goToSearch();" href="#"><div class="active-action" id="friend-search">Search</div></a></li>
+            <li><a onclick="goToFBFriends();" href="#"><div id="fb">Facebook</div></a><li>
         </ul>
-    <form name="userSearchForm" id="userSearchForm" action="#" method="post"> 
-        <input type="search" name="term" id="term" value="" />
-        <a href="javascript:void(1);" onclick="userSearch()" id="signButton"> Search</a>
+    <form name="userSearchForm" id="userSearchForm" action="javascript(void)" onsubmit="userSearch()" method="post"> 
+        <input type="search" class="searchbox" name="term" id="term" placeholder="Search for your friends" value="" />
     </form>
 
     <div id="friend-search-results">

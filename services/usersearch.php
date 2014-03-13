@@ -12,7 +12,7 @@ $term = $_POST['term'];
 $id = $_POST['userid'];
 
 
-$results = mysqli_query($con,"SELECT * FROM user WHERE '$term' IN (email,username) ");
+$results = mysqli_query($con,"SELECT * FROM user WHERE '$term' IN (email,username, first_name, last_name) ");
 while($row = mysqli_fetch_array($results)){
 	if($id === $row['id']){
 		$user['user'] = true;
