@@ -44,7 +44,7 @@ function logout(){
     }
 
     function errorCB(err) {
-        alert("Error processing SQL: "+err.code);
+        a//lert("Error processing SQL: "+err.code);
     }
 
     function successCB() {
@@ -59,19 +59,20 @@ function logout(){
     }
 
     function errorFP(err) {
-        alert("Error processing SQL: "+err.code);
+        //alert("Error processing SQL: "+err.code);
     }
 
     function successFP() {
         //alert("success!");
 
-        FB.getLoginStatus(function(response) {
+        //FB.getLoginStatus(function(response) {
 
-            FB.api("/me/permissions", "delete", function(response){ 
-                document.location.href = 'index.html';
-            });
+          //  FB.api("/me/permissions", "delete", function(response){ 
+                //document.location.href = 'index.html';
+                goToLogin();
+            //});
 
-        });
+        //});
 
         //document.location.href = 'index.html';
     }
@@ -83,7 +84,7 @@ function login(id, first_name, last_name, email, image){
     var data = new FormData();
 
     data.append("id", id);
-    alert(id);
+    //alert(id);
 
     function populateDB(tx) {
     tx.executeSql('DROP TABLE IF EXISTS User');
@@ -102,7 +103,7 @@ function login(id, first_name, last_name, email, image){
     }
 
     function errorCB(err) {
-        alert("Error processing SQL: "+err.code);
+        //alert("Error processing SQL: "+err.code);
     }
 
     function successCB() {
@@ -306,8 +307,10 @@ function redirect(){
             var original_footprint = results.rows.item(num-1).total; //original footprint
             if (original_footprint == 'undefined'){
                 document.location.href = 'calculator.html';
+                $.mobile.urlHistory.clearForward();
             } else {
                 document.location.href = 'index.html';
+                $.mobile.urlHistory.clearForward();
             }
             return false;
         } else {
@@ -339,6 +342,9 @@ function getCurrentUsersName() {
         // this will be true since it was a select statement and so rowsAffected was 0
         if (!results.rowsAffected) {
             $('#name').append(results.rows.item(num-1).first_name + ',');
+            $( document ).ready(function() {
+                newsfeed();
+            });
             return false;
         } else {
             console.log('No rows affected!');
@@ -348,9 +354,10 @@ function getCurrentUsersName() {
     }
 
     function errorCB(err) {
-        alert("Name Error processing SQL: "+err.code);
+        //alert("Name Error processing SQL: "+err.code);
         //goToLogin();
-        document.location.href = 'login.html';
+        //document.location.href = 'login.html';
+        goToLogin();
     }
 
     //var db = window.openDatabase("User", "1.0", "User DB", 1000000);
@@ -382,7 +389,7 @@ function getCurrentUsersImage() {
     }
 
     function errorCB(err) {
-        alert("Image Error processing SQL: "+err.code);
+        //alert("Image Error processing SQL: "+err.code);
         //goToLogin();
         //document.location.href = 'login.html';
     }
@@ -421,7 +428,7 @@ function getCurrentUsersID() {
     }
 
     function errorCB(err) {
-        alert("ID Error processing SQL: "+err.code);
+        //alert("ID Error processing SQL: "+err.code);
         //document.location.href = 'login.html';
     }
 
@@ -457,7 +464,7 @@ function getCurrentUsersID() {
     }
 
     function errorCB(err) {
-        alert("FP Error processing SQL: "+err.code);
+        //alert("FP Error processing SQL: "+err.code);
         //document.location.href = 'login.html';
     }
 
@@ -494,7 +501,7 @@ function getCurrentUsersID() {
     }
 
     function errorCB(err) {
-        alert("Reduction Error processing SQL: "+err.code);
+        //alert("Reduction Error processing SQL: "+err.code);
         //document.location.href = 'login.html';
     }
 
@@ -519,7 +526,7 @@ function getCurrentUsersID() {
     }
 
     function errorCB(err) {
-        alert("Actions Error processing SQL: "+err.code);
+        //alert("Actions Error processing SQL: "+err.code);
         //document.location.href = 'login.html';
     }
 
@@ -545,7 +552,7 @@ function getCurrentUsersID() {
     }
 
     function errorCB(err) {
-        alert("BadgesError processing SQL: "+err.code);
+        //alert("BadgesError processing SQL: "+err.code);
         //document.location.href = 'login.html';
     }
 
@@ -558,7 +565,7 @@ function getCurrentUsersID() {
 
 
  function footprintToDatabase(id, house, meat, organic, local, compost, total_clothes, total_electronics, total_shopping, car_engine, car_miles, train, bus, domestic_flights, short_flights, long_flights, total, current){
-    alert("id: " + id);
+    //alert("id: " + id);
     function populateDB(tx) {
     tx.executeSql('DROP TABLE IF EXISTS Footprint');
     tx.executeSql('CREATE TABLE IF NOT EXISTS Footprint (id unique, house, meat, organic, local, compost, total_clothes, total_electronics, total_shopping, car_engine, car_miles, train, bus, domestic_flights, short_flights, long_flights, total, current)');
@@ -566,11 +573,11 @@ function getCurrentUsersID() {
     }
 
     function errorCB(err) {
-        alert("Error processing SQL: "+err.code);
+        //alert("Error processing SQL: "+err.code);
     }
 
     function successCB() {
-        alert("success footprint added!");
+        //alert("success footprint added!");
         //document.location.href = 'index.html';
     }
     // var dbfp = window.openDatabase("Footprint", "1.0", "User DB", 1000000);
@@ -629,7 +636,7 @@ function footprintToServerDatabase(){
         }
 
         function errorCB(err) {
-            alert("Error processing SQL: "+err.code);
+            //alert("Error processing SQL: "+err.code);
             //document.location.href = 'login.html';
         }
 
@@ -656,13 +663,13 @@ function footprintToServerDatabase(){
                      //$('#failure').slideToggle("slow");                    
                     //document.getElementById("failure").style.display = "block";
                     //document.getElementById("failure").innerHTML ="<div id='failureText'><img src='images/cross.png' id='cross'> <h1>Oops! " + response + "</h1></div>";
-                    alert('success');
+                    //alert('success');
                 }
                 else {
                     //$('#success').slideDown("slow");                    
                     //document.getElementById("failure").style.display = "none";
                     //document.getElementById("firstName").innerHTML ='<div id="newN"><h6>'+name+'</h6></div><div id="newAL">'+age+', '+location+'</div>';
-                    alert('failure');
+                    //alert('failure');
                 }
                 //result = JSON.parse(this.responseText);
                 //injectContent(result.id, form);
@@ -804,7 +811,7 @@ function completeAction(actionid, reduction){
     };
 
     function errorC(err) {
-        alert("Error processing SQL: "+err.code);
+        //alert("Error processing SQL: "+err.code);
     }
 
     function successC() {
@@ -969,11 +976,11 @@ function completeAction(actionid, reduction){
     };
 
     function errorCB(err) {
-        alert("Error processing SQL: "+err.code);
+        //alert("Error processing SQL: "+err.code);
     }
 
     function successCB() {
-        alert("success adding actions");
+        //alert("success adding actions");
     }
     
     db.transaction(populateDB, errorCB, successCB);
@@ -1247,10 +1254,10 @@ function userSearch(){
 
                     }else{
                         var html = "<div class='user'>";
-                        html += "<div class='friends-image'><img class='newsuserimage' src='"+response['image']+"'></div>";
-                        html += "<div class='username'>"+response['username']+" </div>";
-                        html += "<div class='name'>"+response['first_name']+" "+response['last_name']+ "</div>";
-                        html += "<a class='add' href='#' onclick='addFriend("+response['id']+")'>Add friend</a>";
+                        html += "<div class='friends-image'><img class='newsuserimage newuserfriendimage' src='"+response['image']+"'></div>";
+                        //html += "<div class='username'>"+response['username']+" </div>";
+                        html += "<div class='name searchname'>"+response['first_name']+" "+response['last_name']+ "</div>";
+                        html += "<a class='add addfriend' href='#' onclick='addFriend("+response['id']+")'>Add friend</a>";
                         document.getElementById("friend-search-results").innerHTML = html;
                     }
                 }
@@ -1573,10 +1580,10 @@ function getFBFriends(){
 
                                     } else {
                                         var html = "<div class='user'>";
-                                        html += "<div class='friends-image'><img class='newsuserimage' src='"+response['image']+"'></div>";
-                                        html += "<div class='username'>"+response['username']+" </div>";
-                                        html += "<div class='name'>"+response['first_name']+" "+response['last_name']+ "</div>";
-                                        html += "<a class='add' href='#' onclick='addFriend("+response['id']+")'>Add friend</a>";
+                                        html += "<div class='friends-image'><img class='newsuserimage newuserfriendimage' src='"+response['image']+"'></div>";
+                                        //html += "<div class='username'>"+response['username']+" </div>";
+                                        html += "<div class='name searchname'>"+response['first_name']+" "+response['last_name']+ "</div>";
+                                        html += "<a class='add addfriend' href='#' onclick='addFriend("+response['id']+")'>Add friend</a>";
                                         document.getElementById('uncomfirmed-list').innerHTML += html;
                                     }
                                 }

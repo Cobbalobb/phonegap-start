@@ -8,25 +8,35 @@ function goToActions(){
 	    });
 }
 
+function goToHome(){
+	$(':mobile-pagecontainer').pagecontainer('change', 'index.html', {
+	        transition: 'slide',
+	        changeHash: true,
+	        reverse: false,
+	        showLoadMsg: true,
+	        reload: true
+	    });
+}
+
+
 function goToSignup(){
-	// $(':mobile-pagecontainer').pagecontainer('change', 'signup.html', {
-	//         transition: 'slideup',
-	//         changeHash: true,
-	//         reverse: false,
-	//         showLoadMsg: true,
-	//         reload: true
-	//     });
-	        document.location.href = 'signup.html';
+	$(':mobile-pagecontainer').pagecontainer('change', 'signup.html', {
+	        transition: 'slideup',
+	        changeHash: true,
+	        reverse: false,
+	        showLoadMsg: true,
+	        reload: true
+	    });
 }
 
 function goToLogin(){
-	// $(':mobile-pagecontainer').pagecontainer('change', 'login.html', {
-	//         transition: 'slide',
-	//         changeHash: true,
-	//         reverse: false,
-	//         showLoadMsg: true,
-	//         reload: true
-	//     });
+	$(':mobile-pagecontainer').pagecontainer('change', 'login.html', {
+	        transition: 'slide',
+	        changeHash: true,
+	        reverse: false,
+	        showLoadMsg: true,
+	        reload: true
+	    });
 }
 
 function goToAll(){

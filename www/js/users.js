@@ -226,7 +226,7 @@ function submitLoginForm(email, image){
                      //$('#failure').slideToggle("slow");                    
                     //document.getElementById("failure").style.display = "block";
                     //document.getElementById("failure").innerHTML ="<div id='failureText'><img src='images/cross.png' id='cross'> <h1>Oops! " + response + "</h1></div>";
-                    alert('success');
+                    //alert('success');
                     var response = JSON.parse(this.responseText);
                     console.log(response['email']);
                     if (typeof image != 'undefined') {

@@ -958,3 +958,20 @@ form h1{
 #uncomfirmed-list{
     margin-top: 85px;
 }
+
+
+/*SEARCH FRIENDS*/
+#userSearchForm{
+    margin-top: 85px;
+}
+.searchname{
+    padding-top: 0px !important;
+    margin-bottom: 12px;
+}
+.addfriend{
+    margin-left: 23px;
+}
+.newuserfriendimage{
+    width: 72px !important;
+height: 63px !important;
+}
