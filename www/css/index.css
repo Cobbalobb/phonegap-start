@@ -981,3 +981,7 @@ height: 63px !important;
     background: url(.../img/searchicon.png) 2% no-repeat !important;
     padding-left: 40px !important;
 }
+.fb-sign-friends{
+    width: 300px;
+    margin: 0 auto;
+}

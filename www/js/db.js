@@ -702,6 +702,7 @@ function getUserInfo(){
    //getCurrentUsersBadgesNo();
    getCurrentUsersReduction();
    getCurrentUsersImage();
+   actionmessage();
 }
 
 function addActionToList(actionid, title){
@@ -1607,7 +1608,8 @@ function getFBFriends(){
                 }
             });
         } else {
-            alert("Error!");
+            document.getElementById('uncomfirmed-list').innerHTML +='<div id="fb-sign" class="fb-sign-friends"><a href="#" onClick="fblogin();"><img src="http://carbon.jamescobbett.co.uk/www/img/facebooksign.png">Sign in with facebook to see your friends</a></div>';
+            
         }
     });
 }
