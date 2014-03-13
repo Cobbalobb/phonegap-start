@@ -1666,3 +1666,20 @@ function changepassword(){
         alert('Passwords do not match');
     }
 }
+
+$(document).live("pagebeforechange", function(e, ob) {
+
+    // console.log("pagebeforechange");
+
+    // console.log(ob);
+
+    if (ob.toPage[0].id === "login" && ob.options.fromPage) {
+
+        console.log("blocking the back");
+
+        e.preventDefault();
+        history.go(1);
+
+    }
+
+}); 
