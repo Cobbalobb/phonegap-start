@@ -22,7 +22,7 @@ var users;
 
 
 //SUBMIT REGISTRATION FORM
-function submitSignForm(first_name, last_name, email, image,facebookid){
+function submitSignForm(first_name, last_name, email, image,facebookid, fbactions){
   // declaring variables to be used
     var xhr, target, changeListener, url, data;
 
@@ -95,6 +95,7 @@ function submitSignForm(first_name, last_name, email, image,facebookid){
       data.append("password", '');
       data.append("image", image);
       data.append("facebookid", facebookid);
+      data.append("fbactions", fbactions);
     }
     //var form = document.getElementById("signForm");
     //var data = new FormData(form);
@@ -120,7 +121,7 @@ function submitSignForm(first_name, last_name, email, image,facebookid){
                     alert('success');
                     var response = JSON.parse(this.responseText);
                     console.log(response['email']);
-                    login(response['id'], response['first_name'], response['last_name'], response['email'], response['image']);
+                    login(response['id'], response['first_name'], response['last_name'], response['email'], response['image'], response['facebookid'], response['fbactions']);
                     //set email in local temp storage - use this to query db -HOW?
                       // $.ajax({       
                       //  type : 'POST',   
@@ -230,9 +231,9 @@ function submitLoginForm(email, image){
                     var response = JSON.parse(this.responseText);
                     console.log(response['email']);
                     if (typeof image != 'undefined') {
-                      login(response['id'], response['first_name'], response['last_name'], response['email'], image);
+                      login(response['id'], response['first_name'], response['last_name'], response['email'], image, response['facebookid'], response['fbactions']);
                     } else {
-                      login(response['id'], response['first_name'], response['last_name'], response['email'], response['image']);
+                      login(response['id'], response['first_name'], response['last_name'], response['email'], response['image'], response['facebookid'], response['fbactions']);
                     }
                     //set email in local temp storage - use this to query db -HOW?
                       // $.ajax({       

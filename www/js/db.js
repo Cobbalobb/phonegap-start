@@ -144,15 +144,15 @@ document.addEventListener('deviceready', function() {
             }
 
 
-      function facebookWallPost() {
+      function facebookWallPost(name) {
           console.log('Debug 1');
         var params = {
             method: 'feed',
-            name: 'Facebook Dialogs',
-            link: 'https://developers.facebook.com/docs/reference/dialogs/',
+            name: name,
+            link: 'https://carboncutterapp.co.uk/',
             picture: 'http://fbrell.com/f8.jpg',
-            caption: 'Reference Documentation',
-            description: 'Dialogs provide a simple, consistent interface for applications to interface with users.'
+            caption: 'Carbon Footprint',
+            description: 'Carbon cutter is an android application that helps you lower and monitor your carbon footprint.'
           };
         console.log(params);
           FB.ui(params, function(obj) { console.log(obj);});
@@ -226,7 +226,7 @@ function logout(){
     db.transaction(dropFP, errorFP, successFP);
 }
 
-function login(id, first_name, last_name, email, image){
+function login(id, first_name, last_name, email, image, facebookid, fbactions){
     var data = new FormData();
 
     data.append("id", id);
@@ -234,7 +234,7 @@ function login(id, first_name, last_name, email, image){
 
     function populateDB(tx) {
     tx.executeSql('DROP TABLE IF EXISTS User');
-    tx.executeSql('CREATE TABLE IF NOT EXISTS User (id unique, first_name, last_name, email, image)');
+    tx.executeSql('CREATE TABLE IF NOT EXISTS User (id unique, first_name, last_name, email, image, facebookid, fbactions)');
     tx.executeSql('DROP TABLE IF EXISTS Actions');
     tx.executeSql('CREATE TABLE IF NOT EXISTS Actions (id, action, description, reduction, category)');
    
@@ -245,7 +245,7 @@ function login(id, first_name, last_name, email, image){
     tx.executeSql('CREATE TABLE IF NOT EXISTS completed_badges (user_id, badge_id, completed)');    
     tx.executeSql('DROP TABLE IF EXISTS badges');
     tx.executeSql('CREATE TABLE IF NOT EXISTS badges (id, badge)');
-    tx.executeSql('INSERT INTO User (id, first_name, last_name, email, image) VALUES (?,?,?,?,?)',[id, first_name, last_name, email, image]);
+    tx.executeSql('INSERT INTO User (id, first_name, last_name, email, image, facebookid, fbactions) VALUES (?,?,?,?,?,?,?)',[id, first_name, last_name, email, image, facebookid, fbactions]);
     }
 
     function errorCB(err) {
@@ -550,7 +550,7 @@ function getCurrentUsersImage() {
 function getCurrentUsersID() {
     function queryDB(tx) {
         //tx.executeSql('DROP TABLE IF EXISTS User');
-        tx.executeSql('SELECT id FROM User', [], querySuccess, errorCB);
+        tx.executeSql('SELECT id, fbactions FROM User', [], querySuccess, errorCB);
     }
 
     function querySuccess(tx, results) {
@@ -565,6 +565,7 @@ function getCurrentUsersID() {
             //$('#name').append(results.rows.item(num-1).first_name + ',');
             console.log("id: " + id);
             window.localStorage.setItem("id", id);
+            window.localStorage.setItem("fbactions", results.rows.item(num-1).fbactions);
             return id;
         } else {
 
@@ -852,6 +853,7 @@ function getUserInfo(){
 function addActionToList(actionid, title){
 
     var id = localStorage.getItem('id');
+    var fb = localStorage.getItem('fbactions');
 
     function updateAction(tx) {
         tx.executeSql('UPDATE user_actions SET status = ? WHERE action_id = ?',['1', actionid.toString()]);                    
@@ -863,6 +865,23 @@ function addActionToList(actionid, title){
 
     function successCB() {
         document.getElementById(actionid+"success").innerHTML ='<div class="successful-added">Action added to your list.</div><div class="calendar-add"><a href="#" onClick="calendarevent(\''+title+'\');">Add event to calendar</a></div>';
+        if(fb==1){
+        FB.api(
+          'me/carboncutter:added',
+          'post',
+          {
+            carbon_action: "http://samples.ogp.me/488117217965116"
+          },
+          function(response) {
+            console.log(response);
+            if (!response || response.error) {
+            alert('Error occured');
+            } else {
+            alert('Demo was liked successfully! Action ID: ' + response.id);
+            }
+          }
+        );
+        }
     }
     
     db.transaction(updateAction, errorCB, successCB);
@@ -964,6 +983,23 @@ function completeAction(actionid, reduction){
 
     function successC() {
         document.getElementById(actionid+"success").innerHTML ='<div class="successful-completed">Well done! Action complete!</div>';
+        if(fb==1){
+        FB.api(
+          'me/carboncutter:complete',
+          'post',
+          {
+            carbon_action: "http://samples.ogp.me/488117217965116"
+          },
+          function(response) {
+            console.log(response);
+            if (!response || response.error) {
+            alert('Error occured');
+            } else {
+            alert('Demo was liked successfully! Action ID: ' + response.id);
+            }
+          }
+        );
+        }
     }
     
     db.transaction(populateD, errorC, successC);
@@ -1309,6 +1345,7 @@ function facebookLogin(){
       var last_name = response['last_name'];
       var email = response['email'];
       var facebookid = response['id'];
+      var fbactions = 1;
       alert(first_name);
       alert(last_name);
       alert(email);
@@ -1356,7 +1393,7 @@ function facebookLogin(){
                 else {
                     alert('sign up');
                     // User is new so register them
-                    submitSignForm(first_name,last_name,email,image,facebookid);
+                    submitSignForm(first_name,last_name,email,image,facebookid, fbactions);
                 }
             }
         }

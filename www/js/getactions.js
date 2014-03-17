@@ -140,7 +140,7 @@ function getListActionsL(){
 	        		console.log(results.rows.item(i));
 				    var action = "<div class='action'><div class='action-category "+results.rows.item(1).category+"'>"+results.rows.item(1).category+"</div><div class='action-title'>"+results.rows.item(i).action+"</div><div class='action-description'>"+results.rows.item(i).description+"</div>";
 					var action = action + "<div class='action-links-container'><div class='action-links' id='"+results.rows.item(i).id+"success'><a class='action-remove' onclick='removeActionFromList("+results.rows.item(i).id+")' href='#'>Remove from list</a> <a href='#' class='action-complete' onclick='completeAction("+results.rows.item(i).id+","+results.rows.item(i).reduction+")'>Mark as completed</a></div>";
-					var action = action + '<div class="calendar-add-list"><a href="#" onClick="calendarevent(\''+results.rows.item(i).action+'\');">Add event to calendar</a></div></div><a href="#" onclick="shareaction()">Share</a></div>';
+					var action = action + '<div class="calendar-add-list"><a href="#" onClick="calendarevent(\''+results.rows.item(i).action+'\');">Add event to calendar</a></div></div><a href="#" onclick="facebookWallPost(\''+results.rows.item(i).action+'\')">Share</a></div>';
 					document.getElementById("action-list").innerHTML=document.getElementById("action-list").innerHTML + action;
 				}
 					};

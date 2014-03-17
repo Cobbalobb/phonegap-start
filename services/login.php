@@ -36,6 +36,8 @@ if ($row['id'] == null) {
 	 	$user['last_name'] = $row['last_name'];
 	 	$user['email'] = $row['email'];
 	 	$user['image'] = $row['image'];
+	 	$user['facebookid'] = $row['facebookid'];
+	 	$user['fbactions'] = $row['fbactions'];
 	 	if($image != null){
 		 	$sql = "UPDATE user SET image = :image WHERE email = :email";
 			$q = $con->prepare($sql);

@@ -15,6 +15,7 @@ $email = $_POST['email'];
 $password = $_POST['password'];
 $image = $_POST['image'];
 $facebookid = $_POST['facebookid'];
+$fbactions = $_POST['fbactions'];
 
 // Create connection
 //$con=mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
@@ -51,6 +52,8 @@ $q->execute(array(':fname'=>$fname,
 	 	$user['last_name'] = $row['last_name'];
 	 	$user['email'] = $row['email'];
 	 	$user['image'] = $row['image'];
+	 	$user['facebookid'] = $row['facebookid'];
+	 	$user['fbactions'] = $row['fbactions'];
 	// };
  	echo json_encode($user);
  }

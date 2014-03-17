@@ -165,3 +165,13 @@ function goToFBFriends(){
 	        reload: true,
 	    });
 }
+
+function goToFBActions(){
+	$(':mobile-pagecontainer').pagecontainer('change', 'fbactions.html', {
+	        transition: 'slide',
+	        changeHash: true,
+	        reverse: false,
+	        showLoadMsg: true,
+	        reload: true,
+	    });
+}
