@@ -208,7 +208,6 @@ function actionmessage(){
 					if(actions.length > 0){
 						actions.sort(function() { return 0.5 - Math.random() });
 						document.getElementById('actionmessage').innerHTML = actions[0]['action'];
-						alert(actions[0]['action']);
 					} else {
 						document.getElementById('noactions').innerHTML = "You don't have any actions on your list yet, why not <a href='#' onClick='goToActions()'>add some?</a>";
 					}

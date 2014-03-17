@@ -109,7 +109,7 @@
     <gap:plugin name="nl.x-services.plugins.calendar" />
     <gap:plugin name="com.phonegap.plugins.facebookconnect">
         <param name="APP_ID" value="483622355081269" />
-        <param name="APP_NAME" value="Carbon Cutter" />
+        <param name="APP_NAME" value="carboncutter" />
     </gap:plugin>
 <!-- <gap:plugin name="FacebookConnect">
   <param
