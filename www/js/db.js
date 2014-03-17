@@ -1555,11 +1555,11 @@ function getProfileInfo(id){
     //xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.send(data);
 }
-function fblogin(){
-    FB.login(function(response) {
-       facebookLogin();
-     }, {scope: 'email, publish_actions'});
-}
+// function fblogin(){
+//     FB.login(function(response) {
+//        facebookLogin();
+//      }, {scope: 'email, publish_actions'});
+// }
 
 function getFBFriends(){
     FB.api('/me/friends?fields=installed', {fields: 'installed'}, function(response) {
