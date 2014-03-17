@@ -39,6 +39,12 @@
     </head>
     <body>
           <button onclick="login()">Login</button>
+          <button onclick="me()">Me</button>
+    <!--<button onclick="getSession()">Get session</button>-->
+    <button onclick="getLoginStatus()">Get login</button>
+    <button onclick="logout()">Logout</button>
+    <button onclick="facebookWallPost()">facebookWallPost</button>
+    <button onclick="publishStoryFriend()">friendstory</button>
 
       <script>
   // These are the notifications that are displayed to the user through pop-ups if the above JS files does not exist in the same directory-->
@@ -113,6 +119,9 @@
             function login() {
                 FB.login(
                          function(response) {
+                          alert('test');
+                          alert(response);
+                          alert(response.session);
                          if (response.session) {
                          alert('logged in');
                          } else {
