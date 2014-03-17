@@ -10,7 +10,9 @@ function goToActions(){
 
 function goToHome(){
 	$(':mobile-pagecontainer').pagecontainer('change', 'index.html', {
-			show: function( event, ui ) { alert('test') },
+			// show: function( event, ui ) { 
+			// 	alert('test') 
+			// },
 	        transition: 'slide',
 	        changeHash: true,
 	        reverse: false,
@@ -18,7 +20,6 @@ function goToHome(){
 	        reload: false
 	    });
 }
-
 
 function goToSignup(){
 	$(':mobile-pagecontainer').pagecontainer('change', 'signup.html', {

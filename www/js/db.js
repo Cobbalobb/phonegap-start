@@ -1,52 +1,59 @@
-//   window.fbAsyncInit = function() {
-//   FB.init({
-//     appId      : '483622355081269',
-//     status     : true, // check login status
-//     cookie     : true, // enable cookies to allow the server to access the session
-//     xfbml      : true  // parse XFBML
-//   });
+var web = true;
 
-// FB.Event.subscribe('auth.authResponseChange', function(response) {
-//     if (response.status === 'connected') {
-//       console.log('Logged in');
-//     } else {
-//             FB.login(function(response) {
-//        // handle the response
-//      }, {scope: 'email, publish_actions'});
-//     }
-//   });
-// };
+if(web==true){
+  window.fbAsyncInit = function() {
+  FB.init({
+    appId      : '483622355081269',
+    status     : true, // check login status
+    cookie     : true, // enable cookies to allow the server to access the session
+    xfbml      : true  // parse XFBML
+  });
 
-// var redirecttologin = false;
+FB.Event.subscribe('auth.authResponseChange', function(response) {
+    if (response.status === 'connected') {
+      console.log('Logged in');
+    } else {
+            FB.login(function(response) {
+       // handle the response
+     }, {scope: 'email, publish_actions'});
+    }
+  });
+};
+}
 
-//   // Load the SDK asynchronously
-//   (function(d){
-//    var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-//    if (d.getElementById(id)) {return;}
-//    js = d.createElement('script'); js.id = id; js.async = true;
-//    js.src = "//connect.facebook.net/en_US/all.js";
-//    ref.parentNode.insertBefore(js, ref);
-//   }(document));
+var redirecttologin = false;
 
-//   // Here we run a very simple test of the Graph API after login is successful. 
-//   // This testAPI() function is only called in those cases. 
-//   function testAPI() {
-//     console.log('Welcome!  Fetching your information.... ');
-//     FB.api('/me', function(response) {
-//       console.log('Good to see you, ' + response.name + '.');
-//     });
-//   }
+  // Load the SDK asynchronously
+  (function(d){
+   var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+   if (d.getElementById(id)) {return;}
+   js = d.createElement('script'); js.id = id; js.async = true;
+   js.src = "//connect.facebook.net/en_US/all.js";
+   ref.parentNode.insertBefore(js, ref);
+  }(document));
 
-            document.addEventListener('deviceready', function() {
-                                      try {
-                                      alert('Device is ready! Make sure you set your app_id below this alert.');
+  // Here we run a very simple test of the Graph API after login is successful. 
+  // This testAPI() function is only called in those cases. 
+  function testAPI() {
+    console.log('Welcome!  Fetching your information.... ');
+    FB.api('/me', function(response) {
+      console.log('Good to see you, ' + response.name + '.');
+    });
+  }
+
+var db = window.openDatabase("User", "1.0", "User DB", 1000000);
+
+
+document.addEventListener('deviceready', function() {
+                try {
+                    alert('Device is ready! Make sure you set your app_id below this alert.');
                     //Put your FB APP_ID here!
-                                      FB.init({ appId: "483622355081269", nativeInterface: CDV.FB, useCachedDialogs: false });
-                                      document.getElementById('data').innerHTML = "";
-                                      } catch (e) {
-                                      alert(e);
-                                      }
-                                      }, false);
+                    FB.init({ appId: "483622355081269", nativeInterface: CDV.FB, useCachedDialogs: false });
+                    document.getElementById('data').innerHTML = "";
+                    } catch (e) {
+                    alert(e);
+                    }
+                    }, false);
 
 
 // These are the notifications that are displayed to the user through pop-ups if the above JS files does not exist in the same directory-->
@@ -173,9 +180,6 @@
           }
       }
 
-
-var db = window.openDatabase("User", "1.0", "User DB", 1000000);
-
 function logout(){
     function dropDB(tx) {
     tx.executeSql('DROP TABLE IF EXISTS User');
@@ -207,9 +211,9 @@ function logout(){
 
           //  FB.api("/me/permissions", "delete", function(response){ 
                 //document.location.href = 'index.html';
-                FB.logout(function(response) {
-                          alert('logged out');
-                          });
+                // FB.logout(function(response) {
+                //           alert('logged out');
+                //           });
                 redirecttologin = true;
                 goToLogin();
             //});
@@ -1845,3 +1849,45 @@ $(document).live("pagebeforechange", function(e, ob) {
     }
 
 }); 
+
+function shareaction(){
+    var objectToLike = 'http://samples.ogp.me/488117217965116';
+FB.api(
+       'me/carboncutter:added',
+       'post',
+       { carbon_action: objectToLike },
+       function(response) {
+         if (!response) {
+           alert('Error occurred.');
+         } else if (response.error) {
+            console.log(response.error.message);
+           //document.getElementById('result').innerHTML =
+             //'Error: ' + response.error.message;
+         } else {
+           console.log(
+             '<a href=\"https://www.facebook.com/me/activity/' +
+             response.id + '\">' +
+             'Story created.  ID is ' +
+             response.id + '</a>');
+         }
+       }
+    );
+
+
+
+// FB.api(
+//   'me/carboncutter:added',
+//   'post',
+//   {
+//     carbon_action: "http://samples.ogp.me/488117217965116"
+//   },
+//   function(response) {
+//     console.log(response);
+//     if (!response || response.error) {
+//     alert('Error occured');
+//     } else {
+//     alert('Demo was liked successfully! Action ID: ' + response.id);
+//     }
+//   }
+// );
+}
