@@ -38,42 +38,8 @@
         <title>Hello World</title>
     </head>
     <body>
-      <!-- Start of Log in page -->
-<div data-role="page" id="login">
-    <div data-role="content" id="login-content">
-        <div id="welcome">
+          <button onclick="login()">Login</button>
 
-       </div>
-        <div id="logo"></div>
-
-          <button onclick="flogin()">Login</button>
-  <div id="data">loading ...</div>
-        
-        <!--<script src="http://localhost:8080/target/target-script-min.js#anonymous"></script>-->
-        <div id="fb-root"></div>
-
-
-        <form name="loginForm" id="loginForm" action="#" method="post">
-          <h1>Login</h1>
-          <input type="email" name="email" placeholder="Email">
-          <input type="password" name="password" placeholder="Password">
-          <div class="error" id="failure" style="display: none;"></div>
-          <div id="logbutt"><a href="javascript:void(1);" onclick="submitLoginForm()" id="signButton">Sign in</a></div>
-          <h2><span>or</span></h2>
-        </form>
-
-    <!--
-  Below we include the Login Button social plugin. This button uses the JavaScript SDK to
-  present a graphical Login button that triggers the FB.login() function when clicked. -->
-
-<fb:login-button show-faces="true" data-auto-logout-link="true" onlogin="facebookLogin()" width="200" max-rows="1"></fb:login-button>
-    </div>
-<div id="fb-sign"><a href="#" onClick="fblogin();"><img src="http://carbon.jamescobbett.co.uk/www/img/facebooksign.png"></a></div>
-
-<a href="#" rel="external" id="signupstrip" onclick="goToSignup();">Not yet a member? Sign up <span class="bold">here</span></a>
-</div>
-</div>
-<!-- End of Login page -->
       <script>
   // These are the notifications that are displayed to the user through pop-ups if the above JS files does not exist in the same directory-->
             if ((typeof cordova == 'undefined') && (typeof Cordova == 'undefined')) alert('Cordova variable does not exist. Check that you have included cordova.js correctly');
@@ -144,7 +110,7 @@
                           });
             }
             
-            function flogin() {
+            function login() {
                 FB.login(
                          function(response) {
                          if (response.session) {
@@ -193,7 +159,17 @@
           FB.ui(params, function(obj) { console.log(obj);});
           }
       }
-          
+            
+            document.addEventListener('deviceready', function() {
+                                      try {
+                                      alert('Device is ready! Make sure you set your app_id below this alert.');
+                    //Put your FB APP_ID here!
+                                      FB.init({ appId: "APP_ID", nativeInterface: CDV.FB, useCachedDialogs: false });
+                                      document.getElementById('data').innerHTML = "";
+                                      } catch (e) {
+                                      alert(e);
+                                      }
+                                      }, false);
             </script>
         <div id="log"></div>
     </body>
