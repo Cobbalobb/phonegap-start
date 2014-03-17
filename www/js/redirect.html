@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=medium-dpi" />
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="js/jquery.mobile-1.3.2.min.js"></script>
+        <script src="js/users.js"></script>
+        <script src="js/db.js"></script>
+        <script src="js/nav.js"></script>
+        <script src="js/index.js"></script>
+        <script src="cdv-plugin-fb-connect.js"></script>
+<script src="facebook-js-sdk.js"></script>
+        <script src="http://debug.phonegap.com/target/target-script-min.js#carboncutter"></script>
+
+        <title></title>
+    </head>
+    <body>
+<div id="fb-root"></div>
+<script type="text/javascript" charset="utf-8">
+
+            window.fbAsyncInit = function() {
+                          FB.init({
+                            appId      : '483622355081269',
+                            status     : true, // check login status
+                            cookie     : true, // enable cookies to allow the server to access the session
+                            xfbml      : true  // parse XFBML
+                          });
+
+
+                          function getJsonFromUrl(urlString) {
+                              var parameterQuery = urlString.split("?");
+                              var data = parameterQuery[1].split("&");
+                              var result = {};
+                              for(var i=0; i<data.length; i++) {
+                                var item = data[i].split("=");
+                                result[item[0]] = decodeURIComponent(item[1]);
+                              }
+                              return result;
+                            }
+
+                          var fbDataArray = getJsonFromUrl(document.URL);   
+
+                          //If user cancels the permission page
+                          if (typeof  fbDataArray['error'] !== "undefined") {
+                            location = "http://carbon.jamescobbett.co.uk/setVars.html?name=" + response.name + "&email=" + response.email + "&id=" + response.id;
+                          }
+
+                          FB.Event.subscribe('auth.authResponseChange', function(response) {
+
+                            // Here we specify what we do with the response anytime this event occurs. 
+                            if (response.status === 'connected') {
+                              // The response object is returned with a status field that lets the app know the current
+                              // login status of the person. In this case, we're handling the situation where they 
+                              // have logged in to the app.
+                              getFBdata();
+                            } else if (response.status === 'not_authorized') {
+                              // In this case, the person is logged into Facebook, but not into the app
+                              //FB.login();
+                              location = "http://carbon.jamescobbett.co.uk/setVars.html?name=" + response.name + "&email=" + response.email + "&id=" + response.id;
+                            } else {
+                              // In this case, the person is not logged into Facebook,
+                              //FB.login();
+                              location = "http://carbon.jamescobbett.co.uk/setVars.html?name=" + response.name + "&email=" + response.email + "&id=" + response.id;
+                            }
+                          });
+
+
+
+              };
+
+              // Load the SDK asynchronously
+              (function(d){
+               var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+               if (d.getElementById(id)) {return;}
+               js = d.createElement('script'); js.id = id; js.async = true;
+               js.src = "https://connect.facebook.net/en_US/all.js";
+               ref.parentNode.insertBefore(js, ref);
+              }(document));
+
+
+
+              // Here we run a very simple test of the Graph API after login is successful. 
+              // This testAPI() function is only called in those cases. 
+              function getFBdata() {
+
+                FB.api('/me', {fields: 'name,email,id'}, function(response) {
+                  location = "http://carbon.jamescobbett.uk/setVars.html?name=" + response.name + "&email=" + response.email + "&id=" + response.id;
+                });
+
+              }
+    </script>
+    </body>
+</html>

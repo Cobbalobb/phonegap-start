@@ -64,6 +64,88 @@
     </div>
 <div id="fb-sign"><a href="#" onClick="fblogin();"><img src="http://carbon.jamescobbett.co.uk/www/img/facebooksign.png"></a></div>
 
+<div id="fb-root"></div>
+
+    <div onclick="fbLogin();" style="margin-top: 25px; height: 100px; width: 100%; background-color: blue; color: white; font-size: 40px">Login with Facebook</div>
+    <div onclick="location = 'https://www.facebook.com' " style="margin-top: 25px; height: 100px; width: 100%; background-color: blue; color: white; font-size: 40px">Goto Facebook</div>
+
+    <div id="userData"></div>
+
+    <script type="text/javascript" charset="utf-8">
+
+
+        document.addEventListener("deviceready", function() {
+
+
+
+            function getJsonFromUrl(urlString) {
+              var parameterQuery = urlString.split("?");
+              var data = parameterQuery[1].split("&");
+              var result = {};
+              for(var i=0; i<data.length; i++) {
+                var item = data[i].split("=");
+                result[item[0]] = decodeURIComponent(item[1]);
+              }
+              return result;
+            }
+
+            fbLogin = function () {
+                var ref = window.open('https://www.facebook.com/dialog/oauth?scope=email&client_id=483622355081269&redirect_uri=http://carbon.jamescobbett.co.uks/redirect.html', '_blank', 'location=no');
+
+                 ref.addEventListener('loadstop', function(event) { 
+
+
+                    if(event.url.indexOf("http://carbon.jamescobbett.co.uk/setVars.html") != -1) {
+
+                        ref.close();
+
+                        var fbDataArray = getJsonFromUrl(event.url);
+
+                        if (fbDataArray['email'].indexOf('@') != -1) {
+
+                            $('#userData').html('<img style="display:block; height: 150px; width: 150px; margin: 0px auto; margin-top: 50px;" src="https://graph.facebook.com/' + fbDataArray['id'] + '/picture?width=100&height=100" />');
+                            $('#userData').append('<div style="text-align:center; height: 50px; width: 300px; margin: 0px auto; font-size: 25px; margin-top: 25px;">' + fbDataArray['email'] + '</div>');
+                            $('#userData').append('<div style="text-align:center; height: 50px; width: 300px; margin: 0px auto; font-size: 25px; margin-top: 10px;">' + fbDataArray['name'] + '</div>');
+                            $('#userData').append('<div style="color: green; text-align:center; height: 50px; width: 300px; margin: 0px auto; font-size: 25px; margin-top: 10px;">ACCESS GRANTED!</div>');
+                        } else {
+                            $('#userData').html('<div style="color: red; text-align:center; height: 50px; width: 300px; margin: 0px auto; font-size: 25px; margin-top: 10px;">ACCESS DENIED!</div>');
+                        }
+                        //alert(fbDataArray['email'] + ' | ' + fbDataArray['name'] + ' | ' + fbDataArray['id']);
+
+                    }
+
+
+                 });
+                 ref.addEventListener('loaderror', function(event) { alert('error: ' + event.message); });
+
+            };
+
+
+
+
+               window.fbAsyncInit = function() {
+                FB.init({
+                  appId      : '483622355081269',
+                  status     : true,
+                  cookie     : true,
+                  xfbml      : true
+                });
+
+              };
+
+              (function(d, s, id){
+                 var js, fjs = d.getElementsByTagName(s)[0];
+                 if (d.getElementById(id)) {return;}
+                 js = d.createElement(s); js.id = id;
+                 js.src = "//connect.facebook.net/en_US/all.js";
+                 fjs.parentNode.insertBefore(js, fjs);
+               }(document, 'script', 'facebook-jssdk'));
+
+
+        });
+    </script>
+
+
 <a href="#" rel="external" id="signupstrip" onclick="goToSignup();">Not yet a member? Sign up <span class="bold">here</span></a>
 </div>
 </div>
@@ -119,61 +201,6 @@
 //     }, {scope : "email"});
 //   }
 // }
-
-var my_client_id = "483622355081269", // YOUR APP ID
-    my_secret = "7ebd1c83fa40eef1dacdfa0dcf7e237d", // YOUR APP SECRET 
-    my_redirect_uri = "https://www.facebook.com/connect/login_success.html", // LEAVE THIS
-    my_type ="user_agent", my_display = "touch"; // LEAVE THIS
-
-var facebook_token = "fbToken"; // OUR TOKEN KEEPER
-var ref; //IN APP BROWSER REFERENCE
-
-// FACEBOOK
-var Facebook = {
-    init:function(){
-         // Begin Authorization
-         var authorize_url = "https://www.facebook.com/dialog/oauth?";
-         authorize_url += "client_id=" + my_client_id;
-         authorize_url += "&redirect_uri=" + my_redirect_uri;
-         authorize_url += "&display=" + my_display;
-         authorize_url += "&scope=publish_stream";
-
-             //CALL IN APP BROWSER WITH THE LINK
-         ref = window.open(authorize_url, '_blank', 'location=no');
-
-         ref.addEventListener('loadstart', function(event){
-
-             Facebook.facebookLocChanged(event.url);
-
-          });
-
-    },
-    facebookLocChanged:function(loc){
-
-        if (loc.indexOf("code=") >= 1  ) {
-
-            //CLOSE INAPPBROWSER AND NAVIGATE TO INDEX
-            ref.close();
-
-            //THIS IS MEANT TO BE DONE ON SERVER SIDE TO PROTECT CLIENT SECRET
-            var codeUrl = 'https://graph.facebook.com/oauth/access_token?client_id='+my_client_id+'&client_secret='+my_secret+'&redirect_uri='+my_redirect_uri+'&code='+loc.split("=")[1];
-            console.log('CODE_URL::' + codeUrl);
-            $.ajax({
-                url: codeUrl,
-                data: {},
-                type: 'POST',
-                async: false,
-                cache: false,
-                success: function(data, status){
-                    //WE STORE THE TOKEN HERE
-                    localStorage.setItem(facebook_token, data.split('=')[1].split('&')[0]);
-                    },
-                error: function(){
-                    alert("Unknown error Occured");
-                }
-            }); 
-        }
-    }
          </script>
     </body>
 </html>
