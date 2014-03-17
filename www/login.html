@@ -42,7 +42,7 @@
           <button onclick="me()">Me</button>
     <!--<button onclick="getSession()">Get session</button>-->
     <button onclick="getLoginStatus()">Get login</button>
-    <button onclick="logout()">Logout</button>
+    <button onclick="flogout()">Logout</button>
     <button onclick="facebookWallPost()">facebookWallPost</button>
     <button onclick="publishStoryFriend()">friendstory</button>
 
@@ -110,11 +110,11 @@
                        });
             }
             
-            // function logout() {
-            //     FB.logout(function(response) {
-            //               alert('logged out');
-            //               });
-            // }
+            function flogout() {
+                FB.logout(function(response) {
+                          alert('logged out');
+                          });
+            }
             
             function flogin() {
               alert('here');
