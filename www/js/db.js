@@ -37,6 +37,17 @@
 //     });
 //   }
 
+            document.addEventListener('deviceready', function() {
+                                      try {
+                                      alert('Device is ready! Make sure you set your app_id below this alert.');
+                    //Put your FB APP_ID here!
+                                      FB.init({ appId: "483622355081269", nativeInterface: CDV.FB, useCachedDialogs: false });
+                                      document.getElementById('data').innerHTML = "";
+                                      } catch (e) {
+                                      alert(e);
+                                      }
+                                      }, false);
+
 var db = window.openDatabase("User", "1.0", "User DB", 1000000);
 
 function logout(){
