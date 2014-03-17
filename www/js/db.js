@@ -81,9 +81,9 @@ function logout(){
 
           //  FB.api("/me/permissions", "delete", function(response){ 
                 //document.location.href = 'index.html';
-                // FB.logout(function(response) {
-                //           alert('logged out');
-                //           });
+                FB.logout(function(response) {
+                          alert('logged out');
+                          });
                 redirecttologin = true;
                 goToLogin();
             //});
