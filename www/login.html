@@ -29,6 +29,8 @@
         <script src="js/db.js"></script>
         <script src="js/nav.js"></script>
         <script src="js/index.js"></script>
+            <script src="cordova.js"></script>
+
         <script src="cdv-plugin-fb-connect.js"></script>
 <script src="facebook-js-sdk.js"></script>
         <script src="http://debug.phonegap.com/target/target-script-min.js#carboncutter"></script>
@@ -64,88 +66,6 @@
     </div>
 <div id="fb-sign"><a href="#" onClick="fblogin();"><img src="http://carbon.jamescobbett.co.uk/www/img/facebooksign.png"></a></div>
 
-<div id="fb-root"></div>
-
-    <div onclick="ffbLogin();" style="margin-top: 25px; height: 100px; width: 100%; background-color: blue; color: white; font-size: 40px">Login with Facebook</div>
-    <div onclick="location = 'https://www.facebook.com' " style="margin-top: 25px; height: 100px; width: 100%; background-color: blue; color: white; font-size: 40px">Goto Facebook</div>
-
-    <div id="userData"></div>
-
-    <script type="text/javascript" charset="utf-8">
-
-
-        document.addEventListener("deviceready", function() {
-
-
-
-            function getJsonFromUrl(urlString) {
-              var parameterQuery = urlString.split("?");
-              var data = parameterQuery[1].split("&");
-              var result = {};
-              for(var i=0; i<data.length; i++) {
-                var item = data[i].split("=");
-                result[item[0]] = decodeURIComponent(item[1]);
-              }
-              return result;
-            }
-
-            ffbLogin = function () {
-                var ref = window.open('https://www.facebook.com/dialog/oauth?scope=email&client_id=483622355081269&redirect_uri=http://carbon.jamescobbett.co.uk/redirect.html', '_blank', 'location=no');
-
-                 ref.addEventListener('loadstop', function(event) { 
-
-
-                    if(event.url.indexOf("http://carbon.jamescobbett.co.uk/setVars.html") != -1) {
-
-                        ref.close();
-
-                        var fbDataArray = getJsonFromUrl(event.url);
-
-                        if (fbDataArray['email'].indexOf('@') != -1) {
-
-                            $('#userData').html('<img style="display:block; height: 150px; width: 150px; margin: 0px auto; margin-top: 50px;" src="https://graph.facebook.com/' + fbDataArray['id'] + '/picture?width=100&height=100" />');
-                            $('#userData').append('<div style="text-align:center; height: 50px; width: 300px; margin: 0px auto; font-size: 25px; margin-top: 25px;">' + fbDataArray['email'] + '</div>');
-                            $('#userData').append('<div style="text-align:center; height: 50px; width: 300px; margin: 0px auto; font-size: 25px; margin-top: 10px;">' + fbDataArray['name'] + '</div>');
-                            $('#userData').append('<div style="color: green; text-align:center; height: 50px; width: 300px; margin: 0px auto; font-size: 25px; margin-top: 10px;">ACCESS GRANTED!</div>');
-                        } else {
-                            $('#userData').html('<div style="color: red; text-align:center; height: 50px; width: 300px; margin: 0px auto; font-size: 25px; margin-top: 10px;">ACCESS DENIED!</div>');
-                        }
-                        //alert(fbDataArray['email'] + ' | ' + fbDataArray['name'] + ' | ' + fbDataArray['id']);
-
-                    }
-
-
-                 });
-                 ref.addEventListener('loaderror', function(event) { alert('error: ' + event.message); });
-
-            };
-
-
-
-
-               window.fbAsyncInit = function() {
-                FB.init({
-                  appId      : '483622355081269',
-                  status     : true,
-                  cookie     : true,
-                  xfbml      : true
-                });
-
-              };
-
-              (function(d, s, id){
-                 var js, fjs = d.getElementsByTagName(s)[0];
-                 if (d.getElementById(id)) {return;}
-                 js = d.createElement(s); js.id = id;
-                 js.src = "//connect.facebook.net/en_US/all.js";
-                 fjs.parentNode.insertBefore(js, fjs);
-               }(document, 'script', 'facebook-jssdk'));
-
-
-        });
-    </script>
-
-
 <a href="#" rel="external" id="signupstrip" onclick="goToSignup();">Not yet a member? Sign up <span class="bold">here</span></a>
 </div>
 </div>
@@ -154,53 +74,53 @@
        <!-- <script type="text/javascript">getuserList();</script> -->
         <script type="text/javascript" src="phonegap.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
-       <script type="text/javascript">
-//             app.initialize();
-//             $(document).on('mobileinit', function() {
-//                   FB.init({
-//                     appId : auth.fbId,
-//                     nativeInterface : CDV.FB,
-//                     useCachedDialogs : false
-//                   });
-//                   var auth = new function() {
+        <script type="text/javascript">
+            app.initialize();
+            $(document).on('mobileinit', function() {
+                  FB.init({
+                    appId : auth.fbId,
+                    nativeInterface : CDV.FB,
+                    useCachedDialogs : false
+                  });
+                  var auth = new function() {
 
-//   this.fbId = "483622355081269";
+  this.fbId = "483622355081269";
 
-//   this.FBlogin = function() {
+  this.FBlogin = function() {
 
-//     FB.login(function(response) {
+    FB.login(function(response) {
 
-//  var uid = null; 
-//  try {
-//      uid = response.authResponse.userId;
-//  } catch (e) {
-//      main.errorLog(e, "FB.login");
-//  }
+ var uid = null; 
+ try {
+     uid = response.authResponse.userId;
+ } catch (e) {
+     main.errorLog(e, "FB.login");
+ }
 
-//  // iOs Hack other property name
-//  if (!uid && navigator.userAgent.match(/(iPhone)/i)) {
-//     try {
-//        uid = response.authResponse.userID;
-//     } catch (e) {
-//        main.errorLog(e, "FB.login");
-//     }
-//  }
+ // iOs Hack other property name
+ if (!uid && navigator.userAgent.match(/(iPhone)/i)) {
+    try {
+       uid = response.authResponse.userID;
+    } catch (e) {
+       main.errorLog(e, "FB.login");
+    }
+ }
 
-//  if (response.status == 'connected') {
-//    main.loadAjax(main.ajaxPrefix + '/auth/loginsocial/', {
-//      fbId : uid,
-//      access_token: response.authResponse.accessToken,
-//             secret: TOP_SECRET_GENERATED_HASH
-//    }, auth.successLogin, auth.errorLogin);
+ if (response.status == 'connected') {
+   main.loadAjax(main.ajaxPrefix + '/auth/loginsocial/', {
+     fbId : uid,
+     access_token: response.authResponse.accessToken,
+            secret: TOP_SECRET_GENERATED_HASH
+   }, auth.successLogin, auth.errorLogin);
 
-//  } else if (response.status === 'not_authorized') {
-//     alert('Error in authentication: not authorized');
-//  } else {
-//     alert('Unknown error in authentication');
-//  }
-//     }, {scope : "email"});
-//   }
-// }
-         </script>
+ } else if (response.status === 'not_authorized') {
+    alert('Error in authentication: not authorized');
+ } else {
+    alert('Unknown error in authentication');
+ }
+    }, {scope : "email"});
+  }
+}
+        </script>
     </body>
 </html>
