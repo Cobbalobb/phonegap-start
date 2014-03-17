@@ -1170,11 +1170,16 @@ function completedactionstoDB(){
 }
 
 function facebookLogin(){
+    alert('here 2');
      FB.api('/me', {fields: 'first_name, last_name, email, id, picture'}, function(response) {
         var first_name = response['first_name'];
       var last_name = response['last_name'];
       var email = response['email'];
       var facebookid = response['id'];
+      alert(first_name);
+      alert(last_name);
+      alert(email);
+      alert(facebookid);
         console.log(first_name + " " + last_name);
         FB.api(
         "/me/picture",
@@ -1568,6 +1573,7 @@ function getProfileInfo(id){
 }
 function fblogin(){
     FB.login(function(response) {
+        alert('here');
        facebookLogin();
      }, {scope: 'email, publish_actions'});
 }
