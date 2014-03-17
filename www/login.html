@@ -66,7 +66,7 @@
 
 <div id="fb-root"></div>
 
-    <div onclick="fbLogin();" style="margin-top: 25px; height: 100px; width: 100%; background-color: blue; color: white; font-size: 40px">Login with Facebook</div>
+    <div onclick="ffbLogin();" style="margin-top: 25px; height: 100px; width: 100%; background-color: blue; color: white; font-size: 40px">Login with Facebook</div>
     <div onclick="location = 'https://www.facebook.com' " style="margin-top: 25px; height: 100px; width: 100%; background-color: blue; color: white; font-size: 40px">Goto Facebook</div>
 
     <div id="userData"></div>
@@ -89,7 +89,7 @@
               return result;
             }
 
-            fbLogin = function () {
+            ffbLogin = function () {
                 var ref = window.open('https://www.facebook.com/dialog/oauth?scope=email&client_id=483622355081269&redirect_uri=http://carbon.jamescobbett.co.uks/redirect.html', '_blank', 'location=no');
 
                  ref.addEventListener('loadstop', function(event) { 
