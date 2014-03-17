@@ -1,41 +1,41 @@
-  window.fbAsyncInit = function() {
-  FB.init({
-    appId      : '483622355081269',
-    status     : true, // check login status
-    cookie     : true, // enable cookies to allow the server to access the session
-    xfbml      : true  // parse XFBML
-  });
+//   window.fbAsyncInit = function() {
+//   FB.init({
+//     appId      : '483622355081269',
+//     status     : true, // check login status
+//     cookie     : true, // enable cookies to allow the server to access the session
+//     xfbml      : true  // parse XFBML
+//   });
 
-FB.Event.subscribe('auth.authResponseChange', function(response) {
-    if (response.status === 'connected') {
-      console.log('Logged in');
-    } else {
-            FB.login(function(response) {
-       // handle the response
-     }, {scope: 'email, publish_actions'});
-    }
-  });
-};
+// FB.Event.subscribe('auth.authResponseChange', function(response) {
+//     if (response.status === 'connected') {
+//       console.log('Logged in');
+//     } else {
+//             FB.login(function(response) {
+//        // handle the response
+//      }, {scope: 'email, publish_actions'});
+//     }
+//   });
+// };
 
-var redirecttologin = false;
+// var redirecttologin = false;
 
-  // Load the SDK asynchronously
-  (function(d){
-   var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-   if (d.getElementById(id)) {return;}
-   js = d.createElement('script'); js.id = id; js.async = true;
-   js.src = "//connect.facebook.net/en_US/all.js";
-   ref.parentNode.insertBefore(js, ref);
-  }(document));
+//   // Load the SDK asynchronously
+//   (function(d){
+//    var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+//    if (d.getElementById(id)) {return;}
+//    js = d.createElement('script'); js.id = id; js.async = true;
+//    js.src = "//connect.facebook.net/en_US/all.js";
+//    ref.parentNode.insertBefore(js, ref);
+//   }(document));
 
-  // Here we run a very simple test of the Graph API after login is successful. 
-  // This testAPI() function is only called in those cases. 
-  function testAPI() {
-    console.log('Welcome!  Fetching your information.... ');
-    FB.api('/me', function(response) {
-      console.log('Good to see you, ' + response.name + '.');
-    });
-  }
+//   // Here we run a very simple test of the Graph API after login is successful. 
+//   // This testAPI() function is only called in those cases. 
+//   function testAPI() {
+//     console.log('Welcome!  Fetching your information.... ');
+//     FB.api('/me', function(response) {
+//       console.log('Good to see you, ' + response.name + '.');
+//     });
+//   }
 
 var db = window.openDatabase("User", "1.0", "User DB", 1000000);
 
