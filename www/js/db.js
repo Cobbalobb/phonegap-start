@@ -1217,9 +1217,11 @@ function facebookLogin(){
                 var message = response.indexOf("New");
                 console.log(message);
                 if (message == -1){
+                    alert('log in');
                     submitLoginForm(email, image);
                 }
                 else {
+                    alert('sign up');
                     // User is new so register them
                     submitSignForm(first_name,last_name,email,image,facebookid);
                 }
