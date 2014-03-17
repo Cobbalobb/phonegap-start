@@ -117,6 +117,7 @@
             }
             
             function flogin() {
+              alert('here');
                 FB.login(
                          function(response) {
                           alert('test');
@@ -168,17 +169,6 @@
           FB.ui(params, function(obj) { console.log(obj);});
           }
       }
-            
-            document.addEventListener('deviceready', function() {
-                                      try {
-                                      alert('Device is ready! Make sure you set your app_id below this alert.');
-                    //Put your FB APP_ID here!
-                                      FB.init({ appId: "483622355081269", nativeInterface: CDV.FB, useCachedDialogs: false });
-                                      document.getElementById('data').innerHTML = "";
-                                      } catch (e) {
-                                      alert(e);
-                                      }
-                                      }, false);
             </script>
         <div id="log"></div>
     </body>
