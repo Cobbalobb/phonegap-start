@@ -1,98 +1,136 @@
-      window.fbAsyncInit = function() {
-        FB.init({
-          appId      : '1391755347765049',
-          status     : true,
-          xfbml      : true
-        });
-      };
-
-      (function(d, s, id){
-         var js, fjs = d.getElementsByTagName(s)[0];
-         if (d.getElementById(id)) {return;}
-         js = d.createElement(s); js.id = id;
-         js.src = "//connect.facebook.net/en_US/all.js";
-         fjs.parentNode.insertBefore(js, fjs);
-       }(document, 'script', 'facebook-jssdk'));
-
-function fblogin(){
-    FB.login(function(response) {
-        alert('here');
-       facebookLogin();
-     }, {scope: 'email, publish_actions'});
-}
-
-function facebookLogin(){
-    // alert('here 2');
-    //  FB.api('/me', {fields: 'first_name, last_name, email, id, picture'}, function(response) {
-    //     var first_name = response['first_name'];
-    //   var last_name = response['last_name'];
-    //   var email = response['email'];
-    //   var facebookid = response['id'];
-    //   alert(first_name);
-    //   alert(last_name);
-    //   alert(email);
-    //   alert(facebookid);
-    //     console.log(first_name + " " + last_name);
-    //     FB.api(
-    //     "/me/picture",
-    //     {
-    //         "redirect": false,
-    //         "height": "88",
-    //         "type": "normal",
-    //         "width": "98"
-    //     },
-    //     function (response) {
-    //       if (response && !response.error) {
-    //               console.log(response);
-    //   var image = response['data']['url'];
-    //   //GOT FIRST,LAST NAMES AND EMAIL
-    //   // Now to check email address with db, if doesn't exist pass paramaters to signup function to sign user up and add to table.
-    //   //If email does exist, log in as that user.
-
-    // var xhr, target, changeListener, url, data;
-    // //setting url to the php code to add comments to the db
-    // url = "http://carbon.jamescobbett.co.uk/services/checkUsers.php";
-    // var data = new FormData();
-
-    // data.append("email", email);
-
-    // console.log("Sending", data);
-    // console.log(this.test);
-    // // create a request object
-    // xhr = new XMLHttpRequest();
-
-    // changeListener = function () {
-    //     if (xhr.readyState == 4) {
-    //         if (xhr.status == 200) {
-    //             console.log("Response", this.responseText);
-    //             var response = this.responseText;
-    //             var message = response.indexOf("New");
-    //             console.log(message);
-    //             if (message == -1){
-    //                 alert('log in');
-    //                 submitLoginForm(email, image);
-    //             }
-    //             else {
-    //                 alert('sign up');
-    //                 // User is new so register them
-    //                 submitSignForm(first_name,last_name,email,image,facebookid);
-    //             }
-    //         }
-    //     }
-    // };
-
-    // // initialise a request, specifying the HTTP method
-    // // to be used and the URL to be connected to.
-    // xhr.onreadystatechange = changeListener;
-    // xhr.open('POST', url, true);
-    // //xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    // xhr.send(data);
+document.addEventListener('deviceready', function() {
+                try {
+                    //alert('Device is ready! Make sure you set your app_id below this alert.');
+                    //Put your FB APP_ID here!
+                    FB.init({ appId: "483622355081269", nativeInterface: CDV.FB, useCachedDialogs: false });
+                    document.getElementById('data').innerHTML = "";
+                    } catch (e) {
+                    alert(e);
+                    }
+                    }, false);
 
 
+// These are the notifications that are displayed to the user through pop-ups if the above JS files does not exist in the same directory-->
+            //if ((typeof cordova == 'undefined') && (typeof Cordova == 'undefined')) alert('Cordova variable does not exist. Check that you have included cordova.js correctly');
+            //if (typeof CDV == 'undefined') alert('CDV variable does not exist. Check that you have included cdv-plugin-fb-connect.js correctly');
+            //if (typeof FB == 'undefined') alert('FB variable does not exist. Check that you have included the Facebook JS SDK file.');
+            
+            FB.Event.subscribe('auth.login', function(response) {
+                               alert('auth.login event');
+                               });
+            
+            FB.Event.subscribe('auth.logout', function(response) {
+                               alert('auth.logout event');
+                               });
+            
+            FB.Event.subscribe('auth.sessionChange', function(response) {
+                               alert('auth.sessionChange event');
+                               });
+            
+            FB.Event.subscribe('auth.statusChange', function(response) {
+                               alert('auth.statusChange event');
+                               });
+            alert('test');
+ 
+            /*function getSession() {
+                alert("session: " + JSON.stringify(FB.getSession()));
+            }
+            */
+            function getLoginStatus() {
+                FB.getLoginStatus(function(response) {
+                                  if (response.status == 'connected') {
+                                  alert('logged in');
+                                  } else {
+                                  alert('not logged in');
+                                  }
+                                  });
+            }
+            var friendIDs = [];
+      var fdata;
+            function me() {
+                FB.api('/me/friends', { fields: 'id, name, picture' },  function(response) {
+                       if (response.error) {
+                       alert(JSON.stringify(response.error));
+                       } else {
+                       var data = document.getElementById('data');
+                       fdata=response.data;
+                       console.log("fdata: "+fdata);
+                       response.data.forEach(function(item) {
+                                             var d = document.createElement('div');
+                                             d.innerHTML = "<img src="+item.picture+"/>"+item.name;
+                                             data.appendChild(d);
+                                             });
+                       }
+          var friends = response.data;
+          console.log(friends.length); 
+          for (var k = 0; k < friends.length && k < 200; k++) {
+                var friend = friends[k];
+                var index = 1;
 
-    // return false;
-    //       }
-    //     }
-    // );
-    // });     
-}
+                friendIDs[k] = friend.id;
+                //friendsInfo[k] = friend;
+          }
+          console.log("friendId's: "+friendIDs);
+                       });
+            }
+            
+            function flogout() {
+                FB.logout(function(response) {
+                          alert('logged out');
+                          });
+            }
+            
+            function flogin() {
+              alert('here');
+                FB.login(
+                         function(response) {
+                          alert('test');
+                          alert(response);
+                          alert(response.session);
+                          facebookLogin();
+                         if (response.session) {
+                         alert('logged in');
+                         } else {
+                         alert('not logged in');
+                         }
+                         },
+                         { scope: "email, publish_actions" }
+                         );
+            }
+
+
+      function facebookWallPost(name) {
+          console.log('Debug 1');
+        var params = {
+            method: 'feed',
+            name: name,
+            link: 'https://carboncutterapp.co.uk/',
+            picture: 'http://fbrell.com/f8.jpg',
+            caption: 'Carbon Footprint',
+            description: 'Carbon cutter is an android application that helps you lower and monitor your carbon footprint.'
+          };
+        console.log(params);
+          FB.ui(params, function(obj) { console.log(obj);});
+      }
+            
+      function publishStoryFriend() {
+        randNum = Math.floor ( Math.random() * friendIDs.length ); 
+
+        var friendID = friendIDs[randNum];
+        if (friendID == undefined){
+          alert('please click the me button to get a list of friends first');
+        }else{
+            console.log("friend id: " + friendID );
+              console.log('Opening a dialog for friendID: ', friendID);
+              var params = {
+                method: 'feed',
+                  to: friendID.toString(),
+                  name: 'Facebook Dialogs',
+                  link: 'https://developers.facebook.com/docs/reference/dialogs/',
+                  picture: 'http://fbrell.com/f8.jpg',
+                  caption: 'Reference Documentation',
+                  description: 'Dialogs provide a simple, consistent interface for applications to interface with users.'
+            };
+          FB.ui(params, function(obj) { console.log(obj);});
+          }
+      }

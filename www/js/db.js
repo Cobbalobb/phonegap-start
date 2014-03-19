@@ -91,185 +91,7 @@ var redirecttologin = false;
     });
   }
 
-
 var db = window.openDatabase("User", "1.0", "User DB", 1000000);
-
-function direct(){
-  alert('in direct');
-  // alert('web: '+web);
-  // alert(localStorage.getItem('id'));
-  // if(localStorage.getItem('id') != undefined || localStorage.getItem('id') != null){
-  //   directToHome();
-  // } else {
-  //   goToLogin();
-  // }
-//var db = window.openDatabase("User", "1.0", "User DB", 1000000);
-
-  function queryDB(tx) {
-          //tx.executeSql('DROP TABLE IF EXISTS User');
-          tx.executeSql('SELECT first_name FROM User', [], querySuccess, errorCB);
-      }
-
-      function querySuccess(tx, results) {
-        alert('success direct');
-          console.log("Returned rows = " + results.rows.length);
-          var num = results.rows.length;
-          // this will be true since it was a select statement and so rowsAffected was 0
-          if (!results.rowsAffected) {
-              directToHome();
-              return false;
-          } else {
-              console.log('No rows affected!');
-          }
-          // for an insert statement, this property will return the ID of the last inserted row
-          console.log("Last inserted row ID = " + results.insertId);
-      }
-
-      function errorCB(err) {
-        alert('fail direct');
-          goToLogin();
-      }
-
-      //var db = window.openDatabase("User", "1.0", "User DB", 1000000);
-      alert('just before giving db');
-      db.transaction(queryDB, errorCB);
-}
-
-document.addEventListener('deviceready', function() {
-                try {
-                    //alert('Device is ready! Make sure you set your app_id below this alert.');
-                    //Put your FB APP_ID here!
-                    FB.init({ appId: "483622355081269", nativeInterface: CDV.FB, useCachedDialogs: false });
-                    document.getElementById('data').innerHTML = "";
-                    } catch (e) {
-                    alert(e);
-                    }
-                    }, false);
-
-
-// These are the notifications that are displayed to the user through pop-ups if the above JS files does not exist in the same directory-->
-            //if ((typeof cordova == 'undefined') && (typeof Cordova == 'undefined')) alert('Cordova variable does not exist. Check that you have included cordova.js correctly');
-            //if (typeof CDV == 'undefined') alert('CDV variable does not exist. Check that you have included cdv-plugin-fb-connect.js correctly');
-            //if (typeof FB == 'undefined') alert('FB variable does not exist. Check that you have included the Facebook JS SDK file.');
-            
-            FB.Event.subscribe('auth.login', function(response) {
-                               alert('auth.login event');
-                               });
-            
-            FB.Event.subscribe('auth.logout', function(response) {
-                               alert('auth.logout event');
-                               });
-            
-            FB.Event.subscribe('auth.sessionChange', function(response) {
-                               alert('auth.sessionChange event');
-                               });
-            
-            FB.Event.subscribe('auth.statusChange', function(response) {
-                               alert('auth.statusChange event');
-                               });
-            
-            /*function getSession() {
-                alert("session: " + JSON.stringify(FB.getSession()));
-            }
-            */
-            function getLoginStatus() {
-                FB.getLoginStatus(function(response) {
-                                  if (response.status == 'connected') {
-                                  alert('logged in');
-                                  } else {
-                                  alert('not logged in');
-                                  }
-                                  });
-            }
-            var friendIDs = [];
-      var fdata;
-            function me() {
-                FB.api('/me/friends', { fields: 'id, name, picture' },  function(response) {
-                       if (response.error) {
-                       alert(JSON.stringify(response.error));
-                       } else {
-                       var data = document.getElementById('data');
-                       fdata=response.data;
-                       console.log("fdata: "+fdata);
-                       response.data.forEach(function(item) {
-                                             var d = document.createElement('div');
-                                             d.innerHTML = "<img src="+item.picture+"/>"+item.name;
-                                             data.appendChild(d);
-                                             });
-                       }
-          var friends = response.data;
-          console.log(friends.length); 
-          for (var k = 0; k < friends.length && k < 200; k++) {
-                var friend = friends[k];
-                var index = 1;
-
-                friendIDs[k] = friend.id;
-                //friendsInfo[k] = friend;
-          }
-          console.log("friendId's: "+friendIDs);
-                       });
-            }
-            
-            function flogout() {
-                FB.logout(function(response) {
-                          alert('logged out');
-                          });
-            }
-            
-            function flogin() {
-              alert('here');
-                FB.login(
-                         function(response) {
-                          alert('test');
-                          alert(response);
-                          alert(response.session);
-                          facebookLogin();
-                         if (response.session) {
-                         alert('logged in');
-                         } else {
-                         alert('not logged in');
-                         }
-                         },
-                         { scope: "email, publish_actions" }
-                         );
-            }
-
-
-      function facebookWallPost(name) {
-          console.log('Debug 1');
-        var params = {
-            method: 'feed',
-            name: name,
-            link: 'https://carboncutterapp.co.uk/',
-            picture: 'http://fbrell.com/f8.jpg',
-            caption: 'Carbon Footprint',
-            description: 'Carbon cutter is an android application that helps you lower and monitor your carbon footprint.'
-          };
-        console.log(params);
-          FB.ui(params, function(obj) { console.log(obj);});
-      }
-            
-      function publishStoryFriend() {
-        randNum = Math.floor ( Math.random() * friendIDs.length ); 
-
-        var friendID = friendIDs[randNum];
-        if (friendID == undefined){
-          alert('please click the me button to get a list of friends first');
-        }else{
-            console.log("friend id: " + friendID );
-              console.log('Opening a dialog for friendID: ', friendID);
-              var params = {
-                method: 'feed',
-                  to: friendID.toString(),
-                  name: 'Facebook Dialogs',
-                  link: 'https://developers.facebook.com/docs/reference/dialogs/',
-                  picture: 'http://fbrell.com/f8.jpg',
-                  caption: 'Reference Documentation',
-                  description: 'Dialogs provide a simple, consistent interface for applications to interface with users.'
-            };
-          FB.ui(params, function(obj) { console.log(obj);});
-          }
-      }
 
 function logout(){
     function dropDB(tx) {
@@ -928,7 +750,6 @@ function footprintToServerDatabase(){
     return false;
 }
 }
-alert('yrs');
  //Functions to run on homepage
 function getUserInfo(load){
   //alert("show "+show);
@@ -1076,7 +897,6 @@ function addActionToList(actionid, title){
 
     return false;
 }
-
 function completeAction(actionid, reduction){
 
     var id = localStorage.getItem('id');               
@@ -1806,7 +1626,6 @@ function newsfeed(){
     //xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.send(data);
 }
-alert('this far');
 
 function getProfileInfo(id){
      // declaring variables to be used
@@ -2017,4 +1836,45 @@ FB.api(
 //     }
 //   }
 // );
+}
+
+function direct(){
+  alert('in direct');
+  // alert('web: '+web);
+  // alert(localStorage.getItem('id'));
+  // if(localStorage.getItem('id') != undefined || localStorage.getItem('id') != null){
+  //   directToHome();
+  // } else {
+  //   goToLogin();
+  // }
+var db = window.openDatabase("User", "1.0", "User DB", 1000000);
+
+  function queryDB(tx) {
+          //tx.executeSql('DROP TABLE IF EXISTS User');
+          tx.executeSql('SELECT first_name FROM User', [], querySuccess, errorCB);
+      }
+
+      function querySuccess(tx, results) {
+        alert('success direct');
+          console.log("Returned rows = " + results.rows.length);
+          var num = results.rows.length;
+          // this will be true since it was a select statement and so rowsAffected was 0
+          if (!results.rowsAffected) {
+              directToHome();
+              return false;
+          } else {
+              console.log('No rows affected!');
+          }
+          // for an insert statement, this property will return the ID of the last inserted row
+          console.log("Last inserted row ID = " + results.insertId);
+      }
+
+      function errorCB(err) {
+        alert('fail direct');
+          goToLogin();
+      }
+
+      //var db = window.openDatabase("User", "1.0", "User DB", 1000000);
+      alert('just before giving db');
+      db.transaction(queryDB, errorCB);
 }
