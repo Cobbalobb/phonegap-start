@@ -1980,6 +1980,7 @@ FB.api(
 
 function direct(){
   alert('in direct');
+  alert('web: '+web);
   alert(localStorage.getItem('id'));
   if(localStorage.getItem('id') != undefined || localStorage.getItem('id') != null){
     directToHome();
