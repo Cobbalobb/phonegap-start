@@ -1,4 +1,54 @@
+var show;
 var web = true;
+
+$(document).live("pagebeforechange", function(e, ob) {
+
+    console.log("pagebeforechange");
+
+    console.log(ob);
+    console.log(ob.toPage[0].id);
+    //console.log("PAGE CHANGE: "+ob.toPage[0].id);
+    if(ob.options.fromPage != undefined){
+    console.log(ob.options.fromPage[0].id);
+      if (ob.toPage[0].id === "login" && ob.options.fromPage[0].id === "home") {
+          if(redirecttologin === true){
+              redirecttologin = false;
+          } else {
+              console.log("blocking the back");
+              e.preventDefault();
+              history.go(1);
+          }
+      }
+    }
+    if(ob.options.fromPage != undefined){
+      if (ob.toPage[0].id === "home" && ob.options.fromPage[0].id === "login") {
+          setTimeout(function(){getUserInfo()},0100);
+      } else if(ob.options.fromPage != "holding" && ob.toPage[0].id === "home"){
+          setTimeout(function(){getUserInfo()},0100);
+      }
+    }
+});
+
+// $(document).live("pageafterchange", function(e, ob) {
+
+//     console.log("pageafterchange");
+
+//     console.log(ob);
+//     console.log("PAGE AFTER CHANGE: "+ob.toPage[0].id);
+    // if (ob.toPage[0].id === "login" && ob.options.fromPage) {
+    //     if(redirecttologin === true){
+    //         redirecttologin = false;
+    //     } else {
+    //         console.log("blocking the back");
+    //         e.preventDefault();
+    //         history.go(1);
+    //     }
+    // }
+    // if(op.toPage[0].id === "home"){
+
+    // }
+
+//});
 
 if(web==true){
   window.fbAsyncInit = function() {
@@ -46,7 +96,7 @@ var db = window.openDatabase("User", "1.0", "User DB", 1000000);
 
 document.addEventListener('deviceready', function() {
                 try {
-                    alert('Device is ready! Make sure you set your app_id below this alert.');
+                    //alert('Device is ready! Make sure you set your app_id below this alert.');
                     //Put your FB APP_ID here!
                     FB.init({ appId: "483622355081269", nativeInterface: CDV.FB, useCachedDialogs: false });
                     document.getElementById('data').innerHTML = "";
@@ -57,9 +107,9 @@ document.addEventListener('deviceready', function() {
 
 
 // These are the notifications that are displayed to the user through pop-ups if the above JS files does not exist in the same directory-->
-            if ((typeof cordova == 'undefined') && (typeof Cordova == 'undefined')) alert('Cordova variable does not exist. Check that you have included cordova.js correctly');
-            if (typeof CDV == 'undefined') alert('CDV variable does not exist. Check that you have included cdv-plugin-fb-connect.js correctly');
-            if (typeof FB == 'undefined') alert('FB variable does not exist. Check that you have included the Facebook JS SDK file.');
+            //if ((typeof cordova == 'undefined') && (typeof Cordova == 'undefined')) alert('Cordova variable does not exist. Check that you have included cordova.js correctly');
+            //if (typeof CDV == 'undefined') alert('CDV variable does not exist. Check that you have included cdv-plugin-fb-connect.js correctly');
+            //if (typeof FB == 'undefined') alert('FB variable does not exist. Check that you have included the Facebook JS SDK file.');
             
             FB.Event.subscribe('auth.login', function(response) {
                                alert('auth.login event');
@@ -214,6 +264,7 @@ function logout(){
                 // FB.logout(function(response) {
                 //           alert('logged out');
                 //           });
+                show = true;
                 redirecttologin = true;
                 goToLogin();
             //});
@@ -836,18 +887,34 @@ function footprintToServerDatabase(){
     return false;
 }
 }
-
+alert('yrs');
  //Functions to run on homepage
-function getUserInfo(){
-    alert('in function');
-   getCurrentUsersID();
-   getCurrentUsersName();
-   getCurrentUsersFootprint();
-   //getCurrentUsersActionsNo();
-   //getCurrentUsersBadgesNo();
-   getCurrentUsersReduction();
-   getCurrentUsersImage();
-   actionmessage();
+function getUserInfo(load){
+  //alert("show "+show);
+  //alert("load "+load)
+   //if(load == true){
+       getCurrentUsersID();
+       getCurrentUsersName();
+       getCurrentUsersFootprint();
+       //getCurrentUsersActionsNo();
+       //getCurrentUsersBadgesNo();
+       getCurrentUsersReduction();
+       getCurrentUsersImage();
+       actionmessage();
+   //    show = false;
+   //} else if (show == true) {
+   //     getCurrentUsersID();
+   //     getCurrentUsersName();
+   //     getCurrentUsersFootprint();
+   //     //getCurrentUsersActionsNo();
+   //     //getCurrentUsersBadgesNo();
+   //     getCurrentUsersReduction();
+   //     getCurrentUsersImage();
+   //     actionmessage();
+   //     show = false;
+   // } else {
+
+   // }
 }
 
 function addActionToList(actionid, title){
@@ -1698,6 +1765,7 @@ function newsfeed(){
     //xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.send(data);
 }
+alert('this far');
 
 function getProfileInfo(id){
      // declaring variables to be used
@@ -1866,26 +1934,7 @@ function changepassword(){
         alert('Passwords do not match');
     }
 }
-
-$(document).live("pagebeforechange", function(e, ob) {
-
-    console.log("pagebeforechange");
-
-    console.log(ob);
-
-    if (ob.toPage[0].id === "login" && ob.options.fromPage) {
-        if(redirecttologin === true){
-            redirecttologin = false;
-        } else {
-
-            console.log("blocking the back");
-
-            e.preventDefault();
-            history.go(1);
-        }
-    }
-
-}); 
+ 
 
 function shareaction(){
     var objectToLike = 'http://samples.ogp.me/488117217965116';

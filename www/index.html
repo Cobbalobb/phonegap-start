@@ -53,6 +53,10 @@
             $(document).bind("mobileinit", function() {
                 $.support.cors = true;
                 $.mobile.allowCrossDomainPages = true;
+                $("#home").on("pagecontainershow"), function() {
+                 alert('yeeeeah');
+                }
+
             });
 
         </script>
@@ -71,76 +75,18 @@
         </ul>
     </div> -->
 <!-- Start of Home page -->
-<div data-role="page" id="home">
-    <div data-role="panel" id="menu">
-        <ul id="menu-list">
-            <li class="active"><a onclick="goToCurrent();" href="#" class="contentLink"><h1>Home</h1> </a></li>
-            <li><a onclick="goToCurrent();" href="#" class="contentLink"><h1>Actions</h1> </a></li>
-            <li><a onclick="goToFriends();" href="#" class="contentLink"><h1>Friends</h1> </a></li>
-            <li><a onclick="goToBadges();" href="#" class="contentLink"><h1>Badges</h1> </a></li>
-            <li><a href="#" class="contentLink"><h1>Journey</h1> </a></li>
-            <li><a onclick="goToSettings();" href="#" class="contentLink"><h1>Settings</h1> </a></li>
-            <li><a href="#" onclick="logout()" class="contentLink"><h1>Sign Out</h1> </a></li>
-        </ul>
-        </div><!-- /panel -->
-    <div class="header" data-role="header">
-    <!--     <a href="#"class="showMenu"></a>
- -->    <a href="#menu" class="showMenu"></a>
-        <h1>Carbon Cutter</h1>
-    
-    </div>
-    <div data-role="content">
-        <div id="welcome">
-            <div id="json"></div>
-            <div id="welcome-message">
-                <div id="user-img"><img src="http://carbon.jamescobbett.co.uk/www/img/me.jpg"></div>
-                    <h1 id="name">Hi </h1>
-                    <h2 id="noactions">How is <a id="actionmessage" href="#" onclick="goToActions()"></a> going?</h2>
-                    <div style="clear: both;"></div>
-                </div>
-                                    <div style="clear: both;"></div>
-        <div id="stats">
-            <div id="footprint">
-                <h1 class="head">Footprint</h1>
-            </div>
-            <div id="reductions">
-                <h1 class="head">Reduction</h1>
-            </div>
-        </div>
-        </div>
-        <div id="newsfeed">
-        </div>
+<div data-role="page" id="holding">
 
 
-
-<!--        <a href="#"><div class="home_but" id="footprint">
-            <h1 class="head">Footprint</h1>
-        </div>  </a>    
-        <div class="home_but" id="reductions">
-            <h1 class="head">Reductions</h1> 
-        </div>        
-        <a href="#"  rel="external" onclick="goToCurrent();"><div class="home_but" id="actions">
-            <h1 class="head">Actions</h1> 
-        </div> </a>
-        <a href="#" rel="external" onclick="goToFriends();"><div class="home_but" id="friends">
-            <h1 class="head">Friends</h1> <h1 class="dynamic">3rd</h1>
-        </div> </a>
-        <a href="#" rel="external" onclick="goToBadges();"><div class="home_but" id="badges">
-            <h1 class="head">Badges</h1> <h1 class="dynamic"></h1>
-        </div>      </a>
-        <div class="home_but" id="journey">
-            <h1 class="head">Start a Journey</h1>
-        </div>
-        <a href="#" onclick="logout()"><div class="home_but" id="reductions">
-            <h1 class="head">Sign Out</h1>
-        </div></a> -->
-
-    </div>
-
-
+<script type="text/javascript">
+        setTimeout(function(){directToHome()},0800);
+    </script>
 </div>
 <!-- End of Home page -->
-        <script type="text/javascript">$( document ).ready(getUserInfo());</script>
+        <script type="text/javascript">
+         //   $( document ).ready(getUserInfo(true));
+            
+        </script>
         <!--<script type="text/javascript">newsfeed();</script>-->
         <script type="text/javascript" src="phonegap.js"></script>
         <script type="text/javascript" src="js/index.js"></script>

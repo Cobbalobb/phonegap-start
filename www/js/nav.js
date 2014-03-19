@@ -9,15 +9,24 @@ function goToActions(){
 }
 
 function goToHome(){
-	$(':mobile-pagecontainer').pagecontainer('change', 'index.html', {
-			// show: function( event, ui ) { 
-			// 	alert('test') 
-			// },
+	$(':mobile-pagecontainer').pagecontainer('change', 'home.html', {
+			//  beforeshow: function( event, ui ) {alert('test')}
 	        transition: 'slide',
 	        changeHash: true,
 	        reverse: false,
 	        showLoadMsg: true,
-	        reload: false
+	        reload: true
+	    });
+}
+
+function directToHome(){
+	$(':mobile-pagecontainer').pagecontainer('change', 'home.html', {
+			//  beforeshow: function( event, ui ) {alert('test')}
+	        transition: 'fade',
+	        changeHash: true,
+	        reverse: false,
+	        showLoadMsg: true,
+	        reload: true
 	    });
 }
 
