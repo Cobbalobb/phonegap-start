@@ -91,8 +91,10 @@ var redirecttologin = false;
     });
   }
 
-var db = window.openDatabase("User", "1.0", "User DB", 1000000);
 
+$( document ).ready(function() {
+  var db = window.openDatabase("User", "1.0", "User DB", 1000000);
+});
 
 document.addEventListener('deviceready', function() {
                 try {
@@ -1987,7 +1989,7 @@ function direct(){
   // } else {
   //   goToLogin();
   // }
-var db = window.openDatabase("User", "1.0", "User DB", 1000000);
+//var db = window.openDatabase("User", "1.0", "User DB", 1000000);
 
   function queryDB(tx) {
           //tx.executeSql('DROP TABLE IF EXISTS User');
