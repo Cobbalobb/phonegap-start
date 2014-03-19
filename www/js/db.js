@@ -23,7 +23,8 @@ $(document).live("pagebeforechange", function(e, ob) {
     }
     if(ob.options.fromPage != undefined){
       if (ob.toPage[0].id === "home" && ob.options.fromPage[0].id === "login") {
-          setTimeout(function(){getUserInfo()},0100);
+        alert('here');
+          setTimeout(function(){getUserInfo()},1000);
       } else if(ob.options.fromPage != "holding" && ob.toPage[0].id === "home"){
           setTimeout(function(){getUserInfo()},0100);
       }
