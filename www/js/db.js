@@ -526,7 +526,7 @@ function redirect(){
 }
 
 function getCurrentUsersName() {
-alert("test1");
+
     function queryDB(tx) {
         //tx.executeSql('DROP TABLE IF EXISTS User');
         tx.executeSql('SELECT first_name FROM User', [], querySuccess, errorCB);
@@ -537,7 +537,6 @@ alert("test1");
         var num = results.rows.length;
         // this will be true since it was a select statement and so rowsAffected was 0
         if (!results.rowsAffected) {
-          alert('success1');
             $('#name').append(results.rows.item(num-1).first_name + ',');
             $( document ).ready(function() {
                 newsfeed();
@@ -554,7 +553,6 @@ alert("test1");
         //alert("Name Error processing SQL: "+err.code);
         //goToLogin();
         //document.location.href = 'login.html';
-        alert('fail1');
         redirecttologin = true;
         goToLogin();
     }
