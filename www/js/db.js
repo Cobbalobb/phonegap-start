@@ -1979,12 +1979,14 @@ FB.api(
 }
 
 function direct(){
+  alert('in direct');
   function queryDB(tx) {
           //tx.executeSql('DROP TABLE IF EXISTS User');
           tx.executeSql('SELECT first_name FROM User', [], querySuccess, errorCB);
       }
 
       function querySuccess(tx, results) {
+        alert('success');
           console.log("Returned rows = " + results.rows.length);
           var num = results.rows.length;
           // this will be true since it was a select statement and so rowsAffected was 0
@@ -1999,6 +2001,7 @@ function direct(){
       }
 
       function errorCB(err) {
+        alert('fail');
           goToLogin();
       }
 
