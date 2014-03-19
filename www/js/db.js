@@ -1984,7 +1984,7 @@ function direct(){
   if(localStorage.getItem('id') != undefined || localStorage.getItem('id') != null){
     directToHome();
   } else {
-    goToHome();
+    goToLogin();
   }
 
   // function queryDB(tx) {
