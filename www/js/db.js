@@ -1986,7 +1986,7 @@ function direct(){
       }
 
       function querySuccess(tx, results) {
-        alert('success');
+        alert('success direct');
           console.log("Returned rows = " + results.rows.length);
           var num = results.rows.length;
           // this will be true since it was a select statement and so rowsAffected was 0
@@ -2001,7 +2001,7 @@ function direct(){
       }
 
       function errorCB(err) {
-        alert('fail');
+        alert('fail direct');
           goToLogin();
       }
 
