@@ -1,3 +1,4 @@
+var db = window.openDatabase("User", "1.0", "User DB", 1000000);
 var show;
 var web = true;
 
@@ -90,8 +91,6 @@ var redirecttologin = false;
       console.log('Good to see you, ' + response.name + '.');
     });
   }
-
-var db = window.openDatabase("User", "1.0", "User DB", 1000000);
 
 function logout(){
     function dropDB(tx) {
@@ -1847,7 +1846,7 @@ function direct(){
   // } else {
   //   goToLogin();
   // }
-var db = window.openDatabase("User", "1.0", "User DB", 1000000);
+//var db = window.openDatabase("User", "1.0", "User DB", 1000000);
 
   function queryDB(tx) {
           //tx.executeSql('DROP TABLE IF EXISTS User');
