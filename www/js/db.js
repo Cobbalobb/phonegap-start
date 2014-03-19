@@ -537,6 +537,7 @@ function getCurrentUsersName() {
         var num = results.rows.length;
         // this will be true since it was a select statement and so rowsAffected was 0
         if (!results.rowsAffected) {
+          alert('success1');
             $('#name').append(results.rows.item(num-1).first_name + ',');
             $( document ).ready(function() {
                 newsfeed();
@@ -553,6 +554,7 @@ function getCurrentUsersName() {
         //alert("Name Error processing SQL: "+err.code);
         //goToLogin();
         //document.location.href = 'login.html';
+        alert('fail1');
         redirecttologin = true;
         goToLogin();
     }
