@@ -92,9 +92,48 @@ var redirecttologin = false;
   }
 
 
-$( document ).ready(function() {
-  var db = window.openDatabase("User", "1.0", "User DB", 1000000);
-});
+var db = window.openDatabase("User", "1.0", "User DB", 1000000);
+
+function direct(){
+  alert('in direct');
+  // alert('web: '+web);
+  // alert(localStorage.getItem('id'));
+  // if(localStorage.getItem('id') != undefined || localStorage.getItem('id') != null){
+  //   directToHome();
+  // } else {
+  //   goToLogin();
+  // }
+//var db = window.openDatabase("User", "1.0", "User DB", 1000000);
+
+  function queryDB(tx) {
+          //tx.executeSql('DROP TABLE IF EXISTS User');
+          tx.executeSql('SELECT first_name FROM User', [], querySuccess, errorCB);
+      }
+
+      function querySuccess(tx, results) {
+        alert('success direct');
+          console.log("Returned rows = " + results.rows.length);
+          var num = results.rows.length;
+          // this will be true since it was a select statement and so rowsAffected was 0
+          if (!results.rowsAffected) {
+              directToHome();
+              return false;
+          } else {
+              console.log('No rows affected!');
+          }
+          // for an insert statement, this property will return the ID of the last inserted row
+          console.log("Last inserted row ID = " + results.insertId);
+      }
+
+      function errorCB(err) {
+        alert('fail direct');
+          goToLogin();
+      }
+
+      //var db = window.openDatabase("User", "1.0", "User DB", 1000000);
+      alert('just before giving db');
+      db.transaction(queryDB, errorCB);
+}
 
 document.addEventListener('deviceready', function() {
                 try {
@@ -1978,45 +2017,4 @@ FB.api(
 //     }
 //   }
 // );
-}
-
-function direct(){
-  alert('in direct');
-  // alert('web: '+web);
-  // alert(localStorage.getItem('id'));
-  // if(localStorage.getItem('id') != undefined || localStorage.getItem('id') != null){
-  //   directToHome();
-  // } else {
-  //   goToLogin();
-  // }
-//var db = window.openDatabase("User", "1.0", "User DB", 1000000);
-
-  function queryDB(tx) {
-          //tx.executeSql('DROP TABLE IF EXISTS User');
-          tx.executeSql('SELECT first_name FROM User', [], querySuccess, errorCB);
-      }
-
-      function querySuccess(tx, results) {
-        alert('success direct');
-          console.log("Returned rows = " + results.rows.length);
-          var num = results.rows.length;
-          // this will be true since it was a select statement and so rowsAffected was 0
-          if (!results.rowsAffected) {
-              directToHome();
-              return false;
-          } else {
-              console.log('No rows affected!');
-          }
-          // for an insert statement, this property will return the ID of the last inserted row
-          console.log("Last inserted row ID = " + results.insertId);
-      }
-
-      function errorCB(err) {
-        alert('fail direct');
-          goToLogin();
-      }
-
-      //var db = window.openDatabase("User", "1.0", "User DB", 1000000);
-      alert('just before giving db');
-      db.transaction(queryDB, errorCB);
 }
