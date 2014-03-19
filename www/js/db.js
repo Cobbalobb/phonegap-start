@@ -526,7 +526,7 @@ function redirect(){
 }
 
 function getCurrentUsersName() {
-
+alert("test1");
     function queryDB(tx) {
         //tx.executeSql('DROP TABLE IF EXISTS User');
         tx.executeSql('SELECT first_name FROM User', [], querySuccess, errorCB);
