@@ -3,7 +3,7 @@ var show;
 var web = true;
 alert('test');
 $(document).live("pagebeforechange", function(e, ob) {
-
+alert('line 6');
     console.log("pagebeforechange");
 
     //alert("To :"+ob.toPage[0].id);
