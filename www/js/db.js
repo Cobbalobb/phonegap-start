@@ -1829,7 +1829,7 @@ FB.api(
 }
 
 function direct(){
-  alert('in direct');
+  //alert('in direct');
   // alert('web: '+web);
   // alert(localStorage.getItem('id'));
   // if(localStorage.getItem('id') != undefined || localStorage.getItem('id') != null){
@@ -1845,7 +1845,7 @@ function direct(){
       }
 
       function querySuccess(tx, results) {
-        alert('success direct');
+        //alert('success direct');
           console.log("Returned rows = " + results.rows.length);
           var num = results.rows.length;
           // this will be true since it was a select statement and so rowsAffected was 0
@@ -1860,7 +1860,7 @@ function direct(){
       }
 
       function errorCB(err) {
-        alert('fail direct');
+        //alert('fail direct');
           goToLogin();
       }
 
