@@ -185,6 +185,7 @@ input{
     height: 32px !important;
     border: none !important;
     padding: 0 !important;
+    margin-top: 5px !important;
 }
 #menu-list{
     padding-left: 10px;
@@ -747,11 +748,11 @@ border-style: solid;
 .action-links-container{
     background-color: #f2f2f2;
     display: block;
-    padding: 20px 0px 10px;
+    padding: 10px 0px 10px;
 }
 .action-links{
     margin: 0 auto;
-    width: 313px;
+    width: 350px;
 }
 .action-links a{
     text-decoration: none;
@@ -765,12 +766,14 @@ border-style: solid;
 .action-complete{
     background: url(../img/complete.png) no-repeat;
     height: 32px;
-    padding: 10px 38px;
+    padding: 10px 0px 10px 38px;
+    float: right;
 }
 .action-remove{
     background: url(../img/delete.png) no-repeat;
     height: 32px;
     padding: 10px 38px;
+    float: left;
 }
 .successful-added{
     background: url(../img/complete.png) no-repeat;
@@ -796,11 +799,22 @@ border-style: solid;
 .calendar-add-list{
     background: url(../img/calendar.png) no-repeat;
     padding: 9px 0 13px 40px;
-    margin: 26px auto 0;
+    margin: 0px auto 0;
     width: 121px;
+    float: left;
 }
 .calendar-add-list a{
     color: #000;
+}
+.facebook-share{
+    background: url(../img/fb-share.png) no-repeat;
+    padding: 9px 0 13px 40px;
+    margin: 0px auto 0 13px;
+    width: 101px;
+    float: right;
+}
+.padd-top{
+    padding-bottom: 10px;
 }
 /* FRIENDS */
 .user{

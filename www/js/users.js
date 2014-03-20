@@ -203,7 +203,7 @@ function submitLoginForm(email, image){
           //alert('password error');
           return false;
       }
-
+      document.getElementById('logbutt').innerHTML="<img src='img/loading.gif'>";
       var form = document.getElementById("loginForm");
       var data = new FormData(form);
     }

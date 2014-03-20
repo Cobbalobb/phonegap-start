@@ -109,7 +109,7 @@ document.addEventListener('deviceready', function() {
             method: 'feed',
             name: name,
             link: 'https://carboncutterapp.co.uk/',
-            picture: 'http://fbrell.com/f8.jpg',
+            picture: 'http://carbon.jamescobbett.co.uk/www/img/carboncutter.jpg ',
             caption: 'Carbon Footprint',
             description: 'Carbon cutter is an android application that helps you lower and monitor your carbon footprint.'
           };
