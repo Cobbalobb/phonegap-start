@@ -2,7 +2,7 @@ var db = window.openDatabase("User", "1.0", "User DB", 1000000);
 var show;
 var web = true;
 alert('test');
-$(document).live("pagebeforechange", function(e, ob) {
+$(document).on("pagebeforechange", function(e, ob) {
 alert('line 6');
     console.log("pagebeforechange");
 
