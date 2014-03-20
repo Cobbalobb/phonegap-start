@@ -4,31 +4,31 @@
 <div data-role="page">
     <div data-role="panel" id="menu">
         <ul id="menu-list">
-            <li class="active"><a onclick="goToCurrent();" href="#" class="contentLink"><h1>Home</h1> </a></li>
+            <li class="active"><a onclick="goToHome();" href="#" class="contentLink"><h1>Home</h1> </a></li>
             <li><a onclick="goToCurrent();" href="#" class="contentLink"><h1>Actions</h1> </a></li>
             <li><a onclick="goToFriends();" href="#" class="contentLink"><h1>Friends</h1> </a></li>
             <li><a onclick="goToBadges();" href="#" class="contentLink"><h1>Badges</h1> </a></li>
-            <li><a href="#" class="contentLink"><h1>Journey</h1> </a></li>
             <li><a onclick="goToSettings();" href="#" class="contentLink"><h1>Settings</h1> </a></li>
             <li><a href="#" onclick="logout()" class="contentLink"><h1>Sign Out</h1> </a></li>
         </ul>
         </div><!-- /panel -->
     <div class="header" data-role="header">
     
-    <h1>Change password</h1>
+    <h1>Action Sharing</h1>
     </div>
 
-    <div data-role="content">
-        <form name="fbactions" id="fbactions" action="#" method="post">
-            <h1>Facebook actions sharing</h1>
+    <div id="fbactionstoggle" data-role="content">
+        <script type="text/javascript">$( document ).ready(setTimeout(function(){displayactiontoggle()},0500));</script>
 
-            <label for="fbactionswitch">Flip switch:</label>
-            <select name="fbactionswitch" id="fbactionswitch" data-role="slider">
-                <option value="0">Off</option>
-                <option value="1">On</option>
-            </select> 
+        <form name="fbactions" id="fbactions" action="#" method="post">
+        <label for="fbactionswitch"><h2>Actions added and completed shown in recent activity on facebook:</h2></label>
+        <select name="fbactionswitch" id="fbactionswitch" data-role="slider">
+        <option value="0">Off</option>
+        <option value="1">On</option>
+        </select>
         </form>
-        </div>
+
+    </div>
 <script>
 //listener for toggle change
 $('#fbactionswitch').change(function(){

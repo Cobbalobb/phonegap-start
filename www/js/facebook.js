@@ -37,16 +37,20 @@ document.addEventListener('deviceready', function() {
             }
             */
             function getLoginStatus() {
+              alert('loginstatus');
                 FB.getLoginStatus(function(response) {
                                   if (response.status == 'connected') {
-                                  alert('logged in');
-                                  } else {
-                                  alert('not logged in');
+                                    alert('true');
+                                    return true;
                                   }
+                                  // else {
+                                  //   alert('false');
+                                  //   return true;
+                                  // }
                                   });
             }
             var friendIDs = [];
-      var fdata;
+            var fdata;
             function me() {
                 FB.api('/me/friends', { fields: 'id, name, picture' },  function(response) {
                        if (response.error) {
@@ -134,3 +138,21 @@ document.addEventListener('deviceready', function() {
           FB.ui(params, function(obj) { console.log(obj);});
           }
       }
+
+function displayactiontoggle(){
+    var html;
+    FB.getLoginStatus(function(response) {
+      if (response.status == 'connected') {
+        // html += '<form name="fbactions" id="fbactions" action="#" method="post">';
+        // html += '<label for="fbactionswitch" id="fbactionswitch-label">Flip switch:</label>';
+        // html += '<select name="fbactionswitch" id="fbactionswitch" data-role="slider" tabindex="-1" class="ui-slider-switch">';
+        // html += '<option value="0">Off</option>';
+        // html += '<option value="1">On</option>';
+        // html += '</select><div role="application" class="ui-slider ui-slider-switch ui-slider-track ui-shadow-inset ui-bar-inherit ui-corner-all" style=""><span class="ui-slider-label ui-slider-label-a ui-btn-active" role="img" style="width: 0%;">On</span><span class="ui-slider-label ui-slider-label-b" role="img" style="width: 100%;">Off</span><div class="ui-slider-inneroffset"><a href="#" class="ui-slider-handle ui-slider-handle-snapping ui-btn ui-shadow" role="slider" aria-valuemin="0" aria-valuemax="1" aria-valuenow="0" aria-valuetext="Off" title="Off" aria-labelledby="fbactionswitch-label" style="left: 0%;"></a></div></div>';
+        // html += '</form>';
+      } else {
+        html = '<div id="fb-sign" class="fb-sign-friends"><a href="#" onClick="fblogin();"><img src="http://carbon.jamescobbett.co.uk/www/img/facebooksign.png">Sign in with facebook to see your friends</a></div>';
+      }
+      });
+      $('#fbactionstoggle').append(html);
+}

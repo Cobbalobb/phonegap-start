@@ -28,11 +28,7 @@ $(document).on("pagebeforechange", function(e, ob) {
               e.preventDefault();
               history.go(1);
           }
-      } else if (ob.toPage[0].id === "home" && ob.options.fromPage[0].id === "login") {
-        alert('here');
-          setTimeout(function(){getUserInfo()},0100);
-      } else if(ob.options.fromPage[0].id == "holding" && ob.toPage[0].id === "home"){
-        alert("From Holding to Home");
+      } else if (ob.toPage[0].id === "home") {
           setTimeout(function(){getUserInfo()},0100);
       }
     }

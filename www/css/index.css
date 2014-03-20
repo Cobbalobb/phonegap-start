@@ -413,6 +413,29 @@ text-decoration: none;
 #profile-journey{
     background-color: #334d5c;
 }
+
+
+#fbactions{
+    text-align: center;
+}
+.ui-btn-active {
+border: 1px solid #2373a5 /*{global-active-border}*/;
+background: #5393c5 /*{global-active-background-color}*/;
+font-weight: bold;
+color: #fff /*{global-active-color}*/;
+cursor: pointer;
+text-shadow: 0 /*{global-active-shadow-x}*/ 1px /*{global-active-shadow-y}*/ 1px /*{global-active-shadow-radius}*/ #3373a5 /*{global-active-shadow-color}*/;
+text-decoration: none;
+background-image: -webkit-gradient(linear, left top, left bottom, from( #5393c5 /*{global-active-background-start}*/), to( #6facd5 /*{global-active-background-end}*/));
+background-image: -webkit-linear-gradient( #5393c5 /*{global-active-background-start}*/, #6facd5 /*{global-active-background-end}*/);
+background-image: -moz-linear-gradient( #5393c5 /*{global-active-background-start}*/, #6facd5 /*{global-active-background-end}*/);
+background-image: -ms-linear-gradient( #5393c5 /*{global-active-background-start}*/, #6facd5 /*{global-active-background-end}*/);
+background-image: -o-linear-gradient( #5393c5 /*{global-active-background-start}*/, #6facd5 /*{global-active-background-end}*/);
+background-image: linear-gradient( #5393c5 /*{global-active-background-start}*/, #6facd5 /*{global-active-background-end}*/);
+font-family: Helvetica, Arial, sans-serif /*{global-font-family}*/;
+}
+
+
 /*CALCULATOR PAGE*/
 .ui-checkbox input, .ui-radio input {
 position: absolute;
@@ -634,6 +657,14 @@ border-style: solid;
 
 .answers li{
     list-style: none;
+}
+
+/* ACTIONS LIST PAGE */
+#holding{
+    background-color: #297fb8 !important;
+}
+#holding #logo{
+    margin-top: 40%;
 }
 
 /* ACTIONS LIST PAGE */
