@@ -30,7 +30,6 @@ document.addEventListener('deviceready', function() {
             FB.Event.subscribe('auth.statusChange', function(response) {
                                alert('auth.statusChange event');
                                });
-            alert('test');
  
             /*function getSession() {
                 alert("session: " + JSON.stringify(FB.getSession()));
