@@ -6,6 +6,9 @@ $(document).live("pagebeforechange", function(e, ob) {
 
     console.log("pagebeforechange");
 
+    alert("To :"+ob.toPage[0].id);
+    alert("From :"+ob.options.fromPage[0].id);
+
     console.log(ob);
     console.log(ob.toPage[0].id);
     //console.log("PAGE CHANGE: "+ob.toPage[0].id);
