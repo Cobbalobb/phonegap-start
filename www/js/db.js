@@ -1868,7 +1868,5 @@ function direct(){
           goToLogin();
       }
 
-      //var db = window.openDatabase("User", "1.0", "User DB", 1000000);
-      alert('just before giving db');
       db.transaction(queryDB, errorCB);
 }
