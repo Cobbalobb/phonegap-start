@@ -1,7 +1,7 @@
 var db = window.openDatabase("User", "1.0", "User DB", 1000000);
 var show;
 var web = true;
-
+alert('test');
 $(document).live("pagebeforechange", function(e, ob) {
 
     console.log("pagebeforechange");
@@ -33,7 +33,7 @@ $(document).live("pagebeforechange", function(e, ob) {
       }
     }
 });
-
+alert('test2');
 // $(document).live("pageafterchange", function(e, ob) {
 
 //     console.log("pageafterchange");
