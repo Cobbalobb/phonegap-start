@@ -6,13 +6,14 @@ $(document).live("pagebeforechange", function(e, ob) {
 
     console.log("pagebeforechange");
 
-    alert("To :"+ob.toPage[0].id);
-    alert("From :"+ob.options.fromPage[0].id);
+    //alert("To :"+ob.toPage[0].id);
+    //alert("From :"+ob.options.fromPage[0].id);
 
     console.log(ob);
     console.log(ob.toPage[0].id);
     //console.log("PAGE CHANGE: "+ob.toPage[0].id);
     if(ob.options.fromPage != undefined){
+        alert('line 16');
     console.log(ob.options.fromPage[0].id);
       if (ob.toPage[0].id === "login" && ob.options.fromPage[0].id === "home") {
           if(redirecttologin === true){
@@ -22,16 +23,23 @@ $(document).live("pagebeforechange", function(e, ob) {
               e.preventDefault();
               history.go(1);
           }
-      }
-    }
-    if(ob.options.fromPage != undefined){
-      if (ob.toPage[0].id === "home" && ob.options.fromPage[0].id === "login") {
+      } else if (ob.toPage[0].id === "home" && ob.options.fromPage[0].id === "login") {
         alert('here');
           setTimeout(function(){getUserInfo()},1000);
-      } else if(ob.options.fromPage != "holding" && ob.toPage[0].id === "home"){
+      } else if(ob.options.fromPage[0].id == "holding" && ob.toPage[0].id === "home"){
+        alert("From Holding to Home");
           setTimeout(function(){getUserInfo()},0100);
       }
     }
+    // if(ob.options.fromPage != undefined){
+    //   if (ob.toPage[0].id === "home" && ob.options.fromPage[0].id === "login") {
+    //     alert('here');
+    //       setTimeout(function(){getUserInfo()},1000);
+    //   } else if(ob.options.fromPage[0].id == "holding" && ob.toPage[0].id === "home"){
+    //     alert("From Holding to Home");
+    //       setTimeout(function(){getUserInfo()},0100);
+    //   }
+    // }
 });
 alert('test2');
 // $(document).live("pageafterchange", function(e, ob) {
