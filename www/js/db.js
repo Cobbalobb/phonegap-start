@@ -1,9 +1,15 @@
+//Declare gloabl variables
 var db = window.openDatabase("User", "1.0", "User DB", 1000000);
 var show;
+// Variable to enable web testing
 var web = true;
-alert('test');
+var redirecttologin = false;
+
+// Function to run before page changes
+// Prevents user going back to login once signed in
+// Prevents user going back once signed out
+// Injects data to home page
 $(document).on("pagebeforechange", function(e, ob) {
-alert('line 6');
     console.log("pagebeforechange");
 
     //alert("To :"+ob.toPage[0].id);
@@ -13,7 +19,6 @@ alert('line 6');
     console.log(ob.toPage[0].id);
     //console.log("PAGE CHANGE: "+ob.toPage[0].id);
     if(ob.options.fromPage != undefined){
-        alert('line 16');
     console.log(ob.options.fromPage[0].id);
       if (ob.toPage[0].id === "login" && ob.options.fromPage[0].id === "home") {
           if(redirecttologin === true){
@@ -25,7 +30,7 @@ alert('line 6');
           }
       } else if (ob.toPage[0].id === "home" && ob.options.fromPage[0].id === "login") {
         alert('here');
-          setTimeout(function(){getUserInfo()},1000);
+          setTimeout(function(){getUserInfo()},0100);
       } else if(ob.options.fromPage[0].id == "holding" && ob.toPage[0].id === "home"){
         alert("From Holding to Home");
           setTimeout(function(){getUserInfo()},0100);
@@ -41,28 +46,8 @@ alert('line 6');
     //   }
     // }
 });
-alert('test2');
-// $(document).live("pageafterchange", function(e, ob) {
 
-//     console.log("pageafterchange");
-
-//     console.log(ob);
-//     console.log("PAGE AFTER CHANGE: "+ob.toPage[0].id);
-    // if (ob.toPage[0].id === "login" && ob.options.fromPage) {
-    //     if(redirecttologin === true){
-    //         redirecttologin = false;
-    //     } else {
-    //         console.log("blocking the back");
-    //         e.preventDefault();
-    //         history.go(1);
-    //     }
-    // }
-    // if(op.toPage[0].id === "home"){
-
-    // }
-
-//});
-
+// Facebook web settijgs
 if(web==true){
   window.fbAsyncInit = function() {
   FB.init({
@@ -84,25 +69,23 @@ FB.Event.subscribe('auth.authResponseChange', function(response) {
 };
 }
 
-var redirecttologin = false;
+// Load the Facebook SDK asynchronously
+(function(d){
+var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+if (d.getElementById(id)) {return;}
+js = d.createElement('script'); js.id = id; js.async = true;
+js.src = "//connect.facebook.net/en_US/all.js";
+ref.parentNode.insertBefore(js, ref);
+}(document));
 
-  // Load the SDK asynchronously
-  (function(d){
-   var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-   if (d.getElementById(id)) {return;}
-   js = d.createElement('script'); js.id = id; js.async = true;
-   js.src = "//connect.facebook.net/en_US/all.js";
-   ref.parentNode.insertBefore(js, ref);
-  }(document));
-
-  // Here we run a very simple test of the Graph API after login is successful. 
-  // This testAPI() function is only called in those cases. 
-  function testAPI() {
-    console.log('Welcome!  Fetching your information.... ');
-    FB.api('/me', function(response) {
-      console.log('Good to see you, ' + response.name + '.');
-    });
-  }
+// Here we run a very simple test of the Graph API after login is successful. 
+// This testAPI() function is only called in those cases. 
+function testAPI() {
+console.log('Welcome!  Fetching your information.... ');
+FB.api('/me', function(response) {
+  console.log('Good to see you, ' + response.name + '.');
+});
+}
 
 function logout(){
     function dropDB(tx) {
@@ -110,7 +93,7 @@ function logout(){
     }
 
     function errorCB(err) {
-        a//lert("Error processing SQL: "+err.code);
+        //alert("Error processing SQL: "+err.code);
     }
 
     function successCB() {
