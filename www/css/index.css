@@ -198,6 +198,8 @@ input{
     padding-bottom: 10px;
     border-bottom: solid 1px #8A95A5;
     margin-bottom: 10px;
+    padding-left: 47px;
+    padding-top: 7px;
 }
 #menu-list h1{
     text-align: left;
@@ -213,19 +215,19 @@ input{
     background: url(../img/menu/home.png) no-repeat;
 }
 #menu-actions{
-
+    background: url(../img/menu/actions.png) no-repeat;
 }
 #menu-friends{
-
+    background: url(../img/menu/friends.png) no-repeat;
 }
 #menu-badges{
-
+    background: url(../img/menu/badges.png)4px -1px no-repeat;
 }
 #menu-settings{
-
+    background: url(../img/menu/settings.png) no-repeat;
 }
 #menu-signout{
-
+    background: url(../img/menu/logout.png) no-repeat;
 }
 
 .ui-mobile .ui-page-active {
@@ -784,8 +786,8 @@ border-style: solid;
 }
 .action-add{
     background: url(../img/add.png) no-repeat;
-    height: 32px;
     padding: 10px 38px;
+    float: left;
 }
 .action-complete{
     background: url(../img/complete.png) no-repeat;
