@@ -188,11 +188,13 @@ input{
     margin-top: 5px !important;
 }
 #menu-list{
-    padding-left: 10px;
+    padding-left: 0px;
 }
 #menu-list li{
     list-style: none;
     padding-bottom: 10px;
+    border-bottom: solid 1px #8A95A5;
+    margin-bottom: 10px;
 }
 #menu-list h1{
     text-align: left;
