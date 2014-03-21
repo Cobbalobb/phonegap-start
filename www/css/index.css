@@ -179,6 +179,9 @@ input{
     box-shadow: none !important;
     -webkit-box-shadow: none !important;
 }
+
+/* MENU
+================================*/
 .showMenu{
     background: url(../img/menu.png) !important;
     width: 45px !important;
@@ -206,6 +209,25 @@ input{
 #menu{
     background-color: #48647c;
 }
+#menu-home{
+    background: url(../img/menu/home.png) no-repeat;
+}
+#menu-actions{
+
+}
+#menu-friends{
+
+}
+#menu-badges{
+
+}
+#menu-settings{
+
+}
+#menu-signout{
+
+}
+
 .ui-mobile .ui-page-active {
     background-color: #fff;
 }
