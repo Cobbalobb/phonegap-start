@@ -366,6 +366,7 @@ input{
 .news{
     width: 80%;
     margin: 0 auto 5px auto;
+    min-height: 55px;
 }
 .source{
     text-align: right;
@@ -408,7 +409,7 @@ text-decoration: none;
     box-sizing:        border-box;
 }
 #actions{
-    background-color: #efc94c;
+    /*background-color: #efc94c;*/
 }
 #friends{
     background-color: #45b29d;
@@ -777,7 +778,7 @@ border-style: solid;
 }
 .action-links{
     margin: 0 auto;
-    width: 315px;
+    width: 320px;
 }
 .action-links a{
     text-decoration: none;
@@ -785,20 +786,23 @@ border-style: solid;
 }
 .action-add{
     background: url(../img/add.png) no-repeat;
-    padding: 10px 38px;
+    padding: 3px 38px;
     float: left;
+    width: 65px;
 }
 .action-complete{
     background: url(../img/complete.png) no-repeat;
     height: 32px;
-    padding: 10px 0px 10px 38px;
+    padding: 3px 0px 10px 38px;
     float: right;
+    width: 65px;
 }
 .action-remove{
     background: url(../img/delete.png) no-repeat;
     height: 32px;
-    padding: 10px 38px;
+    padding: 3px 38px;
     float: left;
+    width: 65px;
 }
 .successful-added{
     background: url(../img/complete.png) no-repeat;
@@ -835,7 +839,7 @@ border-style: solid;
     background: url(../img/fb-share.png) no-repeat;
     padding: 9px 0 13px 40px;
     margin: 0px auto 0 13px;
-    width: 101px;
+    width: 65px;
     float: right;
 }
 .padd-top{
@@ -1063,8 +1067,10 @@ height: 63px !important;
     top: 30%;
     position: fixed;
     width: 100%;
-    height: 160px;
+    height: 205px;
     background-color: #2ecc71;
+    padding-bottom: 10px;
+    padding-top: 14px;
 }
 #bgfade{
     position: fixed;
@@ -1083,5 +1089,19 @@ height: 63px !important;
 }
 #badge-link{
     margin: 0 auto;
-    width: 50px;
+    width: 42px;
+}
+#badge-name{
+    text-align: center;
+    color: #fff;
+    margin-bottom: 23px;
+}
+#badge-image-alert-contain{
+    margin: 0 auto;
+    width: 80px;
+    margin-top: 10px;
+}
+
+#profile-friend{
+    margin-top: 20px;
 }
