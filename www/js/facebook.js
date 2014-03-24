@@ -5,7 +5,7 @@ document.addEventListener('deviceready', function() {
                     FB.init({ appId: "483622355081269", nativeInterface: CDV.FB, useCachedDialogs: false });
                     document.getElementById('data').innerHTML = "";
                     } catch (e) {
-                    alert(e);
+                    //alert(e);
                     }
                     }, false);
 
@@ -36,7 +36,7 @@ document.addEventListener('deviceready', function() {
             }
             */
             function getLoginStatus() {
-              alert('loginstatus');
+              //alert('loginstatus');
                 FB.getLoginStatus(function(response) {
                                   if (response.status == 'connected') {
                                     //alert('true');
