@@ -30,6 +30,10 @@ $(document).on("pagebeforechange", function(e, ob) {
           }
       } else if (ob.toPage[0].id === "home") {
           setTimeout(function(){getUserInfo()},0100);
+       } else if (ob.toPage[0].id === "holding") {
+            console.log("blocking the back");
+            e.preventDefault();
+            //history.go(1);
       }
     }
     // if(ob.options.fromPage != undefined){
@@ -1041,8 +1045,9 @@ function completeAction(actionid, reduction){
         if (!results.rowsAffected) {
             var orignal_footprint = results.rows.item(number-1).total; //original footprint
             var current_footprint = results.rows.item(number-1).current;
-            var reductions = orignal_footprint - current_footprint;
-            var percentage = orignal_footprint / reductions;
+            //var reductions = orignal_footprint - current_footprint;
+            //var percentage = orignal_footprint / reductions;
+            var percentage = ((orignal_footprint - current_footprint)/orignal_footprint)*100;
             if (percentage >= 15){
                 badge = 18;
                 percentcheck(badge);
@@ -1123,6 +1128,32 @@ function completebadge(badge){
     }
 
     function successBadge() {
+        //GET BADGE NAME
+        function queryDBbadge(btx) {
+        btx.executeSql('SELECT badge FROM badges WHERE id = ?',[badge.toString()], querySuccessbadge, errorCBbadge);
+        }
+
+        function querySuccessbadge(tx, results) {
+            console.log("Returned rows from current_actions = " + results.rows.length);
+            var num = results.rows.length;
+            // this will be true since it was a select statement and so rowsAffected was 0
+            if (!results.rowsAffected) {
+                badgename = results.rows.item(0).badge;
+                html = '<img class="badge-image-alert" src="img/badges/saturated/1.png">';
+                html += '<div id="badge-name"><h3>'+badgename+'</h3></div>';
+                $('#badgealert').append(html);
+                $('#bgfade').fadeIn();
+                $('#badgealert').fadeIn();
+            } else {
+                console.log('No rows affected!');
+            }
+        }
+
+        function errorCBbadge(err) {
+            alert(err);
+        }
+
+        db.transaction(queryDBbadge, errorCBbadge);
         alert("success adding badge");
         // declaring variables to be used
         var xhr, target, changeListener, url, data;
@@ -1865,4 +1896,9 @@ function direct(){
       }
 
       db.transaction(queryDB, errorCB);
+}
+
+function closebadgepopup(){
+    $('#badgealert').fadeOut();
+    $('#bgfade').fadeOut();
 }

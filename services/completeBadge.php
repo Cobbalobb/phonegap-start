@@ -30,9 +30,9 @@ $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 //  	echo "success";
 //  }	 
 
-$sql = "UPDATE completed_badges SET completed = '$completed' WHERE user_id = '$userid' AND badge_id = '$badgeid";
+$sql = "UPDATE completed_badges SET completed = '$completed' WHERE user_id = '$userid' AND badge_id = '$badgeid'";
 $q = $con->prepare($sql);
-$q->execute(array($status));
+$q->execute(array($completed, $userid, $badgeid));
 
  if (!$q->errorCode() != 0) {
      echo $con->errorInfo();
