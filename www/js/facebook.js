@@ -84,7 +84,7 @@ document.addEventListener('deviceready', function() {
             }
             
             function flogin() {
-              alert('here');
+              //alert('here');
                 FB.login(
                          function(response) {
                           //alert('test');

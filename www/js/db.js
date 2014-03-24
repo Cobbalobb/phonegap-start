@@ -1839,7 +1839,7 @@ FB.api(
        { carbon_action: objectToLike },
        function(response) {
          if (!response) {
-           alert('Error occurred.');
+           //alert('Error occurred.');
          } else if (response.error) {
             console.log(response.error.message);
            //document.getElementById('result').innerHTML =

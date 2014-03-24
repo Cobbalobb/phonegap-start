@@ -118,7 +118,7 @@ function submitSignForm(first_name, last_name, email, image,facebookid, fbaction
                      //$('#failure').slideToggle("slow");                    
                     //document.getElementById("failure").style.display = "block";
                     //document.getElementById("failure").innerHTML ="<div id='failureText'><img src='images/cross.png' id='cross'> <h1>Oops! " + response + "</h1></div>";
-                    alert('success');
+                    //alert('success');
                     var response = JSON.parse(this.responseText);
                     console.log(response['email']);
                     login(response['id'], response['first_name'], response['last_name'], response['email'], response['image'], response['facebookid'], response['fbactions']);
@@ -143,7 +143,7 @@ function submitSignForm(first_name, last_name, email, image,facebookid, fbaction
                     //$('#success').slideDown("slow");                    
                     //document.getElementById("failure").style.display = "none";
                     //document.getElementById("firstName").innerHTML ='<div id="newN"><h6>'+name+'</h6></div><div id="newAL">'+age+', '+location+'</div>';
-                    alert('failure');
+                    //alert('failure');
                 }
                 //result = JSON.parse(this.responseText);
                 //injectContent(result.id, form);
@@ -257,7 +257,7 @@ function submitLoginForm(email, image){
                     //$('#success').slideDown("slow");                    
                     //document.getElementById("failure").style.display = "none";
                     //document.getElementById("firstName").innerHTML ='<div id="newN"><h6>'+name+'</h6></div><div id="newAL">'+age+', '+location+'</div>';
-                    alert('failure');
+                    //alert('failure');
                 }
                 //result = JSON.parse(this.responseText);
                 //injectContent(result.id, form);
