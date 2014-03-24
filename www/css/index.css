@@ -787,19 +787,19 @@ border-style: solid;
 }
 .action-add{
     background: url(../img/add.png) no-repeat;
-    padding: 10px 38px;
+    padding: 3px 38px;
     float: left;
 }
 .action-complete{
     background: url(../img/complete.png) no-repeat;
     height: 32px;
-    padding: 10px 0px 10px 38px;
+    padding: 3px 0px 10px 38px;
     float: right;
 }
 .action-remove{
     background: url(../img/delete.png) no-repeat;
     height: 32px;
-    padding: 10px 38px;
+    padding: 3px 38px;
     float: left;
 }
 .successful-added{
