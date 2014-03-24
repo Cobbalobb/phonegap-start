@@ -319,7 +319,7 @@ function login(id, first_name, last_name, email, image, facebookid, fbactions){
                     footprintToDatabase(response['id'], response['house'], response['meat'], response['organic'], response['local'], response['compost'], response['total_clothes'], response['total_electronics'], response['total_shopping'], response['car_engine'], response['car_miles'], response['train'], response['bus'], response['domestic_flights'], response['short_flights'], response['long_flights'], response['total'], response['current']);
                 }
                 else {
-                    alert('no FP');
+                    //alert('no FP');
                     //$('#success').slideDown("slow");                    
                     //document.getElementById("failure").style.display = "none";
                     //document.getElementById("firstName").innerHTML ='<div id="newN"><h6>'+name+'</h6></div><div id="newAL">'+age+', '+location+'</div>';
@@ -374,7 +374,7 @@ function redirect(){
     }
 
     function errorCB(err) {
-        alert("FP Error processing SQL: "+err.code);
+        //alert("FP Error processing SQL: "+err.code);
         //document.location.href = 'login.html';
     }
 
@@ -621,9 +621,9 @@ function getCurrentUsersID() {
 
  function footprintToDatabase(id, house, meat, organic, local, compost, total_clothes, total_electronics, total_shopping, car_engine, car_miles, train, bus, domestic_flights, short_flights, long_flights, total, current){
     //alert("id: " + id);
-    alert(jQuery.type(current));
+    //alert(jQuery.type(current));
     current = parseInt(current);
-    alert(jQuery.type(current));
+    //alert(jQuery.type(current));
     function populateDB(tx) {
     tx.executeSql('DROP TABLE IF EXISTS Footprint');
     tx.executeSql('CREATE TABLE IF NOT EXISTS Footprint (id unique, house, meat, organic, local, compost, total_clothes, total_electronics, total_shopping, car_engine, car_miles, train, bus, domestic_flights, short_flights, long_flights, total, current)');
@@ -786,7 +786,7 @@ function addActionToList(actionid, title){
     };
 
     function errorCB(err) {
-        alert("Error processing SQL: "+err.code);
+        //alert("Error processing SQL: "+err.code);
     }
 
     function successCB() {
@@ -801,9 +801,9 @@ function addActionToList(actionid, title){
           function(response) {
             console.log(response);
             if (!response || response.error) {
-            alert('Error occured');
+            //alert('Error occured');
             } else {
-            alert('Demo was liked successfully! Action ID: ' + response.id);
+            //alert('Demo was liked successfully! Action ID: ' + response.id);
             }
           }
         );
@@ -871,11 +871,11 @@ function addActionToList(actionid, title){
         if(num === 1){
             //award badge
             badge = 3;
-            alert('Badge earned: 1st action added');
+            //alert('Badge earned: 1st action added');
             completebadge(badge);
         } else if (num === 10){
             badge = 4;
-            alert('Badge earned: 10th action completed');
+            //alert('Badge earned: 10th action completed');
             completebadge(badge);
         } else {
             console.log('No rows affected!');
@@ -918,9 +918,9 @@ function completeAction(actionid, reduction){
           function(response) {
             console.log(response);
             if (!response || response.error) {
-            alert('Error occured');
+            //alert('Error occured');
             } else {
-            alert('Demo was liked successfully! Action ID: ' + response.id);
+            //alert('Demo was liked successfully! Action ID: ' + response.id);
             }
           }
         );
@@ -981,18 +981,17 @@ function completeAction(actionid, reduction){
     //UPDATE FOOTPRINT
     function updateFP(tx) {
         //tx.executeSql('INSERT INTO completed_actions (user_id, action_id) VALUES (?,?)',[id, actionid]);     
-                           alert(reduction);
-
-            alert(jQuery.type(reduction));
+        //alert(reduction);
+        //alert(jQuery.type(reduction));
         tx.executeSql('UPDATE Footprint SET current = current - ?', [reduction]);                    
     };
 
     function errorUFP(err) {
-        alert("Error processing SQL: "+err.code);
+        //alert("Error processing SQL: "+err.code);
     }
 
     function successUFP() {
-        alert("success reducing fp");
+        //alert("success reducing fp");
     }
     
     db.transaction(updateFP, errorUFP, successUFP);
@@ -1011,35 +1010,35 @@ function completeAction(actionid, reduction){
         if(num === 1){
             //award badge
             badge = 3;
-            alert('Badge earned: 1st action completed');
+            //alert('Badge earned: 1st action completed');
             completebadge(badge);
         } else if (num === 5){
             badge = 4;
-            alert('Badge earned: 5th action completed');
+            //alert('Badge earned: 5th action completed');
             completebadge(badge);
         } else if (num === 10){
             badge = 5;
-            alert('Badge earned: 10th action completed');
+            //alert('Badge earned: 10th action completed');
             completebadge(badge);
         } else if (num === 15){
             badge = 10;
-            alert('Badge earned: 15th action completed');
+            //alert('Badge earned: 15th action completed');
             completebadge(badge);
         } else if (num === 20){
             badge = 6;
-            alert('Badge earned: 20th action completed');
+            //alert('Badge earned: 20th action completed');
             completebadge(badge);
         } else if (num === 30){
             badge = 7;
-            alert('Badge earned: 30th action completed');
+            //alert('Badge earned: 30th action completed');
             completebadge(badge);
         } else if (num === 40){
             badge = 8;
-            alert('Badge earned: 40th action completed');
+            //alert('Badge earned: 40th action completed');
             completebadge(badge);
         } else if (num === 60){
             badge = 9;
-            alert('Badge earned: 60th action completed');
+            //alert('Badge earned: 60th action completed');
             completebadge(badge);
         } else {
             console.log('No rows affected!');
@@ -1091,7 +1090,7 @@ function completeAction(actionid, reduction){
     }
 
     function errorFP(err) {
-        alert("Error processing SQL: "+err.code);
+        //alert("Error processing SQL: "+err.code);
         //document.location.href = 'login.html';
     }
 
@@ -1131,7 +1130,7 @@ function completebadge(badge){
     };
 
     function errorBadge(err) {
-        alert("Error processing SQL: "+err.code);
+        //alert("Error processing SQL: "+err.code);
     }
 
     function successBadge() {
@@ -1146,12 +1145,8 @@ function completebadge(badge){
             // this will be true since it was a select statement and so rowsAffected was 0
             if (!results.rowsAffected) {
                 badgename = results.rows.item(0).badge;
-<<<<<<< HEAD
-                html = '<img class="badge-image-alert" src="img/badges/colour/1.png">';
-=======
                 html = '<h1 id="badgeearned">Badge earned</h1>';
                 html += '<div id="badge-image-alert-contain"><img class="badge-image-alert" src="img/badges/colour/'+badge+'.png"></div>';
->>>>>>> FETCH_HEAD
                 html += '<div id="badge-name"><h3>'+badgename+'</h3></div>';
                 html += '<div id="badge-link"><a id="close-badge" href="#" onclick="closebadgepopup()">Ok</a></div>';
                 $('#badgealert').append(html);
@@ -1163,11 +1158,11 @@ function completebadge(badge){
         }
 
         function errorCBbadge(err) {
-            alert(err);
+            //alert(err);
         }
 
         db.transaction(queryDBbadge, errorCBbadge);
-        alert("success adding badge");
+        //alert("success adding badge");
         // declaring variables to be used
         var xhr, target, changeListener, url, data;
         //setting url to the php code to add comments to the db
@@ -1212,20 +1207,20 @@ function completebadge(badge){
 
 //Add actions to phone DB
 function actionstoDB(id, action, description, reduction, category, max){
-    alert(action);
+    //alert(action);
                     function populateDB(tx) {
                         //tx.executeSql('DROP TABLE IF EXISTS Actions');
-                        alert('attempt');
+                        //alert('attempt');
                         tx.executeSql('CREATE TABLE IF NOT EXISTS Actions (id unique, action, description, reduction, category, max)');
                         tx.executeSql('INSERT INTO Actions (id, action, description, reduction, category, max) VALUES (?,?,?,?,?,?)',[id, action, description, reduction, category, max]);
                         }(i);
 
                         function errorCB(err) {
-                            alert("Error processing SQL: "+err.code);
+                            //alert("Error processing SQL: "+err.code);
                         }
 
                         function successCB() {
-                            alert("success adding actions");
+                            //alert("success adding actions");
                         }
                         //var dbact = window.openDatabase("Actions", "1.0", "Actions DB", 1000000);
                         db.transaction(populateDB, errorCB, successCB);
@@ -1250,11 +1245,11 @@ function currentactionstoDB(){
                         }
 
                         function errorCB(err) {
-                            alert("Error processing SQL: "+err.code);
+                            //alert("Error processing SQL: "+err.code);
                         }
 
                         function successCB() {
-                            alert("success adding current_actions");
+                            //alert("success adding current_actions");
                         }
                         var db = window.openDatabase("current_actions", "1.0", "current_actions DB", 1000000);
                         db.transaction(populateDB, errorCB, successCB);
@@ -1285,11 +1280,11 @@ function completedactionstoDB(){
                         }
 
                         function errorCB(err) {
-                            alert("Error processing SQL: "+err.code);
+                            //alert("Error processing SQL: "+err.code);
                         }
 
                         function successCB() {
-                            alert("success adding completed actions");
+                            //alert("success adding completed actions");
                         }
                         var db = window.openDatabase("completed_actions", "1.0", "completed_actions DB", 1000000);
                         db.transaction(populateDB, errorCB, successCB);
@@ -1301,17 +1296,17 @@ function completedactionstoDB(){
 }
 
 function facebookLogin(){
-    alert('here 2');
+    //alert('here 2');
      FB.api('/me', {fields: 'first_name, last_name, email, id, picture'}, function(response) {
         var first_name = response['first_name'];
       var last_name = response['last_name'];
       var email = response['email'];
       var facebookid = response['id'];
       var fbactions = 1;
-      alert(first_name);
-      alert(last_name);
-      alert(email);
-      alert(facebookid);
+      //alert(first_name);
+      //alert(last_name);
+      //alert(email);
+      //alert(facebookid);
         console.log(first_name + " " + last_name);
         FB.api(
         "/me/picture",
@@ -1349,11 +1344,11 @@ function facebookLogin(){
                 var message = response.indexOf("New");
                 console.log(message);
                 if (message == -1){
-                    alert('log in');
+                    //alert('log in');
                     submitLoginForm(email, image);
                 }
                 else {
-                    alert('sign up');
+                    //alert('sign up');
                     // User is new so register them
                     submitSignForm(first_name,last_name,email,image,facebookid, fbactions);
                 }
@@ -1561,7 +1556,7 @@ function acceptRequest(id){
                 var message = response.indexOf("Succesfully");
                 console.log(message);
                 if (message != -1){
-                    alert('Accepted Friend');
+                    //alert('Accepted Friend');
                 }
             }
         }
@@ -1709,7 +1704,7 @@ function getProfileInfo(id){
 }
 function fblogin(){
     FB.login(function(response) {
-        alert('here');
+        //alert('here');
        facebookLogin();
      }, {scope: 'email, publish_actions'});
 }
@@ -1775,8 +1770,12 @@ function calendarevent(title){
   var title = title;
   var location = "";
   var notes = "";
-  var success = function(message) { alert("Success: " + JSON.stringify(message)); };
-  var error = function(message) { alert("Error: " + message); };
+  var success = function(message) {
+    // alert("Success: " + JSON.stringify(message)); 
+  };
+  var error = function(message) {
+    // alert("Error: " + message); 
+  };
   // create an event interactively (only supported on Android)
   window.plugins.calendar.createEventInteractively(title,location,notes,today,today,success,error);
 }
@@ -1809,10 +1808,10 @@ function changepassword(){
                     var message = response.indexOf("exception");
                     console.log(message);
                     if (message == -1){
-                        alert('success');
+                        //alert('success');
                     }
                     else {
-                        alert('failure');
+                        //alert('failure');
                     }
                 }
             }
@@ -1827,7 +1826,7 @@ function changepassword(){
 
         return false;
     }else{
-        alert('Passwords do not match');
+        //alert('Passwords do not match');
     }
 }
  

@@ -16,19 +16,19 @@ document.addEventListener('deviceready', function() {
             //if (typeof FB == 'undefined') alert('FB variable does not exist. Check that you have included the Facebook JS SDK file.');
             
             FB.Event.subscribe('auth.login', function(response) {
-                               alert('auth.login event');
+                               //alert('auth.login event');
                                });
             
             FB.Event.subscribe('auth.logout', function(response) {
-                               alert('auth.logout event');
+                               //alert('auth.logout event');
                                });
             
             FB.Event.subscribe('auth.sessionChange', function(response) {
-                               alert('auth.sessionChange event');
+                               //alert('auth.sessionChange event');
                                });
             
             FB.Event.subscribe('auth.statusChange', function(response) {
-                               alert('auth.statusChange event');
+                               //alert('auth.statusChange event');
                                });
  
             /*function getSession() {
@@ -39,7 +39,7 @@ document.addEventListener('deviceready', function() {
               alert('loginstatus');
                 FB.getLoginStatus(function(response) {
                                   if (response.status == 'connected') {
-                                    alert('true');
+                                    //alert('true');
                                     return true;
                                   }
                                   // else {
@@ -53,7 +53,7 @@ document.addEventListener('deviceready', function() {
             function me() {
                 FB.api('/me/friends', { fields: 'id, name, picture' },  function(response) {
                        if (response.error) {
-                       alert(JSON.stringify(response.error));
+                       //alert(JSON.stringify(response.error));
                        } else {
                        var data = document.getElementById('data');
                        fdata=response.data;
@@ -79,7 +79,7 @@ document.addEventListener('deviceready', function() {
             
             function flogout() {
                 FB.logout(function(response) {
-                          alert('logged out');
+                          //alert('logged out');
                           });
             }
             
@@ -87,14 +87,14 @@ document.addEventListener('deviceready', function() {
               alert('here');
                 FB.login(
                          function(response) {
-                          alert('test');
-                          alert(response);
-                          alert(response.session);
+                          //alert('test');
+                          //alert(response);
+                          //alert(response.session);
                           facebookLogin();
                          if (response.session) {
-                         alert('logged in');
+                         //alert('logged in');
                          } else {
-                         alert('not logged in');
+                         //alert('not logged in');
                          }
                          },
                          { scope: "email, publish_actions" }
