@@ -621,6 +621,9 @@ function getCurrentUsersID() {
 
  function footprintToDatabase(id, house, meat, organic, local, compost, total_clothes, total_electronics, total_shopping, car_engine, car_miles, train, bus, domestic_flights, short_flights, long_flights, total, current){
     //alert("id: " + id);
+    alert(jQuery.type(current));
+    current = parseInt(current);
+    alert(jQuery.type(current));
     function populateDB(tx) {
     tx.executeSql('DROP TABLE IF EXISTS Footprint');
     tx.executeSql('CREATE TABLE IF NOT EXISTS Footprint (id unique, house, meat, organic, local, compost, total_clothes, total_electronics, total_shopping, car_engine, car_miles, train, bus, domestic_flights, short_flights, long_flights, total, current)');
@@ -974,6 +977,27 @@ function completeAction(actionid, reduction){
     //xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.send(data);
 
+
+    //UPDATE FOOTPRINT
+    function updateFP(tx) {
+        //tx.executeSql('INSERT INTO completed_actions (user_id, action_id) VALUES (?,?)',[id, actionid]);     
+                           alert(reduction);
+
+            alert(jQuery.type(reduction));
+        tx.executeSql('UPDATE Footprint SET current = current - ?', [reduction]);                    
+    };
+
+    function errorUFP(err) {
+        alert("Error processing SQL: "+err.code);
+    }
+
+    function successUFP() {
+        alert("success reducing fp");
+    }
+    
+    db.transaction(updateFP, errorUFP, successUFP);
+
+
     // Check action to see if badge should be given
     // 1) Check number of actions taken
     function queryDB(tx) {
@@ -1074,35 +1098,18 @@ function completeAction(actionid, reduction){
     //var db = window.openDatabase("Footprint", "1.0", "Footprint DB", 1000000);
     db.transaction(queryFP, errorFP);
     return false;
-
-
-    //UPDATE FOOTPRINT
-    function populateDB(tx) {
-        //tx.executeSql('INSERT INTO completed_actions (user_id, action_id) VALUES (?,?)',[id, actionid]);                    
-        tx.executeSql('UPDATE Footprint SET current = current - '+reduction+'');                    
-    };
-
-    function errorCB(err) {
-        //alert("Error processing SQL: "+err.code);
-    }
-
-    function successCB() {
-        //alert("success adding actions");
-    }
-    
-    db.transaction(populateDB, errorCB, successCB);
 }
 
 function percentcheck(badge){
     function queryDB(tx) {
-        tx.executeSql('SELECT badge_id FROM completed_badges WHERE badge_id = ?', [badge], querySuccess, errorCB);
+        tx.executeSql('SELECT badge_id FROM completed_badges WHERE completed = 1 AND badge_id = ?', [badge.toString()], querySuccess, errorCB);
     }
 
     function querySuccess(tx, results) {
         console.log("Returned rows from current_actions = " + results.rows.length);
         var num = results.rows.length;
         // this will be true since it was a select statement and so rowsAffected was 0
-        if (!results.rowsAffected) {
+        if (num == 0) {
             completebadge(badge);
         } else {
             console.log('No rows affected!');
@@ -1139,8 +1146,10 @@ function completebadge(badge){
             // this will be true since it was a select statement and so rowsAffected was 0
             if (!results.rowsAffected) {
                 badgename = results.rows.item(0).badge;
-                html = '<img class="badge-image-alert" src="img/badges/saturated/1.png">';
+                html = '<h1 id="badgeearned">Badge earned</h1>';
+                html += '<div id="badge-image-alert-contain"><img class="badge-image-alert" src="img/badges/colour/'+badge+'.png"></div>';
                 html += '<div id="badge-name"><h3>'+badgename+'</h3></div>';
+                html += '<div id="badge-link"><a id="close-badge" href="#" onclick="closebadgepopup()">Ok</a></div>';
                 $('#badgealert').append(html);
                 $('#bgfade').fadeIn();
                 $('#badgealert').fadeIn();
@@ -1901,4 +1910,5 @@ function direct(){
 function closebadgepopup(){
     $('#badgealert').fadeOut();
     $('#bgfade').fadeOut();
+    //$('#badgealert').empty();
 }
