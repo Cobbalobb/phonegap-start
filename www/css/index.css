@@ -1105,3 +1105,7 @@ height: 63px !important;
 #profile-friend{
     margin-top: 20px;
 }
+
+#signup, body{
+    background-color: #297fb8;
+}

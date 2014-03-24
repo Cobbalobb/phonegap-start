@@ -83,7 +83,7 @@ function submitSignForm(first_name, last_name, email, image,facebookid, fbaction
           //alert('password error');
           return false;
       }
-
+      document.getElementById('signButton').innerHTML="<img src='img/loading.gif'>";
       var form = document.getElementById("signForm");
       var data = new FormData(form);
     } else {

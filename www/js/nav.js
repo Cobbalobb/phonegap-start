@@ -32,7 +32,7 @@ function directToHome(){
 
 function goToSignup(){
 	$(':mobile-pagecontainer').pagecontainer('change', 'signup.html', {
-	        transition: 'slideup',
+	        transition: 'fade',
 	        changeHash: true,
 	        reverse: false,
 	        showLoadMsg: true,
