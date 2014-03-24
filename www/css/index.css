@@ -789,18 +789,21 @@ border-style: solid;
     background: url(../img/add.png) no-repeat;
     padding: 3px 38px;
     float: left;
+    width: 65px;
 }
 .action-complete{
     background: url(../img/complete.png) no-repeat;
     height: 32px;
     padding: 3px 0px 10px 38px;
     float: right;
+    width: 65px;
 }
 .action-remove{
     background: url(../img/delete.png) no-repeat;
     height: 32px;
     padding: 3px 38px;
     float: left;
+    width: 65px;
 }
 .successful-added{
     background: url(../img/complete.png) no-repeat;
@@ -837,7 +840,7 @@ border-style: solid;
     background: url(../img/fb-share.png) no-repeat;
     padding: 9px 0 13px 40px;
     margin: 0px auto 0 13px;
-    width: 101px;
+    width: 65px;
     float: right;
 }
 .padd-top{
@@ -1098,4 +1101,8 @@ height: 63px !important;
     margin: 0 auto;
     width: 80px;
     margin-top: 10px;
+}
+
+#profile-friend{
+    margin-top: 20px;
 }

@@ -19,6 +19,7 @@ $user['sent'] ="";
 
 $results = mysqli_query($con,"SELECT first_name, last_name, image, total, current FROM user, footprint WHERE user.id = '$id' AND footprint.id = '$id'");
 while($row = mysqli_fetch_array($results)){
+	$user['id'] = $user_id;
 	$user['first_name'] = $row['first_name'];
 	$user['last_name'] = $row['last_name'];
 	$user['image'] = $row['image'];

@@ -1683,6 +1683,8 @@ function getProfileInfo(id){
                     $('#profile-friend').append("<a href='#' onClick='acceptFriend("+response['id']+")' class='acceptfriend'>Accept request</a>");
                 } else if (response.friends === 1 && response.friends === 0 && response.sent === 1){
                     $('#profile-friend').append("Request sent");
+                } else if( response.id == localStorage.getItem('id')){
+
                 } else{
                     $('#profile-friend').append("<a href='#' onClick='addFriend("+response['id']+")' class='addfriend'>Add Friend</a>");
                 }
