@@ -511,10 +511,11 @@ function getCurrentUsersID() {
         // this will be true since it was a select statement and so rowsAffected was 0
         if (!results.rowsAffected) {
             var orignal_footprint = results.rows.item(num-1).total; //original footprint
-            if (orignal_footprint == undefined){
+            var fp = results.rows.item(num-1).current;
+            //alert(fp);
+            if (fp == undefined){
                 goToCalculator();
             } else {
-                var fp = results.rows.item(num-1).current;
                 document.getElementById("footprint").innerHTML="<h1 class='dynamic'>"+Math.round(fp * 100) / 100+" tonnes<br />" + document.getElementById("footprint").innerHTML;
                 //$('#footprint').append("<h1 class='dynamic'>"+results.rows.item(num-1).current+" KG");
                 return false;
