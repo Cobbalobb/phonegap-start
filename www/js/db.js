@@ -433,10 +433,14 @@ function getCurrentUsersImage() {
         var num = results.rows.length;
         // this will be true since it was a select statement and so rowsAffected was 0
         if (!results.rowsAffected) {
-            document.getElementById("user-img").innerHTML = "<img alt='user-image' src='"+results.rows.item(num-1).image+"'</img>";
+            if(results.rows.item(num-1).image == ""){
+                document.getElementById("user-img").innerHTML = "<img alt='user-image' src='../www/img/nopic.jpg'</img>";
+            } else {
+                document.getElementById("user-img").innerHTML = "<a href='#' onClick='fblogin()'><img alt='user-image' src='"+results.rows.item(num-1).image+"'</img></a>";
+            }
             return false;
         } else {
-            console.log('No rows affected!');
+            document.getElementById("user-img").innerHTML = "<img alt='user-image' src='../img/nopic.jpg'</img>";
         }
         // for an insert statement, this property will return the ID of the last inserted row
         console.log("Last inserted row ID = " + results.insertId);
