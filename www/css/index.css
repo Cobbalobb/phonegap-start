@@ -234,7 +234,10 @@ input{
 .ui-mobile .ui-page-active {
     background-color: #fff;
 }
-#action-list, #friend-list{
+#action-list{
+    margin-top: 128px;
+}
+#friend-list{
     margin-top: 85px;
 
 }
@@ -465,6 +468,11 @@ font-family: Helvetica, Arial, sans-serif /*{global-font-family}*/;
 
 
 /*CALCULATOR PAGE*/
+#calcbutton{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+}
 #calculateForm{
     padding-left: 10px !important;
     padding-right: 10px !important;
@@ -735,6 +743,14 @@ border-style: solid;
     float: left;
     list-style: none;
 }
+#action-filters{
+    display: none;
+}
+#action-filters li{
+    width: 100%;
+    float: none;
+    list-style: none;
+}
 #all-actions{
     background: url(../img/all.png) 50% 12px no-repeat;
     height: 70px;
@@ -775,6 +791,27 @@ border-style: solid;
     font-size: 14px;
     padding-left: 5px;
 }
+.action-category.Food{
+    background-color: #d1404a;
+    display: block;
+    color: #fff;
+    font-size: 14px;
+    padding-left: 5px;
+}
+.action-category.Travel{
+    background-color: #ff8800;
+    display: block;
+    color: #fff;
+    font-size: 14px;
+    padding-left: 5px;
+}
+.action-category.Stuff{
+    background-color: #2980b9;
+    display: block;
+    color: #fff;
+    font-size: 14px;
+    padding-left: 5px;
+}
 .action-title{
     padding-top: 15px;
     padding-bottom: 15px; 
@@ -797,9 +834,10 @@ border-style: solid;
 }
 .action-add{
     background: url(../img/add.png) no-repeat;
-    padding: 3px 38px;
+    padding: 10px 38px;
     float: left;
     width: 65px;
+    height: 25px;
 }
 .action-complete{
     background: url(../img/complete.png) no-repeat;

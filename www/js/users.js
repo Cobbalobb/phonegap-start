@@ -169,7 +169,7 @@ function submitLoginForm(email, image){
     var xhr, target, changeListener, url, data;
 
     //setting url to the php code to add comments to the db
-    url = "http://carbon.jamescobbett.co.uk/services/login.php?email=   ";
+    url = "http://carbon.jamescobbett.co.uk/services/login.php";
     if (typeof email != 'undefined') {
       var data = new FormData();
       data.append("email", email);
@@ -254,10 +254,10 @@ function submitLoginForm(email, image){
                       // }); 
                 }
                 else {
-                    //$('#success').slideDown("slow");                    
-                    //document.getElementById("failure").style.display = "none";
-                    //document.getElementById("firstName").innerHTML ='<div id="newN"><h6>'+name+'</h6></div><div id="newAL">'+age+', '+location+'</div>';
-                    //alert('failure');
+                    document.getElementById("failure").innerHTML ="<div id='failureText'><img src='http://carbon.jamescobbett.co.uk/www/img/delete.png' id='cross'> <h1>Oops! That password is incorrect.<h1></div>";      
+                    jQuery('#failure').slideDown("slow");
+                    document.getElementById('logbutt').innerHTML='<a href="javascript:void(1);" onclick="submitLoginForm()" id="signButton" class="ui-link">Sign in</a>'; 
+                    return false;
                 }
                 //result = JSON.parse(this.responseText);
                 //injectContent(result.id, form);
