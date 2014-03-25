@@ -154,15 +154,16 @@ function goToChangePassword(){
 }
 
 function goToCalculator(){
-	$(':mobile-pagecontainer').pagecontainer('change', 'calculator.html', {
-	        transition: 'slide',
-	        changeHash: true,
-	        reverse: false,
-	        showLoadMsg: true,
-	        reload: true,
-	    });
+	// $(':mobile-pagecontainer').pagecontainer('change', 'calculator.html', {
+	//         transition: 'slide',
+	//         changeHash: true,
+	//         reverse: false,
+	//         showLoadMsg: true,
+	//         reload: true,
+	//     });
 	//getProfileInfo(id);
 	//alert('test');
+	document.location.href = 'calculator.html';
 }
 
 function goToFBFriends(){

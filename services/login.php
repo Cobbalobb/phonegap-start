@@ -12,6 +12,18 @@ $email = $_POST['email'];
 $password = $_POST['password'];
 $image = $_POST['image'];
 $image = (string)$image;
+
+function generateHash($password) {
+    if (defined("CRYPT_BLOWFISH") && CRYPT_BLOWFISH) {
+        $salt = '$2y$11$' . substr(md5(uniqid(rand(), true)), 0, 22);
+        return crypt($password, $salt);
+    }
+}
+function verify($password, $hashedPassword) {
+    return crypt($password, $hashedPassword) == $hashedPassword;
+}
+$hashedPassword = generateHash($password);
+
 // Create connection
 //$con=mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
 //$con=mysqli_connect('10.168.1.52','carbonja_carbon','GSwMAYuNyVzSguTf','carbonja_carb');
@@ -30,7 +42,7 @@ if ($row['id'] == null) {
  } else {
 	//Check passwords match
 	//If pass is blank it's come from FB, blank passwords can not be entered through the form
- 	if($password == $row['password'] || $password == ''){
+ 	if(verify($password, $hashedPassword) || $password == ''){
 		$user['id'] = $row['id'];
 	 	$user['first_name'] = $row['first_name'];
 	 	$user['last_name'] = $row['last_name'];

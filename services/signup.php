@@ -17,6 +17,15 @@ $image = $_POST['image'];
 $facebookid = $_POST['facebookid'];
 $fbactions = $_POST['fbactions'];
 
+function generateHash($password) {
+    if (defined("CRYPT_BLOWFISH") && CRYPT_BLOWFISH) {
+        $salt = '$2y$11$' . substr(md5(uniqid(rand(), true)), 0, 22);
+        return crypt($password, $salt);
+    }
+}
+
+$password = generateHash($password);
+
 // Create connection
 //$con=mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
 //$con=mysqli_connect('10.168.1.52','carbonja_carbon','GSwMAYuNyVzSguTf','carbonja_carb');

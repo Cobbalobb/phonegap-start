@@ -139,6 +139,7 @@ h1 {
     height: 50px;
     position: fixed !important;
     width: 100%;
+    z-index: 9000;
 }
 .ui-title{
     text-shadow: none !important;
@@ -464,6 +465,16 @@ font-family: Helvetica, Arial, sans-serif /*{global-font-family}*/;
 
 
 /*CALCULATOR PAGE*/
+#calculateForm{
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+}
+
+.answers{
+    padding-right: 0px;
+    -webkit-padding-start: 0px;
+}
+
 .ui-checkbox input, .ui-radio input {
 position: absolute;
 left: .466em;
