@@ -37,7 +37,7 @@
     <div id="fb-root"></div>
 
 <!-- Start of Log in page -->
-<div data-role="page">
+<div data-role="page" id="settings">
     <div data-role="panel" id="menu">
         <ul id="menu-list">
             <li id="menu-home" class="active"><a onclick="goToHome();" href="#" class="contentLink"><h1>Home</h1> </a></li>
@@ -47,10 +47,10 @@
             <li id="menu-settings"><a onclick="goToSettings();" href="#" class="contentLink"><h1>Settings</h1> </a></li>
             <li id="menu-signout"><a href="#" onclick="logout()" class="contentLink"><h1>Sign Out</h1> </a></li>
         </ul>
-        </div><!-- /panel -->
+    </div><!-- /panel -->
     <div class="header" data-role="header">
-    
-    <h1>Settings</h1>
+        <a href="#menu" class="showMenu"></a>
+        <h1>Settings</h1>
     </div>
 
     <div data-role="content">
