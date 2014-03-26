@@ -196,11 +196,11 @@ input{
 }
 #menu-list li{
     list-style: none;
-    padding-bottom: 10px;
+    padding-bottom: 12px;
     border-bottom: solid 1px #8A95A5;
     margin-bottom: 10px;
     padding-left: 47px;
-    padding-top: 7px;
+    padding-top: 4px;
 }
 #menu-list h1{
     text-align: left;
@@ -762,36 +762,39 @@ border-style: solid;
    -webkit-box-sizing: border-box;
     box-sizing:        border-box;
 }
-#filter-actions{
+.filter-actions{
     background-color: #525252;
     padding-top: 10px;
     padding-bottom: 10px;
     text-align: center;
     color: #fff;
 }
-#home-actions{
+.home-actions{
     background-color: #669900;
     padding-top: 10px;
     padding-bottom: 10px;
     text-align: center;
 }
-#food-actions{
+.food-actions{
     background-color: #d1404a;
     padding-top: 10px;
     padding-bottom: 10px;
     text-align: center;
 }
-#travel-actions{
+.travel-actions{
     background-color: #ff8800;
     padding-top: 10px;
     padding-bottom: 10px;
     text-align: center;
 }
-#stuff-actions{
+.stuff-actions{
     background-color: #2980b9;
     padding-top: 10px;
     padding-bottom: 10px;
     text-align: center;
+}
+#downchevron{
+    padding-left: 4px;
 }
 #current-actions{
     background: url(../img/current.png) 50% 12px no-repeat;
@@ -805,8 +808,9 @@ border-style: solid;
 }
 #completed-actions{
     background: url(../img/completed.png) 50% 12px no-repeat;
-    padding-top: 47px;
+    padding-top: 49px;
     text-align: center;
+    padding-bottom: 6px;
 }
 .active-action{
     background-color: #13537f !important;

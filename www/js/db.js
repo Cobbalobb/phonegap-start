@@ -1926,3 +1926,78 @@ function closebadgepopup(){
     $('#bgfade').fadeOut();
     //$('#badgealert').empty();
 }
+
+function showHome(){
+    $( ".con-Home" ).fadeIn( "fast", function() {
+        // Animation complete.
+    });
+    $( ".con-Food" ).fadeOut( "fast", function() {
+        // Animation complete.
+    });
+    $( ".con-Travel" ).fadeOut( "fast", function() {
+        // Animation complete.
+    });
+    $( ".con-Stuff" ).fadeOut( "fast", function() {
+        // Animation complete.
+    });
+}
+
+function showFood(){
+    $( ".con-Home" ).fadeOut( "fast", function() {
+        // Animation complete.
+    });
+    $( ".con-Food" ).fadeIn( "fast", function() {
+        // Animation complete.
+    });
+    $( ".con-Travel" ).fadeOut( "fast", function() {
+        // Animation complete.
+    });
+    $( ".con-Stuff" ).fadeOut( "fast", function() {
+        // Animation complete.
+    });
+}
+
+function showTravel(){
+    $( ".con-Home" ).fadeOut( "fast", function() {
+        // Animation complete.
+    });
+    $( ".con-Food" ).fadeOut( "fast", function() {
+        // Animation complete.
+    });
+    $( ".con-Travel" ).fadeIn( "fast", function() {
+        // Animation complete.
+    });
+    $( ".con-Stuff" ).fadeOut( "fast", function() {
+        // Animation complete.
+    });
+}
+
+function showStuff(){
+    $( ".con-Home" ).fadeOut( "fast", function() {
+        // Animation complete.
+    });
+    $( ".con-Food" ).fadeOut( "fast", function() {
+        // Animation complete.
+    });
+    $( ".con-Travel" ).fadeOut( "fast", function() {
+        // Animation complete.
+    });
+    $( ".con-Stuff" ).fadeIn( "fast", function() {
+        // Animation complete.
+    });
+}
+
+function showAll(){
+    $( ".con-Home" ).fadeIn( "fast", function() {
+        // Animation complete.
+    });
+    $( ".con-Food" ).fadeIn( "fast", function() {
+        // Animation complete.
+    });
+    $( ".con-Travel" ).fadeIn( "fast", function() {
+        // Animation complete.
+    });
+    $( ".con-Stuff" ).fadeIn( "fast", function() {
+        // Animation complete.
+    });
+}

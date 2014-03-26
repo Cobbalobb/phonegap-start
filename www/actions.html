@@ -55,13 +55,13 @@
     <div data-role="content" id="topmenu">
         <ul id="action-links">
             <li id="actions-filter">
-                <a onclick="goToAll();" href="#"><div class="active-action" id="all-actions">All</div></a>
+                <a onclick="showAll();" href="#"><div class="active-action" id="all-actions">All <img id="downchevron" src="img/downchevron.png"></div></a>
                 <ul id="action-filters">
-                    <li><div id="filter-actions">Filters:</div></li>
-                    <li><a onclick="goToAll();" href="#"><div class="home-actions">Home</div></a></li>
-                    <li><a onclick="goToCurrent();" href="#"><div class="food-actions">Food</div></a></li>
-                    <li><a onclick="goToCompleted();" href="#"><div class="travel-actions">Travel</div></a><li>
-                    <li><a onclick="goToCompleted();" href="#"><div class="stuff-actions">Stuff</div></a><li>
+                    <li><div class="filter-actions">Filters:</div></li>
+                    <li><a onclick="showHome();" href="#"><div class="home-actions">Home</div></a></li>
+                    <li><a onclick="showFood();" href="#"><div class="food-actions">Food</div></a></li>
+                    <li><a onclick="showTravel();" href="#"><div class="travel-actions">Travel</div></a><li>
+                    <li><a onclick="showStuff();" href="#"><div class="stuff-actions">Stuff</div></a><li>
                 </ul>
             </li>
             <li>
@@ -74,15 +74,6 @@
     </div>
       <script type="text/javascript">
                 setTimeout(function(){getActionsL()},1000);
-                // setTimeout(function(){
-                //     $( "#all-actions" ).hover(
-                //       function() {
-                //         $( '#action-filters' ).slideDown();
-                //       }, function() {
-                //         $( '#action-filters'  ).slideUp();
-                //       }
-                //     );
-                // },1000);
                 setTimeout(function(){
                     $( "#actions-filter" ).hover(
                       function() {
