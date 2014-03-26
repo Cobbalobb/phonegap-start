@@ -357,6 +357,7 @@ input{
 .status{
     padding-left: 67px;
     font-size: 15px;
+    min-height: 41px;
 }
 .time{
     font-size: 12px;
@@ -1196,4 +1197,7 @@ height: 63px !important;
 
 #signup, body{
     background-color: #297fb8;
+}
+.black{
+    color: black !important;
 }

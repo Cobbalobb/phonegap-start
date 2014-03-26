@@ -1,7 +1,27 @@
 <?php
 //include 'http://carbon.jamescobbett.co.uk/services/config.php';
+function timeago($time)
+{
+   $periods = array("second", "minute", "hour", "day", "week", "month", "year", "decade");
+   $lengths = array("60","60","24","7","4.35","12","10");
 
+   $now = time();
+   $time = strtotime($time);
+       $difference    = $now - $time;
+       $tense         = "ago";
 
+   for($j = 0; $difference >= $lengths[$j] && $j < count($lengths)-1; $j++) {
+       $difference /= $lengths[$j];
+   }
+
+   $difference = round($difference);
+
+   if($difference != 1) {
+       $periods[$j].= "s";
+   }
+
+   return "$difference $periods[$j] ago ";
+}
 // Create connection
 //$con=mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
 $con=mysqli_connect('10.168.1.52','carbonja_carbon','GSwMAYuNyVzSguTf','carbonja_carb');
@@ -43,7 +63,7 @@ while($row = mysqli_fetch_array($results2)){
 		$news['feed'][$n]['type'] = 2;
 		$news['feed'][$n]['user_id'] = $row['id'];
 		$news['feed'][$n]['confirmed'] = $confirmed;
-		$news['feed'][$n]['timestamp'] = $row['timestamp'];
+		$news['feed'][$n]['timestamp'] = timeago($row['timestamp']);
 		$news['feed'][$n]['sent'] = 0;
 		$n++;
 	}
@@ -60,7 +80,7 @@ while($row = mysqli_fetch_array($results2)){
 			$news['feed'][$n]['type'] = 2;
 			$news['feed'][$n]['user_id'] = $row['id'];
 			$news['feed'][$n]['confirmed'] = $confirmed;
-			$news['feed'][$n]['timestamp'] = $row['timestamp'];
+			$news['feed'][$n]['timestamp'] = timeago($row['timestamp']);
 			$news['feed'][$n]['sent'] = 1;
 			$n++;
 		}
@@ -77,7 +97,7 @@ foreach ($user as $use) {
 		$news['feed'][$n]['user_id'] = $row['user_id'];
 		$news['feed'][$n]['user_name'] = $use['first_name'];
 		$news['feed'][$n]['image'] = $use['image'];
-		$news['feed'][$n]['timestamp'] = $row['timestamp'];
+		$news['feed'][$n]['timestamp'] = timeago($row['timestamp']);
 		$news['feed'][$n]['status'] = $row['status'];
 		$news['feed'][$n]['action_id'] = $row['action_id'];
 		$news['feed'][$n]['action_name'] = $row['action'];
