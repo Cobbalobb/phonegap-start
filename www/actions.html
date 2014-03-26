@@ -54,12 +54,14 @@
 
     <div data-role="content" id="topmenu">
         <ul id="action-links">
-            <li>
+            <li id="actions-filter">
                 <a onclick="goToAll();" href="#"><div class="active-action" id="all-actions">All</div></a>
                 <ul id="action-filters">
-                    <li><a onclick="goToAll();" href="#"><div class="active-action" id="all-actions">All</div></a></li>
-                    <li><a onclick="goToCurrent();" href="#"><div id="current-actions">Current</div></a></li>
-                    <li><a onclick="goToCompleted();" href="#"><div id="completed-actions">Complete</div></a><li>
+                    <li><div id="filter-actions">Filters:</div></li>
+                    <li><a onclick="goToAll();" href="#"><div class="home-actions">Home</div></a></li>
+                    <li><a onclick="goToCurrent();" href="#"><div class="food-actions">Food</div></a></li>
+                    <li><a onclick="goToCompleted();" href="#"><div class="travel-actions">Travel</div></a><li>
+                    <li><a onclick="goToCompleted();" href="#"><div class="stuff-actions">Stuff</div></a><li>
                 </ul>
             </li>
             <li>
@@ -72,8 +74,17 @@
     </div>
       <script type="text/javascript">
                 setTimeout(function(){getActionsL()},1000);
+                // setTimeout(function(){
+                //     $( "#all-actions" ).hover(
+                //       function() {
+                //         $( '#action-filters' ).slideDown();
+                //       }, function() {
+                //         $( '#action-filters'  ).slideUp();
+                //       }
+                //     );
+                // },1000);
                 setTimeout(function(){
-                    $( "#all-actions" ).hover(
+                    $( "#actions-filter" ).hover(
                       function() {
                         $( '#action-filters' ).slideDown();
                       }, function() {

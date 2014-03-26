@@ -745,6 +745,7 @@ border-style: solid;
 }
 #action-filters{
     display: none;
+    -webkit-padding-start: 0px;
 }
 #action-filters li{
     width: 100%;
@@ -760,6 +761,37 @@ border-style: solid;
    -moz-box-sizing:    border-box;
    -webkit-box-sizing: border-box;
     box-sizing:        border-box;
+}
+#filter-actions{
+    background-color: #525252;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    color: #fff;
+}
+#home-actions{
+    background-color: #669900;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+}
+#food-actions{
+    background-color: #d1404a;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+}
+#travel-actions{
+    background-color: #ff8800;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+}
+#stuff-actions{
+    background-color: #2980b9;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
 }
 #current-actions{
     background: url(../img/current.png) 50% 12px no-repeat;
