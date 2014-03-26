@@ -235,7 +235,10 @@ input{
     background-color: #fff;
 }
 #action-list{
-    margin-top: 128px;
+    margin-top: 83px;
+}
+.extra-margin{
+    margin-top: 128px !important;
 }
 #friend-list{
     margin-top: 85px;
