@@ -726,6 +726,7 @@ function footprintToServerDatabase(){
                 var s = "success";
                 var message = response.indexOf("exception");
                 console.log(message);
+                alert(response);
                 if (message == -1){
                      //$('#failure').slideToggle("slow");                    
                     //document.getElementById("failure").style.display = "block";
