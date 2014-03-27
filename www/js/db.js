@@ -655,7 +655,7 @@ function getCurrentUsersID() {
  }
 
 //Add Footprint to Server DB
-function footprintToServerDatabase(){
+function footprintToServerDatabase(id, house, meat, organic, local, compost, total_clothes, total_electronics, total_shopping, car_engine, car_miles, train, bus, domestic_flights, short_flights, long_flights, total){
   // declaring variables to be used
     var xhr, target, changeListener, url, data;
     //setting url to the php code to add comments to the db
@@ -663,11 +663,12 @@ function footprintToServerDatabase(){
     var form = document.getElementById("calculateForm");
     var data = new FormData();
 
-    // get data from local storage
-    function queryDB(tx) {
-            //tx.executeSql('DROP TABLE IF EXISTS User');
-            tx.executeSql('SELECT * FROM Footprint', [], querySuccess, errorCB);
-        }
+    if(typeof id === 'undefined'){
+        // get data from local storage
+        function queryDB(tx) {
+                //tx.executeSql('DROP TABLE IF EXISTS User');
+                tx.executeSql('SELECT * FROM Footprint', [], querySuccess, errorCB);
+            }
 
         function querySuccess(tx, results) {
             console.log("Returned rows = " + results.rows.length);
@@ -701,15 +702,37 @@ function footprintToServerDatabase(){
             }
             // for an insert statement, this property will return the ID of the last inserted row
             console.log("Last inserted row ID = " + results.insertId);
-        }
+            }
 
         function errorCB(err) {
-            //alert("Error processing SQL: "+err.code);
-            //document.location.href = 'login.html';
+                //alert("Error processing SQL: "+err.code);
+                //document.location.href = 'login.html';
         }
 
         //var db = window.openDatabase("Footprint", "1.0", "Footprint DB", 1000000);
         db.transaction(queryDB, errorCB);
+    } else {
+        data.append("id", id);
+        alert(results.rows.item(num-1).id);
+        console.log("gdsgdfgdsgd " + results.rows.item(num-1).id);
+        data.append("house", house);
+        data.append("meat", meat);
+        data.append("organic", organic);
+        data.append("local", local);
+        data.append("compost", compost);
+        data.append("clothes", total_clothes);
+        data.append("electronics", total_electronics);
+        data.append("other_shopping", total_shopping);
+        data.append("engine", car_engine);
+        data.append("car_miles", car_miles);
+        data.append("train_miles", train);
+        data.append("bus_miles", bus);
+        data.append("domestic_flights", domestic_flights);
+        data.append("short_flights", short_flights);
+        data.append("long_flights", long_flights);
+        data.append("total", total);
+        sendData(data);
+    }
 
     //var html = document.getElementById("source").innerHTML;
   //data = 'html='+escape(document.getElementById("source").innerHTML);
