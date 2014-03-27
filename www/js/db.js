@@ -656,6 +656,8 @@ function getCurrentUsersID() {
 
 //Add Footprint to Server DB
 function footprintToServerDatabase(id, house, meat, organic, local, compost, total_clothes, total_electronics, total_shopping, car_engine, car_miles, train, bus, domestic_flights, short_flights, long_flights, total){
+    alert('659');
+    alert(id);
   // declaring variables to be used
     var xhr, target, changeListener, url, data;
     //setting url to the php code to add comments to the db
@@ -664,6 +666,7 @@ function footprintToServerDatabase(id, house, meat, organic, local, compost, tot
     var data = new FormData();
 
     if(typeof id === 'undefined'){
+        alert('668');
         // get data from local storage
         function queryDB(tx) {
                 //tx.executeSql('DROP TABLE IF EXISTS User');
@@ -712,6 +715,7 @@ function footprintToServerDatabase(id, house, meat, organic, local, compost, tot
         //var db = window.openDatabase("Footprint", "1.0", "Footprint DB", 1000000);
         db.transaction(queryDB, errorCB);
     } else {
+        alert('717');
         alert(id);
         data.append("id", id);
         data.append("house", house);
