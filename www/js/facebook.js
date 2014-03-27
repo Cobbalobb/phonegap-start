@@ -48,22 +48,6 @@ document.addEventListener('deviceready', function() {
                                   // }
                                   });
             }
-            function wallPostCheck(name) {
-                FB.getLoginStatus(function(response) {
-                  if (response.status == 'connected') {
-                    facebookWallPost(name)
-                    //return true;
-                  }
-                  else {
-                    html = '<h1 id="badgeearned">Footprint Calculated</h1>';
-                    html += '<div id="badge-name"><h3>Connect to Facebook?</h3></div>';
-                    html += '<div id="badge-link"><a id="close-badge" href="#" onclick="closebadgepopup(); directToHome();">Yes</a></div>';
-                    $('#badgealert').append(html);
-                    $('#bgfade').fadeIn();
-                    $('#badgealert').fadeIn();
-                  });
-              }
-            }
             var friendIDs = [];
             var fdata;
             function me() {
