@@ -676,6 +676,7 @@ function footprintToServerDatabase(){
             if (!results.rowsAffected) {
                 //$('#footprint').append("<h1 class='dynamic'>"+results.rows.item(num-1).total+" KG");
                 data.append("id", results.rows.item(num-1).id);
+                alert(results.rows.item(num-1).id);
                 console.log("gdsgdfgdsgd " + results.rows.item(num-1).id);
                 data.append("house", results.rows.item(num-1).house);
                 data.append("meat", results.rows.item(num-1).meat);
