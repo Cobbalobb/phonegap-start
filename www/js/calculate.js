@@ -161,7 +161,7 @@ if(form_results.engine != undefined){
 	 	 var car = (diesel_large/100) * form_results.car_miles;
 	 }
 	} else if (form_results.engine == 'hybrid'){
-	 if (car_size == 'small'){
+	 if (form_results.car_size == 'small'){
 	 	var car = (hybrid_medium/100) * form_results.car_miles;
 	 } else if (form_results.car_size == 'medium'){
 	 	 var car = (hybrid_medium/100) * form_results.car_miles;

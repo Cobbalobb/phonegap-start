@@ -230,9 +230,9 @@ function submitLoginForm(email, image){
                     var response = JSON.parse(this.responseText);
                     console.log(response['email']);
                     if (typeof image != 'undefined') {
-                      login(response['id'], response['first_name'], response['last_name'], response['email'], image, response['facebookid'], response['fbactions']);
+                      login(response['id'], response['first_name'], response['last_name'], response['email'], image, response['facebookid'], response['fbactions'], response['total_actions_added']);
                     } else {
-                      login(response['id'], response['first_name'], response['last_name'], response['email'], response['image'], response['facebookid'], response['fbactions']);
+                      login(response['id'], response['first_name'], response['last_name'], response['email'], response['image'], response['facebookid'], response['fbactions'], response['total_actions_added']);
                     }
                     //set email in local temp storage - use this to query db -HOW?
                       // $.ajax({       

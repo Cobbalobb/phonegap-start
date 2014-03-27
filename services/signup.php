@@ -15,7 +15,7 @@ $email = $_POST['email'];
 $password = $_POST['password'];
 $image = $_POST['image'];
 if(!isset($image)){
-	$image = "http://http://carbon.jamescobbett.co.uk/www/img/noprofile.jpg";
+	$image = "http://carbon.jamescobbett.co.uk/www/img/noprofile.jpg";
 }
 $facebookid = $_POST['facebookid'];
 $fbactions = $_POST['fbactions'];
@@ -36,7 +36,7 @@ $con = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
 $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 // query
-$sql = "INSERT INTO user (first_name, last_name, username, email, password, image, facebookid) VALUES ('$fname', '$lname', '$username', '$email', '$password', '$image', '$facebookid')";
+$sql = "INSERT INTO user (first_name, last_name, username, email, password, image, facebookid, total_actions_added) VALUES ('$fname', '$lname', '$username', '$email', '$password', '$image', '$facebookid', 0)";
 $q = $con->prepare($sql);
 $q->execute(array(':fname'=>$fname,
                   ':lname'=>$lname,
@@ -44,7 +44,8 @@ $q->execute(array(':fname'=>$fname,
                   ':email'=>$email,
                   ':password'=>$password,
                   ':image'=>$image,
-                  ':facebookid'=>$facebookid));
+                  ':facebookid'=>$facebookid,
+                  ':total_actions_added'=>0));
 
  if (!$q->errorCode() != 0) {
      echo $con->errorInfo();

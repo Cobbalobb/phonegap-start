@@ -134,14 +134,14 @@ function logout(){
     db.transaction(dropFP, errorFP, successFP);
 }
 
-function login(id, first_name, last_name, email, image, facebookid, fbactions){
+function login(id, first_name, last_name, email, image, facebookid, fbactions, total_actions_added){
     var data = new FormData();
     data.append("id", id);
     window.localStorage.setItem("id", id);
 
     function populateDB(tx) {
     tx.executeSql('DROP TABLE IF EXISTS User');
-    tx.executeSql('CREATE TABLE IF NOT EXISTS User (id unique, first_name, last_name, email, image, facebookid, fbactions)');
+    tx.executeSql('CREATE TABLE IF NOT EXISTS User (id unique, first_name, last_name, email, image, facebookid, fbactions, total_actions_added)');
     tx.executeSql('DROP TABLE IF EXISTS Actions');
     tx.executeSql('CREATE TABLE IF NOT EXISTS Actions (id, action, description, reduction, category)');
    
@@ -152,7 +152,7 @@ function login(id, first_name, last_name, email, image, facebookid, fbactions){
     tx.executeSql('CREATE TABLE IF NOT EXISTS completed_badges (user_id, badge_id, completed)');    
     tx.executeSql('DROP TABLE IF EXISTS badges');
     tx.executeSql('CREATE TABLE IF NOT EXISTS badges (id, badge)');
-    tx.executeSql('INSERT INTO User (id, first_name, last_name, email, image, facebookid, fbactions) VALUES (?,?,?,?,?,?,?)',[id, first_name, last_name, email, image, facebookid, fbactions]);
+    tx.executeSql('INSERT INTO User (id, first_name, last_name, email, image, facebookid, fbactions, total_actions_added) VALUES (?,?,?,?,?,?,?,?)',[id, first_name, last_name, email, image, facebookid, fbactions, total_actions_added]);
     }
 
     function errorCB(err) {
@@ -361,8 +361,9 @@ function redirect(){
             if (original_footprint == 'undefined'){
                 html = '<h1 id="badgeearned">Welcome to Carbon Cutter</h1>';
                 html += '<div id="badge-name"><h3>The next stage is to complete the carbon footprint calculator. This will provide an estimate of your footprint, and allow you start monitoring your footprint reductions.</h3></div>';
-                html += '<div id="badge-link"><a id="close-badge" href="#" onclick="closebadgepopup(); goToCalculator();">Go to calculator</a></div>';
+                html += '<div id="welcome-link"><a id="close-badge" href="#" onclick="closebadgepopup(); goToCalculator();">Go to calculator</a></div>';
                 $('#badgealert').append(html);
+                $( "#badgealert" ).addClass( "extra-height" );
                 $('#bgfade').fadeIn();
                 $('#badgealert').fadeIn();
                 //goToCalculator();
@@ -400,6 +401,7 @@ function getCurrentUsersName() {
         // this will be true since it was a select statement and so rowsAffected was 0
         if (!results.rowsAffected) {
             $('#name').append(results.rows.item(num-1).first_name + ',');
+            alert("name: "+results.rows.item(num-1).first_name);
             $( document ).ready(function() {
                 newsfeed();
             });
@@ -640,7 +642,7 @@ function getCurrentUsersID(goToCalc) {
  function footprintToDatabase(id, house, meat, organic, local, compost, total_clothes, total_electronics, total_shopping, car_engine, car_miles, train, bus, domestic_flights, short_flights, long_flights, total, current){
     //alert("id: " + id);
     //alert(jQuery.type(current));
-    current = parseInt(current);
+    current = parseFloat(current);
     //alert(jQuery.type(current));
     function populateDB(tx) {
     tx.executeSql('DROP TABLE IF EXISTS Footprint');
@@ -653,6 +655,7 @@ function getCurrentUsersID(goToCalc) {
     }
 
     function successCB() {
+        alert('657');
         //alert("success footprint added!");
         //document.location.href = 'index.html';
     }
@@ -759,20 +762,16 @@ function footprintToServerDatabase(id, house, meat, organic, local, compost, tot
                 console.log(message);
                 alert(response);
                 if (message == -1){
-                    if(id != undefined){
-                        html = '<h1 id="badgeearned">Footprint Calculated</h1>';
-                        html += '<div id="badge-name"><h3>Your Carbon Footprint is '+total+' tonnes.</h3></div>';
-                        html += '<div id="badge-link"><a id="close-badge" href="#" onclick="closebadgepopup(); directToHome();">OK</a></div>';
-                        $('#badgealert').append(html);
-                        $('#bgfade').fadeIn();
-                        $('#badgealert').fadeIn();
-                    }
+                    alert('763');
+                    html = '<h1 id="badgeearned">Footprint Calculated</h1>';
+                    html += '<div id="badge-name"><h3>Your Carbon Footprint is '+Math.round(total * 100) / 100+' tonnes.</h3></div>';
+                    html += '<div id="badge-link"><a id="close-badge" href="#" onclick="closebadgepopup(); directToHome();">OK</a></div>';
+                    $('#badgealert').append(html);
+                    $('#bgfade').fadeIn();
+                    $('#badgealert').fadeIn();
                 }
                 else {
-                    //$('#success').slideDown("slow");                    
-                    //document.getElementById("failure").style.display = "none";
-                    //document.getElementById("firstName").innerHTML ='<div id="newN"><h6>'+name+'</h6></div><div id="newAL">'+age+', '+location+'</div>';
-                    //alert('failure');
+                    alert('766');
                 }
                 //result = JSON.parse(this.responseText);
                 //injectContent(result.id, form);
@@ -857,6 +856,19 @@ function addActionToList(actionid){
     
     db.transaction(updateAction, errorCB, successCB);
 
+    function addAction(tx) {
+        tx.executeSql('UPDATE user SET total_actions_added = total_actions_added+1',[]);                    
+    };
+
+    function adderrorCB(err) {
+        //alert("Error processing SQL: "+err.code);
+    }
+
+    function addsuccessCB() {
+
+        }
+    
+    db.transaction(addAction, errorCB, successCB);
 
     // declaring variables to be used
     var xhr, target, changeListener, url, data;
@@ -906,20 +918,20 @@ function addActionToList(actionid){
     xhr.send(data);
 
     function queryDB(tx) {
-            tx.executeSql('SELECT * FROM current_actions', [], querySuccess, errorCB);
+            tx.executeSql('SELECT total_actions_added FROM user', [], querySuccess, errorCB);
         }
 
     function querySuccess(tx, results) {
         console.log("Returned rows = " + results.rows.length);
-        var num = results.rows.length;
+        var num = results.rows.item(num-1).total_actions_added; //RETURNED VALUE
         var badge;
-        if(num === 1){
+        if(num == 1){
             //award badge
-            badge = 3;
+            badge = 1;
             //alert('Badge earned: 1st action added');
             completebadge(badge);
-        } else if (num === 10){
-            badge = 4;
+        } else if (num == 10){
+            badge = 2;
             //alert('Badge earned: 10th action completed');
             completebadge(badge);
         } else {
@@ -1231,7 +1243,7 @@ function completebadge(badge){
     var id = localStorage.getItem('id');
 
     function populateBadge(tx) {
-        tx.executeSql('UPDATE completed_badges SET completed = 1 WHERE badge_id=?',[badge.toString()]);                    
+        tx.executeSql('UPDATE completed_badges SET completed = 1 WHERE badge_id=? AND completed = ?',[badge.toString(), '0']);                    
     };
 
     function errorBadge(err) {
