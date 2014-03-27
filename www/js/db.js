@@ -712,9 +712,8 @@ function footprintToServerDatabase(id, house, meat, organic, local, compost, tot
         //var db = window.openDatabase("Footprint", "1.0", "Footprint DB", 1000000);
         db.transaction(queryDB, errorCB);
     } else {
+        alert(id);
         data.append("id", id);
-        alert(results.rows.item(num-1).id);
-        console.log("gdsgdfgdsgd " + results.rows.item(num-1).id);
         data.append("house", house);
         data.append("meat", meat);
         data.append("organic", organic);

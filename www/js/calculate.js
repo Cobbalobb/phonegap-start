@@ -76,89 +76,101 @@ for (var i = 0; i < form.length; i++) {
 // alert(data.items.house);
 // Set users values
 // Gas and electrics
-if(form_results.house == 'small'){
-	var electricity = small_elec;
-	var gas = small_gas;
-} else if(form_results.house == 'medium'){
-	var electricity = medium_elec;
-	var gas = medium_gas;
-} else {
-	var electricity = large_elec;
-	var gas = large_gas;
+if(form_results.house != undefined){
+	if(form_results.house == 'small'){
+		var electricity = small_elec;
+		var gas = small_gas;
+	} else if(form_results.house == 'medium'){
+		var electricity = medium_elec;
+		var gas = medium_gas;
+	} else {
+		var electricity = large_elec;
+		var gas = large_gas;
+	}
 }
 
 // Meat consumption
-if(form_results.meat == '>1'){
- var meat = more_once;
-} else if(form_results.meat == 'daily'){
- var meat = daily;
-} else if(form_results.meat == 'few_times_a_week'){
- var meat = few_week;
-} else if(form_results.meat == 'weekly'){
- var meat = weekly;
-} else if(form_results.meat == 'less_frequently'){
- var meat = less_frequently;
-} else if(form_results.meat == 'never'){
- var meat = never;
+if(form_results.meat != undefined){
+	if(form_results.meat == '>1'){
+	 var meat = more_once;
+	} else if(form_results.meat == 'daily'){
+	 var meat = daily;
+	} else if(form_results.meat == 'few_times_a_week'){
+	 var meat = few_week;
+	} else if(form_results.meat == 'weekly'){
+	 var meat = weekly;
+	} else if(form_results.meat == 'less_frequently'){
+	 var meat = less_frequently;
+	} else if(form_results.meat == 'never'){
+	 var meat = never;
+	}
 }
 
 // Organic food
-if(form_results.organic == 'always'){
- var organic = organic_always;
-} else if(form_results.organic == 'regularly'){
- var organic = organic_regularly;
-} else if(form_results.organic == 'sometimes'){
- var organic = organic_sometimes;
-} else if(form_results.organic == 'never'){
- var organic = organic_never;
+if(form_results.organic != undefined){
+	if(form_results.organic == 'always'){
+	 var organic = organic_always;
+	} else if(form_results.organic == 'regularly'){
+	 var organic = organic_regularly;
+	} else if(form_results.organic == 'sometimes'){
+	 var organic = organic_sometimes;
+	} else if(form_results.organic == 'never'){
+	 var organic = organic_never;
+	}
 }
 
 // Local food
-if(form_results.local == 'always'){
- var local = local_always;
-} else if(form_results.local == 'regularly'){
- var local = local_regularly;
-} else if(form_results.local == 'sometimes'){
- var local = local_sometimes;
-} else if(form_results.local == 'never'){
- var local = local_never;
+if(form_results.local != undefined){
+	if(form_results.local == 'always'){
+	 var local = local_always;
+	} else if(form_results.local == 'regularly'){
+	 var local = local_regularly;
+	} else if(form_results.local == 'sometimes'){
+	 var local = local_sometimes;
+	} else if(form_results.local == 'never'){
+	 var local = local_never;
+	}
 }
 
 // Compost
-if (form_results.compost == 'yes'){
-	var compost = compost_yes;
-} else {
-	var compost = 0;
+if(form_results.compost != undefined){
+	if (form_results.compost == 'yes'){
+		var compost = compost_yes;
+	} else {
+		var compost = 0;
+	}
 }
 
 // TRAVEL
 // Car
-if (form_results.engine == 'petrol'){
- if (form_results.car_size == 'small'){
- 	var car = (petrol_small/100) * form_results.car_miles;
- } else if (form_results.car_size == 'medium'){
- 	 var car = (petrol_medium/100) * form_results.car_miles;
- } else {
- 	 var car = (petrol_large/100) * form_results.car_miles;
- }
-} else if (form_results.engine == 'diesel'){
- if (form_results.car_size == 'small'){
- 	var car = (diesel_small/100) * form_results.car_miles;
- } else if (form_results.car_size == 'medium'){
- 	 var car = (diesel_medium/100) * form_results.car_miles;
- } else {
- 	 var car = (diesel_large/100) * form_results.car_miles;
- }
-} else if (form_results.engine == 'hybrid'){
- if (car_size == 'small'){
- 	var car = (hybrid_medium/100) * form_results.car_miles;
- } else if (form_results.car_size == 'medium'){
- 	 var car = (hybrid_medium/100) * form_results.car_miles;
- } else {
- 	 var car = (hybrid_large/100) * form_results.car_miles;
- }
-} else {
-	var car = 0;
+if(form_results.engine != undefined){
+	if (form_results.engine == 'petrol'){
+	 if (form_results.car_size == 'small'){
+	 	var car = (petrol_small/100) * form_results.car_miles;
+	 } else if (form_results.car_size == 'medium'){
+	 	 var car = (petrol_medium/100) * form_results.car_miles;
+	 } else {
+	 	 var car = (petrol_large/100) * form_results.car_miles;
+	 }
+	} else if (form_results.engine == 'diesel'){
+	 if (form_results.car_size == 'small'){
+	 	var car = (diesel_small/100) * form_results.car_miles;
+	 } else if (form_results.car_size == 'medium'){
+	 	 var car = (diesel_medium/100) * form_results.car_miles;
+	 } else {
+	 	 var car = (diesel_large/100) * form_results.car_miles;
+	 }
+	} else if (form_results.engine == 'hybrid'){
+	 if (car_size == 'small'){
+	 	var car = (hybrid_medium/100) * form_results.car_miles;
+	 } else if (form_results.car_size == 'medium'){
+	 	 var car = (hybrid_medium/100) * form_results.car_miles;
+	 } else {
+	 	 var car = (hybrid_large/100) * form_results.car_miles;
+	 }
+	} else {
+		var car = 0;
+	}
 }
 
 // Train
