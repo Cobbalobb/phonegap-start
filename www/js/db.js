@@ -478,7 +478,7 @@ function getCurrentUsersID() {
             console.log("id: " + id);
             window.localStorage.setItem("id", id);
             alert('set localStorage');
-            alert(localStorage.setItem("id", id));
+            alert(localStorage.getItem("id"));
             window.localStorage.setItem("fbactions", results.rows.item(num-1).fbactions);
             return id;
         } else {
@@ -794,11 +794,11 @@ function getUserInfo(load){
    //if(load == true){
        getCurrentUsersID();
        getCurrentUsersName();
-       getCurrentUsersFootprint();
        //getCurrentUsersActionsNo();
        //getCurrentUsersBadgesNo();
        getCurrentUsersReduction();
        getCurrentUsersImage();
+       getCurrentUsersFootprint();
        actionmessage();
    //    show = false;
    //} else if (show == true) {
