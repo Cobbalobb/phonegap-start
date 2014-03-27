@@ -211,9 +211,15 @@ function calculate(){
 	var total = electricity + gas + meat + organic + local + compost + total_clothes + total_electronics + total_shopping + car + train + bus + domestic_flights + short_flights + long_flights + food + health;
 	console.log("Total: " +total);
 	alert(total);
-    var id = window.localStorage.getItem("id");
+    var id = localStorage.getItem("id");
+    if(id == undefined){
+    	alert('id was undefined');
+    	getCurrentUsersID();
+    	alert(localStorage.getItem("id"));
+    	id = localStorage.getItem("id");
+    }
     alert(id);
-    alert(localStorage.getItem("id"));
+    //alert(localStorage.getItem("id"));
     //alert("id:" + id);	
     //var id = 1;
     footprintToDatabase(id, form_results.house, form_results.meat, form_results.organic, form_results.local, form_results.compost, form_results.clothes, form_results.electronics, form_results.other_shopping, form_results.engine, form_results.car_miles, form_results.train_miles, form_results.bus_miles, form_results.domestic_flights, form_results.short_flights, form_results.long_flights, total, total);

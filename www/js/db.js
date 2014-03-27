@@ -477,6 +477,7 @@ function getCurrentUsersID() {
             //$('#name').append(results.rows.item(num-1).first_name + ',');
             console.log("id: " + id);
             window.localStorage.setItem("id", id);
+            alert('set localStorage');
             window.localStorage.setItem("fbactions", results.rows.item(num-1).fbactions);
             return id;
         } else {
