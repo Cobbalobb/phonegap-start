@@ -459,7 +459,7 @@ function getCurrentUsersImage() {
     //$('#name').append(data.items.first_name + ',');
  }
 
-function getCurrentUsersID() {
+function getCurrentUsersID(goToCalc) {
     function queryDB(tx) {
         //tx.executeSql('DROP TABLE IF EXISTS User');
         tx.executeSql('SELECT id, fbactions FROM User', [], querySuccess, errorCB);
@@ -480,7 +480,11 @@ function getCurrentUsersID() {
             alert('set localStorage');
             alert(localStorage.getItem("id"));
             window.localStorage.setItem("fbactions", results.rows.item(num-1).fbactions);
-            return id;
+            if(goToCalc == true){
+                goToCalculator();
+            } else {
+                return id;
+            }
         } else {
 
         }
@@ -516,7 +520,11 @@ function getCurrentUsersID() {
             var fp = results.rows.item(num-1).current;
             //alert(fp);
             if (fp == undefined){
-                goToCalculator();
+                if(localStorage.getItem("id") == undefined){
+                    getCurrentUsersID(true);
+                } else {
+                    goToCalculator();  
+                }      
             } else {
                 document.getElementById("footprint").innerHTML="<h1 class='dynamic'>"+Math.round(fp * 100) / 100+" tonnes<br />" + document.getElementById("footprint").innerHTML;
                 //$('#footprint').append("<h1 class='dynamic'>"+results.rows.item(num-1).current+" KG");
