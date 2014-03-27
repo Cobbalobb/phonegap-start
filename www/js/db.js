@@ -136,11 +136,8 @@ function logout(){
 
 function login(id, first_name, last_name, email, image, facebookid, fbactions){
     var data = new FormData();
-    alert('here');
     data.append("id", id);
     window.localStorage.setItem("id", id);
-    alert(id);
-    alert("storage id: "+localStorage.getItem('id'));
 
     function populateDB(tx) {
     tx.executeSql('DROP TABLE IF EXISTS User');
@@ -479,8 +476,6 @@ function getCurrentUsersID(goToCalc) {
             //$('#name').append(results.rows.item(num-1).first_name + ',');
             console.log("id: " + id);
             window.localStorage.setItem("id", id);
-            alert('set localStorage');
-            alert(localStorage.getItem("id"));
             window.localStorage.setItem("fbactions", results.rows.item(num-1).fbactions);
             if(goToCalc == true){
                 goToCalculator();
@@ -522,11 +517,7 @@ function getCurrentUsersID(goToCalc) {
             var fp = results.rows.item(num-1).current;
             //alert(fp);
             if (fp == undefined){
-                if(localStorage.getItem("id") == undefined){
-                    getCurrentUsersID(true);
-                } else {
-                    goToCalculator();  
-                }      
+                goToCalculator();      
             } else {
                 document.getElementById("footprint").innerHTML="<h1 class='dynamic'>"+Math.round(fp * 100) / 100+" tonnes<br />" + document.getElementById("footprint").innerHTML;
                 //$('#footprint').append("<h1 class='dynamic'>"+results.rows.item(num-1).current+" KG");
@@ -668,9 +659,6 @@ function getCurrentUsersID(goToCalc) {
 
 //Add Footprint to Server DB
 function footprintToServerDatabase(id, house, meat, organic, local, compost, total_clothes, total_electronics, total_shopping, car_engine, car_miles, train, bus, domestic_flights, short_flights, long_flights, total){
-    alert('659');
-    alert(id);
-    alert(localStorage.getItem('id'));
   // declaring variables to be used
     var xhr, target, changeListener, url, data;
     //setting url to the php code to add comments to the db
@@ -693,7 +681,6 @@ function footprintToServerDatabase(id, house, meat, organic, local, compost, tot
             if (!results.rowsAffected) {
                 //$('#footprint').append("<h1 class='dynamic'>"+results.rows.item(num-1).total+" KG");
                 data.append("id", results.rows.item(num-1).id);
-                alert(results.rows.item(num-1).id);
                 console.log("gdsgdfgdsgd " + results.rows.item(num-1).id);
                 data.append("house", results.rows.item(num-1).house);
                 data.append("meat", results.rows.item(num-1).meat);
@@ -728,8 +715,6 @@ function footprintToServerDatabase(id, house, meat, organic, local, compost, tot
         //var db = window.openDatabase("Footprint", "1.0", "Footprint DB", 1000000);
         db.transaction(queryDB, errorCB);
     } else {
-        alert('717');
-        alert(id);
         data.append("id", id);
         data.append("house", house);
         data.append("meat", meat);
@@ -1712,78 +1697,80 @@ function newsfeed(){
                 console.log("Response", this.responseText);
                 var response = JSON.parse(this.responseText);
                 console.log(response);
-                console.log(response['feed'][0]['image']);
+                //console.log(response['feed'][0]['image']);
                 console.log(response['news']);
-                if(response['feed'].length < 5){
-                    var arrnum = response['feed'].length;
-                } else {
-                    var arrnum = 5;
-                }
                 var n = 0;
-                //Generate random numbers
-                var arr = []
-                while(arr.length < arrnum){
-                  var randomnumber=Math.ceil(Math.random()*response['feed'].length)
-                  var found=false;
-                  for(var i=0;i<arr.length;i++){
-                    if(arr[i]==randomnumber){found=true;break}
-                  }
-                  if(!found)arr[arr.length]=randomnumber;
-                }
-                var jointlengths = response['feed'].length+arr.length;
-                for(var  i= 0; i < response['feed'].length; i++){
-                    //IF NUMBER IN NUMBER ARRAY
-                    if (inArray(arr, i)) {
-                        html += "<div class='news'>";
-                        html += "<div class='news-image'><a href='"+response['news'][n]['url']+"'><img class='newsuserimage' src='http://carbon.jamescobbett.co.uk/www/img/news.png'</src></a></div>";
-                        html += "<div class='status'><a class='black' href='"+response['news'][n]['url']+"'>"+response['news'][n]['headline']+"</a></div>";
-                        html += "<div class='source'><a href='"+response['news'][n]['url']+"'>"+response['news'][n]['source']+"</a></div>";
-                        //html += "<div class='time'>"+response['feed'][i]['timestamp']+"</div></div>";
-                        html += "</div>";
-                        html += "<div class='line'></div>";
-                        html += "<div style='clear: both;'></div>"; 
-                        n++;
-                    }
-                    if(response['feed'][i]['type']==1 && response['feed'][i]['status']==1){
-                        html += "<div class='news'>";
-                        if(response['feed'][i]['image'] == null){
-                            html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='/www/img/noprofile.jpg'</src></a></div>";
-                        } else {
-                            html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='"+response['feed'][i]['image']+"'</src></a></div>";
+                if(response['feed'] != undefined){
+                    if(response['feed'].length < 5){
+                        var arrnum = response['feed'].length;
+                    } else {
+                        var arrnum = 5;
                         }
-                        html += "<div class='status'><a onClick='goToProfile("+response['feed'][i]['user_id']+")' href='#'>"+response['feed'][i]['user_name']+"</a> added <a onClick='goToCurrent()' href='#'>"+response['feed'][i]['action_name']+"</a> to their list.";
-                        html += "<div class='time'>"+response['feed'][i]['timestamp']+"</div></div>";
-                        html += "</div>";
-                    }else if(response['feed'][i]['type']==1 && response['feed'][i]['status']==2){
-                        html += "<div class='news'>";
-                        if(response['feed'][i]['image'] == null){
-                            html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='/www/img/noprofile.jpg'</src></a></div>";
-                        } else {
-                            html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='"+response['feed'][i]['image']+"'</src></a></div>";
-                        }                        html += "<div class='status'><a onClick='goToProfile("+response['feed'][i]['user_id']+")' href='#'>"+response['feed'][i]['user_name']+"</a> completed <a onClick='goToCurrent()' href='#'>"+response['feed'][i]['action_name']+"</a>.";
-                        html += "<div class='time'>"+response['feed'][i]['timestamp']+"</div></div>";
-                        html += "</div>";
-                    }else if(response['feed'][i]['type']==2 && response['feed'][i]['status']==1){
-                        html += "<div class='news'>";
-                        if(response['feed'][i]['image'] == null){
-                            html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='/www/img/noprofile.jpg'</src></a></div>";
-                        } else {
-                            html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='"+response['feed'][i]['image']+"'</src></a></div>";
-                        }                        html += "<div class='status'>You are now friends with <a onClick='goToProfile("+response['feed'][i]['user_id']+")' href='#'>"+response['feed'][i]['user_name']+"</a>.";
-                        html += "<div class='time'>"+response['feed'][i]['timestamp']+"</div></div>";
-                        html += "</div>";
-                    }else if(response['feed'][i]['type']==2 && response['feed'][i]['status']==0){
-                        html += "<div class='news'>";
-                        if(response['feed'][i]['image'] == null){
-                            html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='/www/img/noprofile.jpg'</src></a></div>";
-                        } else {
-                            html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='"+response['feed'][i]['image']+"'</src></a></div>";
-                        }                        html += "<div class='status'><a onClick='goToProfile("+response['feed'][i]['user_id']+")' href='#'>"+response['feed'][i]['user_name']+"</a> sent you a friend request.";
-                        html += "<div class='time'>"+response['feed'][i]['timestamp']+"</div></div>";
-                        html += "</div>";
+                    //Generate random numbers
+                    var arr = []
+                    while(arr.length < arrnum){
+                      var randomnumber=Math.ceil(Math.random()*response['feed'].length)
+                      var found=false;
+                      for(var i=0;i<arr.length;i++){
+                        if(arr[i]==randomnumber){found=true;break}
+                      }
+                      if(!found)arr[arr.length]=randomnumber;
                     }
-                    html += "<div class='line'></div>";
-                    html += "<div style='clear: both;'></div>";
+                    var jointlengths = response['feed'].length+arr.length;
+                    for(var  i= 0; i < response['feed'].length; i++){
+                        //IF NUMBER IN NUMBER ARRAY
+                        if (inArray(arr, i)) {
+                            html += "<div class='news'>";
+                            html += "<div class='news-image'><a href='"+response['news'][n]['url']+"'><img class='newsuserimage' src='http://carbon.jamescobbett.co.uk/www/img/news.png'</src></a></div>";
+                            html += "<div class='status'><a class='black' href='"+response['news'][n]['url']+"'>"+response['news'][n]['headline']+"</a></div>";
+                            html += "<div class='source'><a href='"+response['news'][n]['url']+"'>"+response['news'][n]['source']+"</a></div>";
+                            //html += "<div class='time'>"+response['feed'][i]['timestamp']+"</div></div>";
+                            html += "</div>";
+                            html += "<div class='line'></div>";
+                            html += "<div style='clear: both;'></div>"; 
+                            n++;
+                        }
+                        if(response['feed'][i]['type']==1 && response['feed'][i]['status']==1){
+                            html += "<div class='news'>";
+                            if(response['feed'][i]['image'] == null){
+                                html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='/www/img/noprofile.jpg'</src></a></div>";
+                            } else {
+                                html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='"+response['feed'][i]['image']+"'</src></a></div>";
+                            }
+                            html += "<div class='status'><a onClick='goToProfile("+response['feed'][i]['user_id']+")' href='#'>"+response['feed'][i]['user_name']+"</a> added <a onClick='goToCurrent()' href='#'>"+response['feed'][i]['action_name']+"</a> to their list.";
+                            html += "<div class='time'>"+response['feed'][i]['timestamp']+"</div></div>";
+                            html += "</div>";
+                        }else if(response['feed'][i]['type']==1 && response['feed'][i]['status']==2){
+                            html += "<div class='news'>";
+                            if(response['feed'][i]['image'] == null){
+                                html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='/www/img/noprofile.jpg'</src></a></div>";
+                            } else {
+                                html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='"+response['feed'][i]['image']+"'</src></a></div>";
+                            }                        html += "<div class='status'><a onClick='goToProfile("+response['feed'][i]['user_id']+")' href='#'>"+response['feed'][i]['user_name']+"</a> completed <a onClick='goToCurrent()' href='#'>"+response['feed'][i]['action_name']+"</a>.";
+                            html += "<div class='time'>"+response['feed'][i]['timestamp']+"</div></div>";
+                            html += "</div>";
+                        }else if(response['feed'][i]['type']==2 && response['feed'][i]['status']==1){
+                            html += "<div class='news'>";
+                            if(response['feed'][i]['image'] == null){
+                                html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='/www/img/noprofile.jpg'</src></a></div>";
+                            } else {
+                                html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='"+response['feed'][i]['image']+"'</src></a></div>";
+                            }                        html += "<div class='status'>You are now friends with <a onClick='goToProfile("+response['feed'][i]['user_id']+")' href='#'>"+response['feed'][i]['user_name']+"</a>.";
+                            html += "<div class='time'>"+response['feed'][i]['timestamp']+"</div></div>";
+                            html += "</div>";
+                        }else if(response['feed'][i]['type']==2 && response['feed'][i]['status']==0){
+                            html += "<div class='news'>";
+                            if(response['feed'][i]['image'] == null){
+                                html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='/www/img/noprofile.jpg'</src></a></div>";
+                            } else {
+                                html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='"+response['feed'][i]['image']+"'</src></a></div>";
+                            }                        html += "<div class='status'><a onClick='goToProfile("+response['feed'][i]['user_id']+")' href='#'>"+response['feed'][i]['user_name']+"</a> sent you a friend request.";
+                            html += "<div class='time'>"+response['feed'][i]['timestamp']+"</div></div>";
+                            html += "</div>";
+                        }
+                        html += "<div class='line'></div>";
+                        html += "<div style='clear: both;'></div>";
+                    }
                 }
                 for(var  n; n < 5; n++){
                     html += "<div class='news'>";

@@ -131,8 +131,10 @@ $results4 = mysqli_query($con,"SELECT * FROM news");
     return $array;
 }
 shuffle($news['news']);
-
-	$news['feed'] = sort_2d_desc($news['feed'], 'timestamp');
+	if(isset($news['feed'])){
+		$news['feed'] = sort_2d_desc($news['feed'], 'timestamp');
+	}
+	//$news['feed'] = sort_2d_desc($news['feed'], 'timestamp');
 	//print_r($news);
  	echo json_encode($news); 
 

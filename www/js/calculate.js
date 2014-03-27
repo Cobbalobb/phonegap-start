@@ -212,13 +212,6 @@ function calculate(){
 	console.log("Total: " +total);
 	alert(total);
     var id = localStorage.getItem("id");
-    if(id == undefined){
-    	alert('id was undefined');
-    	getCurrentUsersID();
-    	alert(localStorage.getItem("id"));
-    	id = localStorage.getItem("id");
-    }
-    alert(id);
     //alert(localStorage.getItem("id"));
     //alert("id:" + id);	
     //var id = 1;
