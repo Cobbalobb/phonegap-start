@@ -1117,9 +1117,14 @@ form h1{
 }
 
 /* SETTINGS PAGE*/
+#settings-list{
+    padding-right: 20px;
+}
 #settings-list li{
     list-style-type: none;
     margin-bottom: 13px;
+    border-bottom: solid 1px #8A95A5;
+    padding-bottom: 14px;
 }
 #settings-list a{
     color: #000;

@@ -1559,6 +1559,12 @@ function addFriend(id){
                 console.log(message);
                 if (message == '-1'){
                      console.log('this.responseText');
+                    html = '<h1 id="badgeearned">Friend request sent</h1>';
+                    html += '<div id="badge-link"><a id="close-badge" href="#" onclick="closebadgepopup()">Ok</a></div>';
+                    $('#badgealert').append(html);
+                    $('#bgfade').fadeIn();
+                    $('#badgealert').fadeIn();
+                    $('.addfriend').hide();
                 } else {
                      console.log('this.responseText');
                 }
