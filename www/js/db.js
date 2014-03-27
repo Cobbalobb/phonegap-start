@@ -693,7 +693,7 @@ function footprintToServerDatabase(){
                 data.append("short_flights", results.rows.item(num-1).short_flights);
                 data.append("long_flights", results.rows.item(num-1).long_flights);
                 data.append("total", results.rows.item(num-1).total);
-                sendData();
+                sendData(data);
                 return false;
             } else {
                 console.log('No rows affected!');
@@ -712,7 +712,7 @@ function footprintToServerDatabase(){
 
     //var html = document.getElementById("source").innerHTML;
   //data = 'html='+escape(document.getElementById("source").innerHTML);
-    function sendData(){
+    function sendData(data){
     console.log("Sending", data);
     console.log(this.test);
     // create a request object
