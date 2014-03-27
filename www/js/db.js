@@ -138,6 +138,7 @@ function login(id, first_name, last_name, email, image, facebookid, fbactions){
     var data = new FormData();
 
     data.append("id", id);
+    window.localStorage.setItem("id", id);
     //alert(id);
 
     function populateDB(tx) {
