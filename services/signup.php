@@ -14,6 +14,9 @@ $username = $_POST['username'];
 $email = $_POST['email'];
 $password = $_POST['password'];
 $image = $_POST['image'];
+if(!isset($image)){
+	$image = "http://http://carbon.jamescobbett.co.uk/www/img/noprofile.jpg";
+}
 $facebookid = $_POST['facebookid'];
 $fbactions = $_POST['fbactions'];
 

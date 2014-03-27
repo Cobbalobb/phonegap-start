@@ -217,7 +217,7 @@ function calculate(){
     //var id = 1;
     footprintToDatabase(id, form_results.house, form_results.meat, form_results.organic, form_results.local, form_results.compost, form_results.clothes, form_results.electronics, form_results.other_shopping, form_results.engine, form_results.car_miles, form_results.train_miles, form_results.bus_miles, form_results.domestic_flights, form_results.short_flights, form_results.long_flights, total, total);
     footprintToServerDatabase(id, form_results.house, form_results.meat, form_results.organic, form_results.local, form_results.compost, form_results.clothes, form_results.electronics, form_results.other_shopping, form_results.engine, form_results.car_miles, form_results.train_miles, form_results.bus_miles, form_results.domestic_flights, form_results.short_flights, form_results.long_flights, total);
-    directToHome();
+    //directToHome();
 }
 
 }

@@ -90,6 +90,7 @@ function getActionsL(){
     }
 
     function querySuccess(tx, results) {
+    	$( "#action-list" ).empty();
         console.log("Returned rows = " + results.rows.length);
         var num = results.rows.length;
         // this will be true since it was a select statement and so rowsAffected was 0
@@ -135,6 +136,7 @@ function getListActionsL(){
     }
 
     function querySuccess(tx, results) {
+    	$( "#action-list" ).empty();
         console.log("Returned rows from current_actions = " + results.rows.length);
         var num = results.rows.length;
         // this will be true since it was a select statement and so rowsAffected was 0
@@ -150,7 +152,7 @@ function getListActionsL(){
 				}
 					};
         } else {
-            console.log('No rows affected!');
+			document.getElementById("action-list").innerHTML=document.getElementById("action-list").innerHTML + "<h2>No Actions on your list. Why not <a href='#' onClick='goToActions();'>add some?</a></h2>";
         }
     }
 
@@ -167,6 +169,7 @@ function getCompletedActionsL(){
 		    }
 
 		    function querySuccess(tx, results) {
+		        $( "#action-list" ).empty();
 		        console.log("Returned rows from current_actions = " + results.rows.length);
 		        var num = results.rows.length;
 		        // this will be true since it was a select statement and so rowsAffected was 0
@@ -180,7 +183,8 @@ function getCompletedActionsL(){
 						}
 					};
 		        } else {
-		            console.log('No rows affected!');
+		            document.getElementById("action-list").innerHTML=document.getElementById("action-list").innerHTML + "<h2>No Actions completed yet.</h2>";
+
 		        }
 		    }
 
@@ -214,7 +218,7 @@ function actionmessage(){
 						actions.sort(function() { return 0.5 - Math.random() });
 						document.getElementById('actionmessage').innerHTML = actions[0]['action'];
 					} else {
-						document.getElementById('noactions').innerHTML = "You don't have any actions on your list yet, why not <a href='#' onClick='goToActions()'>add some?</a>";
+						document.getElementById('noactions').innerHTML = "You don't have any actions on your list, why not <a href='#' onClick='goToActions()'>add some?</a>";
 					}
 		        } else {
 		            console.log('No rows affected!');

@@ -180,6 +180,10 @@ input{
     box-shadow: none !important;
     -webkit-box-shadow: none !important;
 }
+#loading{
+    text-align: center;
+    margin-top: 50%;
+}
 
 /* MENU
 ================================*/
@@ -472,14 +476,19 @@ font-family: Helvetica, Arial, sans-serif /*{global-font-family}*/;
 
 
 /*CALCULATOR PAGE*/
+.calc-btn{
+    float: right;
+}
 #calcbutton{
     margin-left: auto;
     margin-right: auto;
     margin-top: 20px;
+    text-align: center;
 }
 #calculateForm{
     padding-left: 10px !important;
     padding-right: 10px !important;
+    min-height: 360px;
 }
 
 .answers{
@@ -1104,6 +1113,7 @@ form h1{
 #failureText h1{
     font-size: 14px;    
     color: #fff;
+    padding-bottom: 0px !important;
 }
 
 /* SETTINGS PAGE*/

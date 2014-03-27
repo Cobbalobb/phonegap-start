@@ -140,10 +140,9 @@ function submitSignForm(first_name, last_name, email, image,facebookid, fbaction
                       // }); 
                 }
                 else {
-                    //$('#success').slideDown("slow");                    
-                    //document.getElementById("failure").style.display = "none";
-                    //document.getElementById("firstName").innerHTML ='<div id="newN"><h6>'+name+'</h6></div><div id="newAL">'+age+', '+location+'</div>';
-                    //alert('failure');
+                    document.getElementById("failure").innerHTML ="<div id='failureText'><img src='http://carbon.jamescobbett.co.uk/www/img/delete.png' id='cross'> <h1>Oops! That email address is already in use.<h1></div>";      
+                    jQuery('#failure').slideDown("slow");
+                    document.getElementById('logbutt').innerHTML='<a href="javascript:void(1);" onclick="submitSignForm()" id="signButton">Sign up</a>'; 
                 }
                 //result = JSON.parse(this.responseText);
                 //injectContent(result.id, form);
@@ -254,7 +253,7 @@ function submitLoginForm(email, image){
                       // }); 
                 }
                 else {
-                    document.getElementById("failure").innerHTML ="<div id='failureText'><img src='http://carbon.jamescobbett.co.uk/www/img/delete.png' id='cross'> <h1>Oops! That password is incorrect.<h1></div>";      
+                    document.getElementById("failure").innerHTML ="<div id='failureText'><img src='http://carbon.jamescobbett.co.uk/www/img/delete.png' id='cross'> <h1>Oops! Email or password is incorrect.<h1></div>";      
                     jQuery('#failure').slideDown("slow");
                     document.getElementById('logbutt').innerHTML='<a href="javascript:void(1);" onclick="submitLoginForm()" id="signButton" class="ui-link">Sign in</a>'; 
                     return false;

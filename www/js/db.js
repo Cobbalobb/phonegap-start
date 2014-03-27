@@ -359,7 +359,13 @@ function redirect(){
         if (!results.rowsAffected) {
             var original_footprint = results.rows.item(num-1).total; //original footprint
             if (original_footprint == 'undefined'){
-                goToCalculator();
+                html = '<h1 id="badgeearned">Welcome to Carbon Cutter</h1>';
+                html += '<div id="badge-name"><h3>The next stage is to complete the carbon footprint calculator. This will provide an estimate of your footprint, and allow you start monitoring your footprint reductions.</h3></div>';
+                html += '<div id="badge-link"><a id="close-badge" href="#" onclick="closebadgepopup(); goToCalculator();">Go to calculator</a></div>';
+                $('#badgealert').append(html);
+                $('#bgfade').fadeIn();
+                $('#badgealert').fadeIn();
+                //goToCalculator();
             } else {
                 //document.location.href = 'index.html';
                 goToHome();
@@ -485,7 +491,7 @@ function getCurrentUsersID(goToCalc) {
         } else {
 
         }
-        // for an insert statement, this property will return the ID of the last inserted row
+        // for an insert statement, this propert will return the ID of the last inserted row
         console.log("Last inserted row ID = " + results.insertId);
     }
 
@@ -753,10 +759,14 @@ function footprintToServerDatabase(id, house, meat, organic, local, compost, tot
                 console.log(message);
                 alert(response);
                 if (message == -1){
-                     //$('#failure').slideToggle("slow");                    
-                    //document.getElementById("failure").style.display = "block";
-                    //document.getElementById("failure").innerHTML ="<div id='failureText'><img src='images/cross.png' id='cross'> <h1>Oops! " + response + "</h1></div>";
-                    //alert('success');
+                    if(id != undefined){
+                        html = '<h1 id="badgeearned">Footprint Calculated</h1>';
+                        html += '<div id="badge-name"><h3>Your Carbon Footprint is '+total+' tonnes.</h3></div>';
+                        html += '<div id="badge-link"><a id="close-badge" href="#" onclick="closebadgepopup(); directToHome();">OK</a></div>';
+                        $('#badgealert').append(html);
+                        $('#bgfade').fadeIn();
+                        $('#badgealert').fadeIn();
+                    }
                 }
                 else {
                     //$('#success').slideDown("slow");                    
@@ -1587,6 +1597,7 @@ function getFriends(){
                 console.log("Response", this.responseText);
                 var response = JSON.parse(this.responseText);
                 console.log(response);
+                $( "#friend-list" ).empty();
                 for(var  i= 0; i < response.length; i++){
                     if(response[i]['confirmed']==0 && response[i]['sent']==0){
                         html2 += "<div class='user'>";
@@ -2069,6 +2080,7 @@ function showHome(){
     $( ".con-Stuff" ).fadeOut( "fast", function() {
         // Animation complete.
     });
+    $( '#action-filters'  ).slideUp();
 }
 
 function showFood(){
@@ -2084,6 +2096,7 @@ function showFood(){
     $( ".con-Stuff" ).fadeOut( "fast", function() {
         // Animation complete.
     });
+    $( '#action-filters'  ).slideUp();
 }
 
 function showTravel(){
@@ -2099,6 +2112,7 @@ function showTravel(){
     $( ".con-Stuff" ).fadeOut( "fast", function() {
         // Animation complete.
     });
+    $( '#action-filters'  ).slideUp();
 }
 
 function showStuff(){
@@ -2114,6 +2128,7 @@ function showStuff(){
     $( ".con-Stuff" ).fadeIn( "fast", function() {
         // Animation complete.
     });
+    $( '#action-filters'  ).slideUp();
 }
 
 function showAll(){
@@ -2129,4 +2144,5 @@ function showAll(){
     $( ".con-Stuff" ).fadeIn( "fast", function() {
         // Animation complete.
     });
+    $( '#action-filters'  ).slideToggle();
 }
