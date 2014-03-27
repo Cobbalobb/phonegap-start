@@ -139,7 +139,8 @@ function login(id, first_name, last_name, email, image, facebookid, fbactions){
 
     data.append("id", id);
     window.localStorage.setItem("id", id);
-    //alert(id);
+    alert(id);
+    alert("storage id: "+localStorage.getItem('id'));
 
     function populateDB(tx) {
     tx.executeSql('DROP TABLE IF EXISTS User');
