@@ -665,7 +665,7 @@ function footprintToServerDatabase(id, house, meat, organic, local, compost, tot
     var form = document.getElementById("calculateForm");
     var data = new FormData();
 
-    if(typeof id === 'undefined'){
+    if(id == undefined){
         alert('668');
         // get data from local storage
         function queryDB(tx) {
