@@ -658,6 +658,7 @@ function getCurrentUsersID() {
 function footprintToServerDatabase(id, house, meat, organic, local, compost, total_clothes, total_electronics, total_shopping, car_engine, car_miles, train, bus, domestic_flights, short_flights, long_flights, total){
     alert('659');
     alert(id);
+    alert(localStorage.getItem('id'));
   // declaring variables to be used
     var xhr, target, changeListener, url, data;
     //setting url to the php code to add comments to the db
