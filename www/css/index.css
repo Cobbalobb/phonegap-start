@@ -253,7 +253,7 @@ input{
     overflow: auto;
     background-color: #297fb8 !important;
     color: #fff;
-    position: fixed;
+    /*position: fixed;*/
     width: 100%;
 }
 
@@ -357,7 +357,7 @@ input{
 }
 #newsfeed{
     padding-top: 5px;
-    margin-top: 240px;
+    /*margin-top: 240px;*/
 }
 .status{
     padding-left: 67px;
@@ -720,6 +720,14 @@ border-style: solid;
 }
 
 /* ACTIONS LIST PAGE */
+#action-message{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+#complete-message{
+    padding-right: 20px;
+    padding-left: 20px;
+}
 #holding{
     background-color: #297fb8 !important;
 }
@@ -1180,7 +1188,7 @@ height: 63px !important;
     width: 95%;
 }
 .extra-height{
-    height: 222px !important;
+    height: 242px !important;
 }
 #bgfade{
     position: fixed;

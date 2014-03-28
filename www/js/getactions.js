@@ -151,12 +151,14 @@ function getListActionsL(){
 					document.getElementById("action-list").innerHTML=document.getElementById("action-list").innerHTML + action;
 				}
 					};
-        } else {
-			document.getElementById("action-list").innerHTML=document.getElementById("action-list").innerHTML + "<h2>No Actions on your list. Why not <a href='#' onClick='goToActions();'>add some?</a></h2>";
-        }
-    }
+        			if(m == 0){
+						document.getElementById("action-list").innerHTML=document.getElementById("action-list").innerHTML + "<div id='action-message'>No Actions on your list. Why not <a href='#' onClick='goToActions();'>add some?</a></div>";
+					}
+    	}
+	}
 
     function errorCB(err) {
+    		document.getElementById("action-list").innerHTML=document.getElementById("action-list").innerHTML + "<div id='action-message'><h2>No Actions on your list. Why not <a href='#' onClick='goToActions();'>add some?</a></h2></div>";
     }
 
     db.transaction(queryDB, errorCB);
@@ -164,6 +166,7 @@ function getListActionsL(){
 
 //SHOW COMPLETED ACTIONS FROM LOCAL
 function getCompletedActionsL(){
+	var m = 0;
 	function queryDB(tx) {
 		        tx.executeSql('SELECT user_actions.action_id, user_actions.status, Actions.id, Actions.action, Actions.description, Actions.reduction, Actions.category FROM user_actions INNER JOIN Actions ON user_actions.action_id=Actions.id', [], querySuccess, errorCB);
 		    }
@@ -180,15 +183,18 @@ function getCompletedActionsL(){
 							var action = "<div class='action con-"+results.rows.item(i).category+"'><div class='action-category "+results.rows.item(i).category+"'>"+results.rows.item(i).category+"</div><div class='action-title'>"+results.rows.item(i).action+"</div><div class='action-description'>"+results.rows.item(i).description+"</div>";
 							//var action = action + "<div class='action-links'><a onclick='addActionToList("+results.rows.item(i).id+")' href='#'>Remove from list</a> <a href='#' onclick='completeAction("+results.rows.item(i).id+","+results.rows.item(i).reduction+")'>Mark as completed</a></div></div>";
 							document.getElementById("action-list").innerHTML=document.getElementById("action-list").innerHTML + action;
+							m = 1;
 						}
 					};
-		        } else {
-		            document.getElementById("action-list").innerHTML=document.getElementById("action-list").innerHTML + "<h2>No Actions completed yet.</h2>";
-
-		        }
+					if(m == 0){
+						document.getElementById("action-list").innerHTML=document.getElementById("action-list").innerHTML + "<div id='action-message'><h2>No Actions completed yet.</h2></div>";
+					}
+		        } 
+		       
 		    }
 
 		    function errorCB(err) {
+		    	document.getElementById("action-list").innerHTML=document.getElementById("action-list").innerHTML + "<h2>No Actions completed yet.</h2>";
 		    }
 
 	    db.transaction(queryDB, errorCB);
