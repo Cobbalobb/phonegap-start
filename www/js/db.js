@@ -389,7 +389,7 @@ function redirect(){
 }
 
 function getCurrentUsersName() {
-
+alert('392');
     function queryDB(tx) {
         //tx.executeSql('DROP TABLE IF EXISTS User');
         tx.executeSql('SELECT first_name FROM User', [], querySuccess, errorCB);
@@ -793,6 +793,7 @@ function footprintToServerDatabase(id, house, meat, organic, local, compost, tot
 }
  //Functions to run on homepage
 function getUserInfo(load){
+    alert('796');
   //alert("show "+show);
   //alert("load "+load)
    //if(load == true){
