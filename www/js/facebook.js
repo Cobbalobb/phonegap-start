@@ -121,7 +121,7 @@ document.addEventListener('deviceready', function() {
 
         var friendID = friendIDs[randNum];
         if (friendID == undefined){
-          alert('please click the me button to get a list of friends first');
+          //alert('please click the me button to get a list of friends first');
         }else{
             console.log("friend id: " + friendID );
               console.log('Opening a dialog for friendID: ', friendID);

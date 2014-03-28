@@ -268,6 +268,7 @@ input{
     padding-left: 15px;
     float: left;
     padding-right: 10px;
+    min-height: 80px;
 }
 
 #user-img img {
@@ -1179,7 +1180,7 @@ height: 63px !important;
     width: 95%;
 }
 .extra-height{
-    height: 222px;
+    height: 222px !important;
 }
 #bgfade{
     position: fixed;
@@ -1224,4 +1225,12 @@ height: 63px !important;
 }
 .black{
     color: black !important;
+}
+#holding-load{
+    text-align: center;
+    margin-top: 40px;
+}
+#holding-load img{
+    margin-right: auto;
+    margin-left: auto;
 }

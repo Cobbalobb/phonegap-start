@@ -30,6 +30,11 @@ function directToHome(){
 	    });
 }
 
+function docToHome(){
+	document.location.href = 'index.html';
+	document.getElementById('logbutt').innerHTML="<img src='img/loading.gif'>";
+}
+
 function goToSignup(){
 	$(':mobile-pagecontainer').pagecontainer('change', 'signup.html', {
 	        transition: 'fade',

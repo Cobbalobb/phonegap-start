@@ -656,7 +656,6 @@ function getCurrentUsersID(goToCalc) {
     }
 
     function successCB() {
-        alert('657');
         //alert("success footprint added!");
         //document.location.href = 'index.html';
     }
@@ -761,12 +760,12 @@ function footprintToServerDatabase(id, house, meat, organic, local, compost, tot
                 var s = "success";
                 var message = response.indexOf("exception");
                 console.log(message);
-                alert(response);
+                //alert(response);
                 if (message == -1){
                     //alert('763');
                     html = '<h1 id="badgeearned">Footprint Calculated</h1>';
                     html += '<div id="badge-name"><h3>Your Carbon Footprint is '+Math.round(total * 100) / 100+' tonnes.</h3></div>';
-                    html += '<div id="badge-link"><a id="close-badge" href="#" onclick="closebadgepopup(); directToHome();">OK</a></div>';
+                    html += '<div id="badge-link"><a id="close-badge" href="#" onclick="closebadgepopup(); docToHome();">OK</a></div>';
                     $('#badgealert').append(html);
                     $('#bgfade').fadeIn();
                     $('#badgealert').fadeIn();
@@ -2152,4 +2151,40 @@ function showAll(){
         // Animation complete.
     });
     $( '#action-filters'  ).slideToggle();
+}
+
+function actionmessage(){
+    var actions= new Array();
+    var a = 0;
+    function queryDB(tx) {
+                tx.executeSql('SELECT user_actions.action_id, user_actions.status, Actions.id, Actions.action, Actions.description, Actions.reduction, Actions.category FROM user_actions INNER JOIN Actions ON user_actions.action_id=Actions.id', [], querySuccess, errorCB);
+            }
+
+            function querySuccess(tx, results) {
+                console.log("Returned rows from current_actions = " + results.rows.length);
+                var num = results.rows.length;
+                // this will be true since it was a select statement and so rowsAffected was 0
+                if (!results.rowsAffected) {
+                    for(var i = 0; i < results.rows.length; i++){
+                        if (results.rows.item(i).status==1){
+                            actions[a]=new Array();
+                            actions[a]['action']=results.rows.item(i).action;
+                            a++;
+                        }
+                    };
+                    if(actions.length > 0){
+                        actions.sort(function() { return 0.5 - Math.random() });
+                        document.getElementById('actionmessage').innerHTML = actions[0]['action'];
+                    } else {
+                        document.getElementById('noactions').innerHTML = "You don't have any actions on your list, why not <a href='#' onClick='goToActions()'>add some?</a>";
+                    }
+                } else {
+                    console.log('No rows affected!');
+                }
+            }
+
+            function errorCB(err) {
+            }
+
+        db.transaction(queryDB, errorCB);
 }

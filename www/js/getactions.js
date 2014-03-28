@@ -194,43 +194,6 @@ function getCompletedActionsL(){
 	    db.transaction(queryDB, errorCB);
 };
 
-
-function actionmessage(){
-	var actions= new Array();
-	var a = 0;
-    function queryDB(tx) {
-		        tx.executeSql('SELECT user_actions.action_id, user_actions.status, Actions.id, Actions.action, Actions.description, Actions.reduction, Actions.category FROM user_actions INNER JOIN Actions ON user_actions.action_id=Actions.id', [], querySuccess, errorCB);
-		    }
-
-		    function querySuccess(tx, results) {
-		        console.log("Returned rows from current_actions = " + results.rows.length);
-		        var num = results.rows.length;
-		        // this will be true since it was a select statement and so rowsAffected was 0
-		        if (!results.rowsAffected) {
-					for(var i = 0; i < results.rows.length; i++){
-						if (results.rows.item(i).status==1){
-							actions[a]=new Array();
-							actions[a]['action']=results.rows.item(i).action;
-							a++;
-						}
-					};
-					if(actions.length > 0){
-						actions.sort(function() { return 0.5 - Math.random() });
-						document.getElementById('actionmessage').innerHTML = actions[0]['action'];
-					} else {
-						document.getElementById('noactions').innerHTML = "You don't have any actions on your list, why not <a href='#' onClick='goToActions()'>add some?</a>";
-					}
-		        } else {
-		            console.log('No rows affected!');
-		        }
-		    }
-
-		    function errorCB(err) {
-		    }
-
-	    db.transaction(queryDB, errorCB);
-}
-
 //GET COMPLETED BADGES FROM LOCAL
 function getCompletedBadges(){
 	function queryDB(tx) {

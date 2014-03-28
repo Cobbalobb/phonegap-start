@@ -210,7 +210,7 @@ function calculate(){
 	console.log(long_flights);
 	var total = electricity + gas + meat + organic + local + compost + total_clothes + total_electronics + total_shopping + car + train + bus + domestic_flights + short_flights + long_flights + food + health;
 	console.log("Total: " +total);
-	alert(total);
+	//alert(total);
     var id = localStorage.getItem("id");
     //alert(localStorage.getItem("id"));
     //alert("id:" + id);	
