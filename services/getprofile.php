@@ -39,7 +39,7 @@ $results4 = mysqli_query($con,"SELECT * FROM friends WHERE id1 = '$id' AND id2 =
 $row4 = mysqli_fetch_array($results4);
 if(sizeof($row4) > 0){
 	$user['friends'] = 1;
-	$user['status'] = $row['status'];
+	$user['status'] = $row['confirmed'];
 	$user['sent'] = '0';
 }
 
@@ -47,7 +47,7 @@ $results4 = mysqli_query($con,"SELECT * FROM friends WHERE id1 = '$user_id' AND 
 $row4 = mysqli_fetch_array($results4);
 if(sizeof($row4) > 0){
 	$user['friends'] = 1;
-	$user['status'] = $row['status'];
+	$user['status'] = $row['confirmed'];
 	$user['sent'] = '1';
 }
 

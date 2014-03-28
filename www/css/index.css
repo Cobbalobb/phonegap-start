@@ -1245,3 +1245,12 @@ height: 63px !important;
     margin-right: auto;
     margin-left: auto;
 }
+.close-friend{
+    margin-top: 30px;
+}
+.less-height{
+    height: 110px !important;
+}
+#search-message{
+    padding-left: 106px;
+}

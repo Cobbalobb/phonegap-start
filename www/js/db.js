@@ -353,6 +353,7 @@ function redirect(){
     }
 
     function querySuccess(tx, results) {
+        closebadgepopup();
         console.log("Returned rows = " + results.rows.length);
         var num = results.rows.length;
         // this will be true since it was a select statement and so rowsAffected was 0
@@ -443,7 +444,7 @@ function getCurrentUsersImage() {
             if(results.rows.item(num-1).image == ""){
                 document.getElementById("user-img").innerHTML = "<img alt='user-image' src='../www/img/nopic.jpg'</img>";
             } else {
-                document.getElementById("user-img").innerHTML = "<a href='#' onClick='fblogin()'><img alt='user-image' src='"+results.rows.item(num-1).image+"'</img></a>";
+                document.getElementById("user-img").innerHTML = "<img alt='user-image' src='"+results.rows.item(num-1).image+"'</img>";
             }
             return false;
         } else {
@@ -1467,9 +1468,6 @@ function facebookLogin(){
     xhr.open('POST', url, true);
     //xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.send(data);
-
-
-
     return false;
           }
         }
@@ -1519,7 +1517,17 @@ function userSearch(){
                             html += "<div class='friends-image'><img class='newsuserimage newuserfriendimage' src='"+response[i]['image']+"'></div>";
                             //html += "<div class='username'>"+response['username']+" </div>";
                             html += "<div class='name searchname'>"+response[i]['first_name']+" "+response[i]['last_name']+ "</div>";
-                            html += "<a class='add addfriend' href='#' onclick='addFriend("+response[i]['id']+")'>Add friend</a>";
+                            if(response[i]['status'] == undefined){
+                                html += "<a class='add addfriend' href='#' onclick='addFriend("+response[i]['id']+")'>Add friend</a>";
+                            } else if(response[i]['status'] == 0) {
+                                if(response[i]['sent'] == 1){
+                                    html += "<div id='search-message'>Friend request sent.</div>";
+                                } else {
+                                    html += "<div id='search-message'><a href='#' onclick='acceptRequest("+response[i]['id']+")'>Accept friend request</a></div>";
+                                }
+                            } else {
+                                html += "<div id='search-message'>Friends</div>";
+                            }
                             document.getElementById("friend-search-results").innerHTML = html;
                         }
                     }
@@ -1560,11 +1568,12 @@ function addFriend(id){
                 var response = this.responseText;
                 var message = response.indexOf("Succesfully");
                 console.log(message);
-                if (message == '-1'){
+                if (message == '0'){
                      console.log('this.responseText');
                     html = '<h1 id="badgeearned">Friend request sent</h1>';
-                    html += '<div id="badge-link"><a id="close-badge" href="#" onclick="closebadgepopup()">Ok</a></div>';
+                    html += '<div id="badge-link" class="close-friend"><a id="close-badge" href="#" onclick="closebadgepopup()">Ok</a></div>';
                     $('#badgealert').append(html);
+                    $( "#badgealert" ).addClass( "less-height" );
                     $('#bgfade').fadeIn();
                     $('#badgealert').fadeIn();
                     $('.addfriend').hide();
@@ -2084,7 +2093,7 @@ function direct(){
 function closebadgepopup(){
     $('#badgealert').fadeOut();
     $('#bgfade').fadeOut();
-    //$('#badgealert').empty();
+    $('#badgealert').empty();
 }
 
 function showHome(){
