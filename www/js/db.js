@@ -467,6 +467,7 @@ function getCurrentUsersImage() {
  }
 
 function getCurrentUsersID(goToCalc) {
+    alert('470');
     function queryDB(tx) {
         //tx.executeSql('DROP TABLE IF EXISTS User');
         tx.executeSql('SELECT id, fbactions FROM User', [], querySuccess, errorCB);
@@ -798,6 +799,7 @@ function getUserInfo(load){
   //alert("load "+load)
    //if(load == true){
        getCurrentUsersID();
+       alert('802');
        getCurrentUsersName();
        //getCurrentUsersActionsNo();
        //getCurrentUsersBadgesNo();
