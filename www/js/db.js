@@ -389,7 +389,7 @@ function redirect(){
 }
 
 function getCurrentUsersName() {
-alert('392');
+//alert('392');
     function queryDB(tx) {
         //tx.executeSql('DROP TABLE IF EXISTS User');
         tx.executeSql('SELECT first_name FROM User', [], querySuccess, errorCB);
@@ -401,7 +401,7 @@ alert('392');
         // this will be true since it was a select statement and so rowsAffected was 0
         if (!results.rowsAffected) {
             $('#name').append(results.rows.item(num-1).first_name + ',');
-            alert("name: "+results.rows.item(num-1).first_name);
+            //alert("name: "+results.rows.item(num-1).first_name);
             $( document ).ready(function() {
                 newsfeed();
             });
@@ -467,7 +467,7 @@ function getCurrentUsersImage() {
  }
 
 function getCurrentUsersID(goToCalc) {
-    alert('470');
+    //alert('470');
     function queryDB(tx) {
         //tx.executeSql('DROP TABLE IF EXISTS User');
         tx.executeSql('SELECT id, fbactions FROM User', [], querySuccess, errorCB);
@@ -763,7 +763,7 @@ function footprintToServerDatabase(id, house, meat, organic, local, compost, tot
                 console.log(message);
                 alert(response);
                 if (message == -1){
-                    alert('763');
+                    //alert('763');
                     html = '<h1 id="badgeearned">Footprint Calculated</h1>';
                     html += '<div id="badge-name"><h3>Your Carbon Footprint is '+Math.round(total * 100) / 100+' tonnes.</h3></div>';
                     html += '<div id="badge-link"><a id="close-badge" href="#" onclick="closebadgepopup(); directToHome();">OK</a></div>';
@@ -772,7 +772,7 @@ function footprintToServerDatabase(id, house, meat, organic, local, compost, tot
                     $('#badgealert').fadeIn();
                 }
                 else {
-                    alert('766');
+                    //alert('766');
                 }
                 //result = JSON.parse(this.responseText);
                 //injectContent(result.id, form);
@@ -794,12 +794,12 @@ function footprintToServerDatabase(id, house, meat, organic, local, compost, tot
 }
  //Functions to run on homepage
 function getUserInfo(load){
-    alert('796');
+    //alert('796');
     if(localStorage.getItem('id') == undefined){
         getCurrentUsersID();
     }
    //getCurrentUsersID();
-   alert('802');
+   //alert('802');
    getCurrentUsersName();
    //getCurrentUsersActionsNo();
    //getCurrentUsersBadgesNo();
