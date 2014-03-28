@@ -795,32 +795,18 @@ function footprintToServerDatabase(id, house, meat, organic, local, compost, tot
  //Functions to run on homepage
 function getUserInfo(load){
     alert('796');
-  //alert("show "+show);
-  //alert("load "+load)
-   //if(load == true){
-       getCurrentUsersID();
-       alert('802');
-       getCurrentUsersName();
-       //getCurrentUsersActionsNo();
-       //getCurrentUsersBadgesNo();
-       getCurrentUsersReduction();
-       getCurrentUsersImage();
-       getCurrentUsersFootprint();
-       actionmessage();
-   //    show = false;
-   //} else if (show == true) {
-   //     getCurrentUsersID();
-   //     getCurrentUsersName();
-   //     getCurrentUsersFootprint();
-   //     //getCurrentUsersActionsNo();
-   //     //getCurrentUsersBadgesNo();
-   //     getCurrentUsersReduction();
-   //     getCurrentUsersImage();
-   //     actionmessage();
-   //     show = false;
-   // } else {
-
-   // }
+    if(localStorage.getItem('id') == undefined){
+        getCurrentUsersID();
+    }
+   //getCurrentUsersID();
+   alert('802');
+   getCurrentUsersName();
+   //getCurrentUsersActionsNo();
+   //getCurrentUsersBadgesNo();
+   getCurrentUsersReduction();
+   getCurrentUsersImage();
+   getCurrentUsersFootprint();
+   actionmessage();
 }
 
 function addActionToList(actionid){
