@@ -1482,6 +1482,7 @@ function facebookLogin(){
 
 //SUBMIT Login FORM
 function userSearch(){
+    $('#friend-search-results').empty();
   // declaring variables to be used
     var xhr, target, changeListener, url, data;
 
@@ -1504,21 +1505,23 @@ function userSearch(){
                 console.log(message);
                 if (response != ''){
                     var response = JSON.parse(this.responseText);
-                    if(response['user'] === true){
-                        var html = "<div class='user'>";
-                        html += "<div class='name searchname'>No results</div>";
-                        document.getElementById("friend-search-results").innerHTML = html;
-                    }else if(response['username'] === undefined){
-                        var html = "<div class='user'>";
-                        html += "<div class='name searchname'>No results</div>";
-                        document.getElementById("friend-search-results").innerHTML = html;
-                    }else{
-                        var html = "<div class='user'>";
-                        html += "<div class='friends-image'><img class='newsuserimage newuserfriendimage' src='"+response['image']+"'></div>";
-                        //html += "<div class='username'>"+response['username']+" </div>";
-                        html += "<div class='name searchname'>"+response['first_name']+" "+response['last_name']+ "</div>";
-                        html += "<a class='add addfriend' href='#' onclick='addFriend("+response['id']+")'>Add friend</a>";
-                        document.getElementById("friend-search-results").innerHTML = html;
+                    for(var  i= 0; i < response.length; i++){
+                        if(response[i]['user'] === true){
+                            var html = "<div class='user'>";
+                            html += "<div class='name searchname'>No results</div>";
+                            document.getElementById("friend-search-results").innerHTML = html;
+                        }else if(response[i]['username'] === undefined){
+                            var html = "<div class='user'>";
+                            html += "<div class='name searchname'>No results</div>";
+                            document.getElementById("friend-search-results").innerHTML = html;
+                        }else{
+                            var html = "<div class='user'>";
+                            html += "<div class='friends-image'><img class='newsuserimage newuserfriendimage' src='"+response[i]['image']+"'></div>";
+                            //html += "<div class='username'>"+response['username']+" </div>";
+                            html += "<div class='name searchname'>"+response[i]['first_name']+" "+response[i]['last_name']+ "</div>";
+                            html += "<a class='add addfriend' href='#' onclick='addFriend("+response[i]['id']+")'>Add friend</a>";
+                            document.getElementById("friend-search-results").innerHTML = html;
+                        }
                     }
                 }
             }

@@ -83,6 +83,14 @@ function submitSignForm(first_name, last_name, email, image,facebookid, fbaction
           //alert('password error');
           return false;
       }
+      if (x.length < 7)
+      {
+          document.getElementById("failure").innerHTML ="<div id='failureText'><img src='http://carbon.jamescobbett.co.uk/www/img/delete.png' id='cross'> <h1>Oops! Passwords must be at least 7 characters.<h1></div>";      
+          jQuery('#failure').slideDown("slow");    
+          //$('#emailerror').slideDown("slow");  
+          //alert('password error');
+          return false;
+      }
       document.getElementById('logbutt').innerHTML="<img src='img/loading.gif'>";
       var form = document.getElementById("signForm");
       var data = new FormData(form);
