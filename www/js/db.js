@@ -1941,51 +1941,62 @@ function calendarevent(title){
 function changepassword(){
     var password = document.getElementById('password').value;
     var passwordrepeat = document.getElementById('password-repeat').value;
-    if(password === passwordrepeat){
-           // declaring variables to be used
-        var xhr, target, changeListener, url, data;
+    if(password != passwordrepeat){
+        document.getElementById("failure").innerHTML ="<div class='black' id='failureText'><img src='http://carbon.jamescobbett.co.uk/www/img/delete.png' id='cross'> <h1>Oops! Passwords don't match.<h1></div>";      
+        jQuery('#failure').slideDown("slow");    
+        //$('#emailerror').slideDown("slow");  
+        //alert('password error');
+        return false;
+    }
+    if (password.length < 7)
+    {
+      document.getElementById("failure").innerHTML ="<div class='black' id='failureText'><img src='http://carbon.jamescobbett.co.uk/www/img/delete.png' id='cross'> <h1>Oops! Passwords must be at least 7 characters.<h1></div>";      
+      jQuery('#failure').slideDown("slow");    
+      //$('#emailerror').slideDown("slow");  
+      //alert('password error');
+      return false;
+    }
+    // declaring variables to be used
+    var xhr, target, changeListener, url, data;
 
-        //setting url to the php code to add comments to the db
-        url = "http://carbon.jamescobbett.co.uk/services/changepassword.php";
-        
-        var data = new FormData();
-        data.append("password", password);
-        data.append("id", localStorage.getItem('id'));
+    //setting url to the php code to add comments to the db
+    url = "http://carbon.jamescobbett.co.uk/services/changepassword.php";
+    
+    var data = new FormData();
+    data.append("password", password);
+    data.append("id", localStorage.getItem('id'));
 
-        console.log("Sending", data);
-        console.log(this.test);
-        // create a request object
-        xhr = new XMLHttpRequest();
+    console.log("Sending", data);
+    console.log(this.test);
+    // create a request object
+    xhr = new XMLHttpRequest();
 
-        changeListener = function () {
-            if (xhr.readyState == 4) {
-                if (xhr.status == 200) {
-                    console.log("Response", this.responseText);
-                    var response = this.responseText;
-                    var s = "success";
-                    var message = response.indexOf("exception");
-                    console.log(message);
-                    if (message == -1){
-                        //alert('success');
-                    }
-                    else {
-                        //alert('failure');
-                    }
+    changeListener = function () {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                console.log("Response", this.responseText);
+                var response = this.responseText;
+                var s = "success";
+                var message = response.indexOf("exception");
+                console.log(message);
+                if (message == -1){
+                    //alert('success');
+                }
+                else {
+                    //alert('failure');
                 }
             }
-        };
+        }
+    };
 
-        // initialise a request, specifying the HTTP method
-        // to be used and the URL to be connected to.
-        xhr.onreadystatechange = changeListener;
-        xhr.open('POST', url, true);
-        //xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhr.send(data);
+    // initialise a request, specifying the HTTP method
+    // to be used and the URL to be connected to.
+    xhr.onreadystatechange = changeListener;
+    xhr.open('POST', url, true);
+    //xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.send(data);
 
-        return false;
-    }else{
-        //alert('Passwords do not match');
-    }
+    return false;
 }
  
 

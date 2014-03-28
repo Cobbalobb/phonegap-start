@@ -1234,6 +1234,9 @@ height: 63px !important;
 .black{
     color: black !important;
 }
+.black h1{
+    color: black !important;
+}
 #holding-load{
     text-align: center;
     margin-top: 40px;
