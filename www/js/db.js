@@ -1483,7 +1483,7 @@ function userSearch(){
     $('#friend-search-results').empty();
   // declaring variables to be used
     var xhr, target, changeListener, url, data;
-
+    var html = '';
     //setting url to the php code to add comments to the db
     url = "http://carbon.jamescobbett.co.uk/services/usersearch.php";
     var form = document.getElementById("userSearchForm");
@@ -1504,16 +1504,16 @@ function userSearch(){
                 if (response != ''){
                     var response = JSON.parse(this.responseText);
                     for(var  i= 0; i < response.length; i++){
-                        if(response[i]['user'] === true){
-                            var html = "<div class='user'>";
-                            html += "<div class='name searchname'>No results</div>";
-                            document.getElementById("friend-search-results").innerHTML = html;
+                        if(response[i]['user'] === true && response.length == 1){
+                            html += "<div class='user'>";
+                            html += "<div class='name searchname'>No results</div></div>";
+                            //document.getElementById("friend-search-results").innerHTML = html;
                         }else if(response[i]['username'] === undefined){
-                            var html = "<div class='user'>";
-                            html += "<div class='name searchname'>No results</div>";
-                            document.getElementById("friend-search-results").innerHTML = html;
+                            //html += "<div class='user'>";
+                            //html += "<div class='name searchname'>No results</div></div>";
+                            //document.getElementById("friend-search-results").innerHTML = html;
                         }else{
-                            var html = "<div class='user'>";
+                            html += "<div class='user'>";
                             html += "<div class='friends-image'><img class='newsuserimage newuserfriendimage' src='"+response[i]['image']+"'></div>";
                             //html += "<div class='username'>"+response['username']+" </div>";
                             html += "<div class='name searchname'>"+response[i]['first_name']+" "+response[i]['last_name']+ "</div>";
@@ -1528,9 +1528,11 @@ function userSearch(){
                             } else {
                                 html += "<div id='search-message'>Friends</div>";
                             }
-                            document.getElementById("friend-search-results").innerHTML = html;
+                            html += "</div>";
+                            //document.getElementById("friend-search-results").innerHTML = html;
                         }
                     }
+                $('#friend-search-results').append(html);
                 }
             }
         }
