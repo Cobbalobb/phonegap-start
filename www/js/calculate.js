@@ -53,8 +53,8 @@ var petrol_large = 0.049333;
 var diesel_small = 0.025166;
 var diesel_medium = 0.031333;
 var diesel_large = 0.04300;
-var medium_hybrid = 0.021;
-var large_hybrid = 0.037333;
+var hybrid_medium = 0.021;
+var hybrid_large = 0.037333;
 
 // plane journeys in miles
 var domestic_flight = 264;
@@ -143,33 +143,35 @@ if(form_results.compost != undefined){
 
 // TRAVEL
 // Car
-if(form_results.engine != undefined){
-	if (form_results.engine == 'petrol'){
-	 if (form_results.car_size == 'small'){
-	 	var car = (petrol_small/100) * form_results.car_miles;
-	 } else if (form_results.car_size == 'medium'){
-	 	 var car = (petrol_medium/100) * form_results.car_miles;
-	 } else {
-	 	 var car = (petrol_large/100) * form_results.car_miles;
-	 }
-	} else if (form_results.engine == 'diesel'){
-	 if (form_results.car_size == 'small'){
-	 	var car = (diesel_small/100) * form_results.car_miles;
-	 } else if (form_results.car_size == 'medium'){
-	 	 var car = (diesel_medium/100) * form_results.car_miles;
-	 } else {
-	 	 var car = (diesel_large/100) * form_results.car_miles;
-	 }
-	} else if (form_results.engine == 'hybrid'){
-	 if (form_results.car_size == 'small'){
-	 	var car = (hybrid_medium/100) * form_results.car_miles;
-	 } else if (form_results.car_size == 'medium'){
-	 	 var car = (hybrid_medium/100) * form_results.car_miles;
-	 } else {
-	 	 var car = (hybrid_large/100) * form_results.car_miles;
-	 }
-	} else {
-		var car = 0;
+if(form_results.car == 'yes'){
+	if(form_results.engine != undefined){
+		if (form_results.engine == 'petrol'){
+		 if (form_results.car_size == 'small'){
+		 	var car = (petrol_small/100) * form_results.car_miles;
+		 } else if (form_results.car_size == 'medium'){
+		 	 var car = (petrol_medium/100) * form_results.car_miles;
+		 } else {
+		 	 var car = (petrol_large/100) * form_results.car_miles;
+		 }
+		} else if (form_results.engine == 'diesel'){
+		 if (form_results.car_size == 'small'){
+		 	var car = (diesel_small/100) * form_results.car_miles;
+		 } else if (form_results.car_size == 'medium'){
+		 	 var car = (diesel_medium/100) * form_results.car_miles;
+		 } else {
+		 	 var car = (diesel_large/100) * form_results.car_miles;
+		 }
+		} else if (form_results.engine == 'hybrid'){
+		 if (form_results.car_size == 'small'){
+		 	var car = (hybrid_medium/100) * form_results.car_miles;
+		 } else if (form_results.car_size == 'medium'){
+		 	 var car = (hybrid_medium/100) * form_results.car_miles;
+		 } else {
+		 	 var car = (hybrid_large/100) * form_results.car_miles;
+		 }
+		} else {
+			var car = 0;
+		}
 	}
 }
 

@@ -89,7 +89,7 @@ document.addEventListener('deviceready', function() {
               $('#badgealert').append(html);
               $('#bgfade').fadeIn();
               $('#badgealert').fadeIn();
-              //alert('here');
+              alert('fb.js linke 92');
                 FB.login(
                          function(response) {
                           //alert('test');

@@ -1402,7 +1402,7 @@ function completedactionstoDB(){
 }
 
 function facebookLogin(){
-    //alert('here 2');
+    alert('1405');
      FB.api('/me', {fields: 'first_name, last_name, email, id, picture'}, function(response) {
         var first_name = response['first_name'];
       var last_name = response['last_name'];
@@ -1450,11 +1450,11 @@ function facebookLogin(){
                 var message = response.indexOf("New");
                 console.log(message);
                 if (message == -1){
-                    //alert('log in');
+                    alert('1453');
                     submitLoginForm(email, image);
                 }
                 else {
-                    //alert('sign up');
+                    alert('1457');
                     // User is new so register them
                     submitSignForm(first_name,last_name,email,image,facebookid, fbactions);
                 }
@@ -1883,7 +1883,7 @@ function getProfileInfo(id){
 }
 function fblogin(){
     FB.login(function(response) {
-        //alert('here');
+        alert('1886');
        facebookLogin();
      }, {scope: 'email, publish_actions'});
 }
