@@ -1578,7 +1578,7 @@ function addFriend(id){
                     // $( "#badgealert" ).addClass( "less-height" );
                     // $('#bgfade').fadeIn();
                     // $('#badgealert').fadeIn();
-                    $('.add'+id).html('Friend request sent.');
+                    $('.add'+id).html('<div id="search-message">Friend request sent.</div>');
                 } else {
                      console.log('this.responseText');
                 }
@@ -1772,15 +1772,20 @@ function newsfeed(){
                             html += "<div class='status'><a onClick='goToProfile("+response['feed'][i]['user_id']+")' href='#'>"+response['feed'][i]['user_name']+"</a> added <a onClick='goToCurrent()' href='#'>"+response['feed'][i]['action_name']+"</a> to their list.";
                             html += "<div class='time'>"+response['feed'][i]['timestamp']+"</div></div>";
                             html += "</div>";
+                            html += "<div class='line'></div>";
+                            html += "<div style='clear: both;'></div>";
                         }else if(response['feed'][i]['type']==1 && response['feed'][i]['status']==2){
                             html += "<div class='news'>";
                             if(response['feed'][i]['image'] == null){
                                 html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='/www/img/noprofile.jpg'</src></a></div>";
                             } else {
                                 html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='"+response['feed'][i]['image']+"'</src></a></div>";
-                            }                        html += "<div class='status'><a onClick='goToProfile("+response['feed'][i]['user_id']+")' href='#'>"+response['feed'][i]['user_name']+"</a> completed <a onClick='goToCurrent()' href='#'>"+response['feed'][i]['action_name']+"</a>.";
+                            }                        
+                            html += "<div class='status'><a onClick='goToProfile("+response['feed'][i]['user_id']+")' href='#'>"+response['feed'][i]['user_name']+"</a> completed <a onClick='goToCurrent()' href='#'>"+response['feed'][i]['action_name']+"</a>.";
                             html += "<div class='time'>"+response['feed'][i]['timestamp']+"</div></div>";
                             html += "</div>";
+                            html += "<div class='line'></div>";
+                            html += "<div style='clear: both;'></div>";
                         }else if(response['feed'][i]['type']==2 && response['feed'][i]['confirmed']==1){
                             html += "<div class='news'>";
                             if(response['feed'][i]['image'] == null){
@@ -1791,6 +1796,8 @@ function newsfeed(){
                             html += "<div class='status'>You are now friends with <a onClick='goToProfile("+response['feed'][i]['user_id']+")' href='#'>"+response['feed'][i]['first_name']+"</a>.";
                             html += "<div class='time'>"+response['feed'][i]['timestamp']+"</div></div>";
                             html += "</div>";
+                            html += "<div class='line'></div>";
+                            html += "<div style='clear: both;'></div>";
                         }else if(response['feed'][i]['type']==2 && response['feed'][i]['sent']==0 && response['feed'][i]['confirmed']==0){
                             html += "<div class='news'>";
                             if(response['feed'][i]['image'] == null){
@@ -1801,9 +1808,9 @@ function newsfeed(){
                             html += "<div class='status'><a onClick='goToProfile("+response['feed'][i]['user_id']+")' href='#'>"+response['feed'][i]['user_name']+"</a> sent you a friend request.";
                             html += "<div class='time'>"+response['feed'][i]['timestamp']+"</div></div>";
                             html += "</div>";
+                            html += "<div class='line'></div>";
+                            html += "<div style='clear: both;'></div>";
                         } 
-                        html += "<div class='line'></div>";
-                        html += "<div style='clear: both;'></div>";
                     }
                 }
                 for(var  n; n < 5; n++){
@@ -1913,7 +1920,11 @@ function getFBFriends(){
                                         html += "<div class='friends-image'><img class='newsuserimage newuserfriendimage' src='"+response['image']+"'></div>";
                                         //html += "<div class='username'>"+response['username']+" </div>";
                                         html += "<div class='name searchname'>"+response['first_name']+" "+response['last_name']+ "</div>";
-                                        html += "<div class='add"+response['id']+"'><a class='add addfriend' href='#' onclick='addFriend("+response['id']+")'>Add friend</a></div>";
+                                        if(response.confirmed == 0){
+                                            html += "<div class='add"+response['id']+"'><a class='add addfriend' href='#' onclick='addFriend("+response['id']+")'>Add friend</a></div>"; 
+                                        } else{
+                                            html += "<div class='add"+response['id']+"'><div id='search-message'>Friend request sent.</div></div>";
+                                        }
                                         document.getElementById('uncomfirmed-list').innerHTML += html;
                                     }
                                 }

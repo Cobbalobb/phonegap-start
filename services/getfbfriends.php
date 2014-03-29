@@ -21,6 +21,7 @@ while($row = mysqli_fetch_array($results)){
 		$user['last_name'] = $row['last_name'];
 		$user['email'] = $row['email'];
 		$user['image'] = $row['image'];
+		$user['confirmed'] = $row['confirmed'];
 	}
 	else{
 
