@@ -1019,7 +1019,12 @@ border-style: solid;
     height: 32px;
     padding: 10px 38px; 
 }
-
+#name-request{
+    padding-top: 0px !important;
+}
+#user-request{
+    padding: 10px 10px 0px 10px !important;
+}
 /* BADGES */
 .badges{
     border: solid 1px #dbdbdb;
@@ -1179,17 +1184,17 @@ height: 63px !important;
     z-index: 1041;
     top: 30%;
     position: fixed;
-    height: 205px;
+    /*height: 205px;*/
     background-color: #2ecc71;
-    padding-bottom: 10px;
+    padding-bottom: 20px;
     padding-top: 14px;
     padding-left: 10px;
     padding-right: 10px;
     width: 95%;
 }
-.extra-height{
+/*.extra-height{
     height: 242px !important;
-}
+}*/
 #bgfade{
     position: fixed;
     top: 0;
@@ -1229,7 +1234,7 @@ height: 63px !important;
 }
 
 #signup, body{
-    background-color: #297fb8;
+    background-cetolor: #297fb8;
 }
 .black{
     color: black !important;
@@ -1246,11 +1251,11 @@ height: 63px !important;
     margin-left: auto;
 }
 .close-friend{
-    margin-top: 30px;
+    margin-top: 20px !important;
 }
-.less-height{
+/*.less-height{
     height: 110px !important;
-}
+}*/
 #search-message{
     padding-left: 106px;
 }

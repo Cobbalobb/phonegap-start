@@ -84,8 +84,8 @@ document.addEventListener('deviceready', function() {
             }
             
             function flogin() {
-              html = '<h1 id="badgeearned">Signing into facebook</h1>';
-              html += '<div id="badge-name"><h3><img src="img/loading.gif"></h3></div>';
+              html = '<h1 id="badgeearned">Signing in with facebook</h1>';
+              html += '<div id="badge-name"><h3><img src="img/loadinggreen.gif"></h3></div>';
               $('#badgealert').append(html);
               $('#bgfade').fadeIn();
               $('#badgealert').fadeIn();

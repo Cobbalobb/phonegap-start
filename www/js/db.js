@@ -1518,12 +1518,12 @@ function userSearch(){
                             //html += "<div class='username'>"+response['username']+" </div>";
                             html += "<div class='name searchname'>"+response[i]['first_name']+" "+response[i]['last_name']+ "</div>";
                             if(response[i]['status'] == undefined){
-                                html += "<a class='add addfriend' href='#' onclick='addFriend("+response[i]['id']+")'>Add friend</a>";
+                                html += "<div class='add"+response[i]['id']+"'><a class='addfriend' href='#' onclick='addFriend("+response[i]['id']+")'>Add friend</a></div>";
                             } else if(response[i]['status'] == 0) {
                                 if(response[i]['sent'] == 1){
                                     html += "<div id='search-message'>Friend request sent.</div>";
                                 } else {
-                                    html += "<div id='search-message'><a href='#' onclick='acceptRequest("+response[i]['id']+")'>Accept friend request</a></div>";
+                                    html += "<div class='acceptfriend' id='search-message accept"+response[i]['id']+"'><a href='#' class='acceptrequest' onclick='acceptRequest("+response[i]['id']+")'>Accept friend request</a></div>";
                                 }
                             } else {
                                 html += "<div id='search-message'>Friends</div>";
@@ -1572,13 +1572,13 @@ function addFriend(id){
                 console.log(message);
                 if (message == '0'){
                      console.log('this.responseText');
-                    html = '<h1 id="badgeearned">Friend request sent</h1>';
-                    html += '<div id="badge-link" class="close-friend"><a id="close-badge" href="#" onclick="closebadgepopup()">Ok</a></div>';
-                    $('#badgealert').append(html);
-                    $( "#badgealert" ).addClass( "less-height" );
-                    $('#bgfade').fadeIn();
-                    $('#badgealert').fadeIn();
-                    $('.addfriend').hide();
+                    // html = '<h1 id="badgeearned">Friend request sent</h1>';
+                    // html += '<div id="badge-link" class="close-friend"><a id="close-badge" href="#" onclick="closebadgepopup()">Ok</a></div>';
+                    // $('#badgealert').append(html);
+                    // $( "#badgealert" ).addClass( "less-height" );
+                    // $('#bgfade').fadeIn();
+                    // $('#badgealert').fadeIn();
+                    $('.add'+id).html('Friend request sent.');
                 } else {
                      console.log('this.responseText');
                 }
@@ -1620,9 +1620,10 @@ function getFriends(){
                 $( "#friend-list" ).empty();
                 for(var  i= 0; i < response.length; i++){
                     if(response[i]['confirmed']==0 && response[i]['sent']==0){
-                        html2 += "<div class='user'>";
-                        html2 += "<div class='name'>"+response[i]['first_name']+" "+response[i]['last_name']+ "</div>";
-                        html2 += "<div class='username'><a href='#' onclick='acceptRequest("+response[i]['id']+")'>Accept friend request</a></div>";
+                        html2 += "<div class='user' id='user-request'>";
+                        html2 += "<div class='friends-image'><a href='goToProfile("+response[i]['id']+")'><img class='newsuserimage' src='"+response[i]['image']+"'</src></a></div>";
+                        html2 += "<div class='name' id='name-request'>"+response[i]['first_name']+" "+response[i]['last_name']+ "</div>";
+                        html2 += "<div id='search-message'><div class='acceptfriend accept"+response[i]['id']+"'><a href='#' onclick='acceptRequest("+response[i]['id']+")'>Accept friend request</a></div></div>";
                         html2 += "</div>";
                         html2 += "<div style='clear: both;'></div>";
                         bool = 1;
@@ -1682,7 +1683,7 @@ function acceptRequest(id){
                 var message = response.indexOf("Succesfully");
                 console.log(message);
                 if (message != -1){
-                    //alert('Accepted Friend');
+                    $('.accept'+id).html('You are now freinds.');
                 }
             }
         }
@@ -1780,25 +1781,27 @@ function newsfeed(){
                             }                        html += "<div class='status'><a onClick='goToProfile("+response['feed'][i]['user_id']+")' href='#'>"+response['feed'][i]['user_name']+"</a> completed <a onClick='goToCurrent()' href='#'>"+response['feed'][i]['action_name']+"</a>.";
                             html += "<div class='time'>"+response['feed'][i]['timestamp']+"</div></div>";
                             html += "</div>";
-                        }else if(response['feed'][i]['type']==2 && response['feed'][i]['status']==1){
+                        }else if(response['feed'][i]['type']==2 && response['feed'][i]['confirmed']==1){
                             html += "<div class='news'>";
                             if(response['feed'][i]['image'] == null){
                                 html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='/www/img/noprofile.jpg'</src></a></div>";
                             } else {
                                 html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='"+response['feed'][i]['image']+"'</src></a></div>";
-                            }                        html += "<div class='status'>You are now friends with <a onClick='goToProfile("+response['feed'][i]['user_id']+")' href='#'>"+response['feed'][i]['user_name']+"</a>.";
+                            }                        
+                            html += "<div class='status'>You are now friends with <a onClick='goToProfile("+response['feed'][i]['user_id']+")' href='#'>"+response['feed'][i]['first_name']+"</a>.";
                             html += "<div class='time'>"+response['feed'][i]['timestamp']+"</div></div>";
                             html += "</div>";
-                        }else if(response['feed'][i]['type']==2 && response['feed'][i]['status']==0){
+                        }else if(response['feed'][i]['type']==2 && response['feed'][i]['sent']==0 && response['feed'][i]['confirmed']==0){
                             html += "<div class='news'>";
                             if(response['feed'][i]['image'] == null){
                                 html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='/www/img/noprofile.jpg'</src></a></div>";
                             } else {
                                 html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='"+response['feed'][i]['image']+"'</src></a></div>";
-                            }                        html += "<div class='status'><a onClick='goToProfile("+response['feed'][i]['user_id']+")' href='#'>"+response['feed'][i]['user_name']+"</a> sent you a friend request.";
+                            }                        
+                            html += "<div class='status'><a onClick='goToProfile("+response['feed'][i]['user_id']+")' href='#'>"+response['feed'][i]['user_name']+"</a> sent you a friend request.";
                             html += "<div class='time'>"+response['feed'][i]['timestamp']+"</div></div>";
                             html += "</div>";
-                        }
+                        } 
                         html += "<div class='line'></div>";
                         html += "<div style='clear: both;'></div>";
                     }
@@ -1848,13 +1851,13 @@ function getProfileInfo(id){
                 if(response.friends === 1 && response.friends ===1){
                     $('#profile-friend').append("Friends");
                 } else if (response.friends === 1 && response.friends === 0 && response.sent === 0){
-                    $('#profile-friend').append("<a href='#' onClick='acceptFriend("+response['id']+")' class='acceptfriend'>Accept request</a>");
+                    $('#profile-friend').append("<a href='#' onClick='acceptFriend("+response['id']+")' class='accept"+response['id']+" acceptfriend'>Accept request</a>");
                 } else if (response.friends === 1 && response.friends === 0 && response.sent === 1){
                     $('#profile-friend').append("Request sent");
                 } else if( response.id == localStorage.getItem('id')){
 
                 } else{
-                    $('#profile-friend').append("<a href='#' onClick='addFriend("+response['id']+")' class='addfriend'>Add Friend</a>");
+                    $('#profile-friend').append("<div class='add"+response['id']+"'><a href='#' onClick='addFriend("+response['id']+")' class='addfriend add'>Add Friend</a></div>");
                 }
                 $('#profile-img').append('<img src="'+response.image+'">');
                 $('#profile-footprint').append("<h1 class='profile-dynamic'>"+response.total+"</h1>");
@@ -1910,7 +1913,7 @@ function getFBFriends(){
                                         html += "<div class='friends-image'><img class='newsuserimage newuserfriendimage' src='"+response['image']+"'></div>";
                                         //html += "<div class='username'>"+response['username']+" </div>";
                                         html += "<div class='name searchname'>"+response['first_name']+" "+response['last_name']+ "</div>";
-                                        html += "<a class='add addfriend' href='#' onclick='addFriend("+response['id']+")'>Add friend</a>";
+                                        html += "<div class='add"+response['id']+"'><a class='add addfriend' href='#' onclick='addFriend("+response['id']+")'>Add friend</a></div>";
                                         document.getElementById('uncomfirmed-list').innerHTML += html;
                                     }
                                 }
