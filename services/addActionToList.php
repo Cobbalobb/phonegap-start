@@ -18,9 +18,10 @@ $con = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
 $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 // query
-$sql = "UPDATE user SET total_actions_added = total_actions_added+1 WHERE user_id = '$userid'";
+$sql = "UPDATE user SET total_actions_added = total_actions_added+1 WHERE id = '$userid'";
 $q = $con->prepare($sql);
-$q->execute(array($status));
+$q->execute(array(':total_actions_added'=>total_actions_added+1)
+	);
 
  if (!$q->errorCode() != 0) {
      //echo $con->errorInfo();

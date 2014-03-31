@@ -110,6 +110,7 @@ document.addEventListener('deviceready', function() {
 
 
       function facebookWallPost(name) {
+        name = unescape(name);
           console.log('Debug 1');
         var params = {
             method: 'feed',

@@ -1050,10 +1050,10 @@ border-style: solid;
 .badge-image{
     float: left;
 }
-form h1{
-    /*color: #000;*/
+/*form h1{
+    /*color: #000;
     margin-bottom: 20px;
-}
+}*/
 
 /*LOGIN PAGE */
 #login, #login-content, #sign-content{
@@ -1085,6 +1085,7 @@ form h1{
 #loginForm h1{
     padding-bottom: 10px;
     color: #fff !important;
+    margin-bottom: 20px;
 }
 #logo{
     background: url(../img/logo.png) no-repeat;

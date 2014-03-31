@@ -97,10 +97,11 @@ function getActionsL(){
         if (!results.rowsAffected) {
         	for(var i = 0; i < results.rows.length; i++){
         		if (results.rows.item(i).status==0){
+        			var name = escape(results.rows.item(i).action);
 		    		var action = "<div class='action con-"+results.rows.item(i).category+"'><div class='action-category "+results.rows.item(i).category+"'>"+results.rows.item(i).category+"</div><div class='action-title'>"+results.rows.item(i).action+"</div><div class='action-description'>"+results.rows.item(i).description+"</div>";
 				 	var action = action + "<div class='action-links-container'><div class='action-links'id='"+results.rows.item(i).id+"success'><a class='action-add' onclick='addActionToList("+results.rows.item(i).id+")' href='#'>Add to list</a> <a href='#' class='action-complete' onclick='completeAction("+results.rows.item(i).id+","+results.rows.item(i).reduction+")'>Mark as completed</a></div><div style='clear: both;'></div>";
 				 	var action = action + '<div style="clear: both;"></div>';
-					var action = action + '<div class="action-links padd-top"><a href="#" class="calendar-add-list" onClick="calendarevent(\''+results.rows.item(i).action+'\');">Add to calendar</a><a href="#" class="facebook-share" onclick="facebookWallPost(\''+results.rows.item(i).action+'\')">Share</a></div><div style="clear: both;"></div></div></div>';
+					var action = action + '<div class="action-links padd-top"><a href="#" class="calendar-add-list" onClick="calendarevent(\''+name+'\');">Add to calendar</a><a href="#" class="facebook-share" onclick="facebookWallPost(\''+name+'\')">Share</a></div><div style="clear: both;"></div></div></div>';
 				 	document.getElementById("action-list").innerHTML=document.getElementById("action-list").innerHTML + action;
 				 	//document.getElementById("actions").innerHTML=document.getElementById("actions").innerHTML + response[i]['action'];
 				 	//document.getElementById("actions").innerHTML=document.getElementById("actions").innerHTML + response[i]['description'];
@@ -145,10 +146,12 @@ function getListActionsL(){
         	for(var i = 0; i < results.rows.length; i++){
         		if (results.rows.item(i).status==1){
 	        		console.log(results.rows.item(i));
+	        		//var name = results.rows.item(i).action.replace("'","&#39;");
+				    var name = escape(results.rows.item(i).action);
 				    var action = "<div class='action con-"+results.rows.item(i).category+"'><div class='action-category "+results.rows.item(i).category+"'>"+results.rows.item(i).category+"</div><div class='action-title'>"+results.rows.item(i).action+"</div><div class='action-description'>"+results.rows.item(i).description+"</div>";
 					var action = action + "<div class='action-links-container'><div class='action-links' id='"+results.rows.item(i).id+"success'><a class='action-remove' onclick='removeActionFromList("+results.rows.item(i).id+")' href='#'>Remove from list</a> <a href='#' class='action-complete' onclick='completeAction("+results.rows.item(i).id+","+results.rows.item(i).reduction+")'>Mark as completed</a></div>";
 					var action = action + '<div style="clear: both;"></div>';
-					var action = action + '<div class="action-links padd-top"><a href="#" class="calendar-add-list" onClick="calendarevent(\''+results.rows.item(i).action+'\');">Add to calendar</a><a href="#" class="facebook-share" onclick="facebookWallPost(\''+results.rows.item(i).action+'\')">Share</a></div><div style="clear: both;"></div></div></div>';
+					var action = action + '<div class="action-links padd-top"><a href="#" class="calendar-add-list" onClick="calendarevent(\''+name+'\');">Add to calendar</a><a href="#" class="facebook-share" onclick="facebookWallPost(\''+name+'\')">Share</a></div><div style="clear: both;"></div></div></div>';
 					m = 1;
 					document.getElementById("action-list").innerHTML=document.getElementById("action-list").innerHTML + action;
 				}
