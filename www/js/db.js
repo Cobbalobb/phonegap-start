@@ -1764,11 +1764,11 @@ function newsfeed(){
                         }
                         if(response['feed'][i]['type']==1 && response['feed'][i]['status']==1){
                             html += "<div class='news'>";
-                            if(response['feed'][i]['image'] == null){
-                                html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='http://carbon.jamescobbett.co.uk/www/img/noprofile.jpg'</src></a></div>";
-                            } else {
+                            //if(response['feed'][i]['image'] == null){
+                            //    html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='http://carbon.jamescobbett.co.uk/www/img/noprofile.jpg'</src></a></div>";
+                            //} else {
                                 html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='"+response['feed'][i]['image']+"'</src></a></div>";
-                            }
+                            //}
                             html += "<div class='status'><a onClick='goToProfile("+response['feed'][i]['user_id']+")' href='#'>"+response['feed'][i]['user_name']+"</a> added <a onClick='goToCurrent()' href='#'>"+response['feed'][i]['action_name']+"</a> to their list.";
                             html += "<div class='time'>"+response['feed'][i]['timestamp']+"</div></div>";
                             html += "</div>";
@@ -1776,11 +1776,11 @@ function newsfeed(){
                             html += "<div style='clear: both;'></div>";
                         }else if(response['feed'][i]['type']==1 && response['feed'][i]['status']==2){
                             html += "<div class='news'>";
-                            if(response['feed'][i]['image'] == null){
-                                html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='/www/img/noprofile.jpg'</src></a></div>";
-                            } else {
+                            //if(response['feed'][i]['image'] == null){
+                            //    html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='/www/img/noprofile.jpg'</src></a></div>";
+                            //} else {
                                 html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='"+response['feed'][i]['image']+"'</src></a></div>";
-                            }                        
+                            //}                        
                             html += "<div class='status'><a onClick='goToProfile("+response['feed'][i]['user_id']+")' href='#'>"+response['feed'][i]['user_name']+"</a> completed <a onClick='goToCurrent()' href='#'>"+response['feed'][i]['action_name']+"</a>.";
                             html += "<div class='time'>"+response['feed'][i]['timestamp']+"</div></div>";
                             html += "</div>";
@@ -1788,11 +1788,11 @@ function newsfeed(){
                             html += "<div style='clear: both;'></div>";
                         }else if(response['feed'][i]['type']==2 && response['feed'][i]['confirmed']==1){
                             html += "<div class='news'>";
-                            if(response['feed'][i]['image'] == null){
-                                html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='/www/img/noprofile.jpg'</src></a></div>";
-                            } else {
+                            //if(response['feed'][i]['image'] == null){
+                            //    html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='/www/img/noprofile.jpg'</src></a></div>";
+                            //} else {
                                 html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='"+response['feed'][i]['image']+"'</src></a></div>";
-                            }                        
+                            //}                        
                             html += "<div class='status'>You are now friends with <a onClick='goToProfile("+response['feed'][i]['user_id']+")' href='#'>"+response['feed'][i]['first_name']+"</a>.";
                             html += "<div class='time'>"+response['feed'][i]['timestamp']+"</div></div>";
                             html += "</div>";
@@ -1800,11 +1800,11 @@ function newsfeed(){
                             html += "<div style='clear: both;'></div>";
                         }else if(response['feed'][i]['type']==2 && response['feed'][i]['sent']==0 && response['feed'][i]['confirmed']==0){
                             html += "<div class='news'>";
-                            if(response['feed'][i]['image'] == null){
-                                html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='/www/img/noprofile.jpg'</src></a></div>";
-                            } else {
+                            //if(response['feed'][i]['image'] == null){
+                            //    html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='/www/img/noprofile.jpg'</src></a></div>";
+                            //} else {
                                 html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='"+response['feed'][i]['image']+"'</src></a></div>";
-                            }                        
+                            //}                        
                             html += "<div class='status'><a onClick='goToProfile("+response['feed'][i]['user_id']+")' href='#'>"+response['feed'][i]['user_name']+"</a> sent you a friend request.";
                             html += "<div class='time'>"+response['feed'][i]['timestamp']+"</div></div>";
                             html += "</div>";
