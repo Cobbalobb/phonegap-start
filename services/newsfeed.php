@@ -36,6 +36,13 @@ $news = array();
 $n=0;
 $image = false;
 
+	if($image==false ){
+		$results1 = mysqli_query($con,"SELECT image FROM user WHERE id = '$id'");
+		while($row = mysqli_fetch_array($results1)){
+			$user[0]['image'] = $row['image'];
+			$image = true;
+		}
+	}
 $actions = array();
 //GET FRIENDS AND ADD TO ARRAY WITH CURRENT USER
 $results2 = mysqli_query($con,"SELECT * FROM friends WHERE '$id' IN (id1,id2)");
@@ -43,13 +50,7 @@ while($row = mysqli_fetch_array($results2)){
 	$id1=$row['id1'];
 	$id2=$row['id2'];
 	$confirmed = $row['confirmed'];
-	if($id1 == $id || $id2 == $id && $image===false ){
-		$results1 = mysqli_query($con,"SELECT user.image FROM user WHERE id = '$id'");
-		while($row = mysqli_fetch_array($results1)){
-			$user[0]['image'] = $row['image'];
-			$image = true;
-		}
-	}
+
 	if($id1 != $id){
 	$results1 = mysqli_query($con,"SELECT user.id, user.username, user.first_name, user.last_name, user.image, footprint.total, footprint.current FROM user INNER JOIN footprint ON user.id=footprint.id WHERE user.id = '$id1'");
 	while($row = mysqli_fetch_array($results1)){

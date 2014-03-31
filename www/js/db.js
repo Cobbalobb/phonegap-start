@@ -1106,7 +1106,7 @@ function completeAction(actionid, reduction){
     // Check action to see if badge should be given
     // 1) Check number of actions taken
     function queryDB(tx) {
-        tx.executeSql('SELECT * FROM completed_actions', [], querySucceed, errorCB);
+        tx.executeSql('SELECT * FROM user_actions WHERE status=2', [], querySucceed, errorCB);
     }
 
     function querySucceed(tx, results) {
