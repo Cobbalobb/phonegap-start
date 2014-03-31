@@ -144,6 +144,7 @@ h1 {
 .ui-title{
     text-shadow: none !important;
     font-size: 1.5em !important;
+    margin: 0 20% !important;
 }
 .ui-content {
     border-width: 0;

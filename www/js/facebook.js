@@ -97,8 +97,10 @@ document.addEventListener('deviceready', function() {
                           //alert(response.session);
                           facebookLogin();
                          if (response.session) {
+                          alert('fb line 100');
                          //alert('logged in');
                          } else {
+                          alert('fb line 103');
                          //alert('not logged in');
                          }
                          },

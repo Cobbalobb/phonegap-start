@@ -1946,6 +1946,7 @@ function getFBFriends(){
 }
 
 function calendarevent(title){
+    alert('here');
      // prep some variables
   var today = new Date();
   var startDate = new Date(2014,3,6,18,30,0,0,0); // beware: month 0 = january, 11 = december
@@ -2005,7 +2006,8 @@ function changepassword(){
                 var message = response.indexOf("exception");
                 console.log(message);
                 if (message == -1){
-                    //alert('success');
+                    document.getElementById("failure").innerHTML ="<div class='black' id='failureText'><img src='http://carbon.jamescobbett.co.uk/www/img/complete.png' id='cross'> <h1>Password successfully changed.<h1></div>";
+                    jQuery('#failure').slideDown("slow");
                 }
                 else {
                     //alert('failure');

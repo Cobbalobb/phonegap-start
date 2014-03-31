@@ -130,6 +130,7 @@ function getActionsL(){
 
 //GET LIST ACTIONS FROM LOCAL
 function getListActionsL(){
+	var m = 0;
 	function queryDB(tx) {
         //tx.executeSql('SELECT action_id FROM current_actions', [], querySuccess, errorCB);
 		tx.executeSql('SELECT user_actions.action_id, user_actions.status, Actions.id, Actions.action, Actions.description, Actions.reduction, Actions.category FROM user_actions INNER JOIN Actions ON user_actions.action_id=Actions.id', [], querySuccess, errorCB);
@@ -148,11 +149,12 @@ function getListActionsL(){
 					var action = action + "<div class='action-links-container'><div class='action-links' id='"+results.rows.item(i).id+"success'><a class='action-remove' onclick='removeActionFromList("+results.rows.item(i).id+")' href='#'>Remove from list</a> <a href='#' class='action-complete' onclick='completeAction("+results.rows.item(i).id+","+results.rows.item(i).reduction+")'>Mark as completed</a></div>";
 					var action = action + '<div style="clear: both;"></div>';
 					var action = action + '<div class="action-links padd-top"><a href="#" class="calendar-add-list" onClick="calendarevent(\''+results.rows.item(i).action+'\');">Add to calendar</a><a href="#" class="facebook-share" onclick="facebookWallPost(\''+results.rows.item(i).action+'\')">Share</a></div><div style="clear: both;"></div></div></div>';
+					m = 1;
 					document.getElementById("action-list").innerHTML=document.getElementById("action-list").innerHTML + action;
 				}
 					};
         			if(m == 0){
-						document.getElementById("action-list").innerHTML=document.getElementById("action-list").innerHTML + "<div id='action-message'>No Actions on your list. Why not <a href='#' onClick='goToActions();'>add some?</a></div>";
+						document.getElementById("action-list").innerHTML=document.getElementById("action-list").innerHTML + "<div id='action-message'><h2>No Actions on your list. Why not <a href='#' onClick='goToActions();'>add some?</a></h2></div>";
 					}
     	}
 	}
