@@ -31,9 +31,13 @@ $(document).on("pagebeforechange", function(e, ob) {
       } else if (ob.toPage[0].id === "home") {
           setTimeout(function(){getUserInfo()},0100);
        } else if (ob.toPage[0].id === "holding") {
-            console.log("blocking the back");
-            e.preventDefault();
-            //history.go(1);
+            if(ob.options.fromPage[0].id === "other"){
+
+            } else {
+                console.log("blocking the back");
+                e.preventDefault();
+                //history.go(1);
+            }
       }
     }
     // if(ob.options.fromPage != undefined){
