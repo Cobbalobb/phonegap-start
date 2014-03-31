@@ -89,7 +89,7 @@ document.addEventListener('deviceready', function() {
               $('#badgealert').append(html);
               $('#bgfade').fadeIn();
               $('#badgealert').fadeIn();
-              alert('fb.js linke 92');
+              //alert('fb.js linke 92');
                 FB.login(
                          function(response) {
                           //alert('test');
@@ -97,10 +97,10 @@ document.addEventListener('deviceready', function() {
                           //alert(response.session);
                           facebookLogin();
                          if (response.session) {
-                          alert('fb line 100');
+                          //alert('fb line 100');
                          //alert('logged in');
                          } else {
-                          alert('fb line 103');
+                          //alert('fb line 103');
                          //alert('not logged in');
                          }
                          },

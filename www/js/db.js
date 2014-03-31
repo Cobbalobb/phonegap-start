@@ -1402,7 +1402,7 @@ function completedactionstoDB(){
 }
 
 function facebookLogin(){
-    alert('1405');
+    //alert('1405');
      FB.api('/me', {fields: 'first_name, last_name, email, id, picture'}, function(response) {
         var first_name = response['first_name'];
       var last_name = response['last_name'];
@@ -1450,11 +1450,11 @@ function facebookLogin(){
                 var message = response.indexOf("New");
                 console.log(message);
                 if (message == -1){
-                    alert('1453');
+                    //alert('1453');
                     submitLoginForm(email, image);
                 }
                 else {
-                    alert('1457');
+                    //alert('1457');
                     // User is new so register them
                     submitSignForm(first_name,last_name,email,image,facebookid, fbactions);
                 }
@@ -1883,7 +1883,7 @@ function getProfileInfo(id){
 }
 function fblogin(){
     FB.login(function(response) {
-        alert('1886');
+        //alert('1886');
        facebookLogin();
      }, {scope: 'email, publish_actions'});
 }
@@ -1946,7 +1946,7 @@ function getFBFriends(){
 }
 
 function calendarevent(title){
-    alert('here');
+    //alert('here');
      // prep some variables
   var today = new Date();
   var startDate = new Date(2014,3,6,18,30,0,0,0); // beware: month 0 = january, 11 = december
@@ -1955,10 +1955,10 @@ function calendarevent(title){
   var location = "";
   var notes = "";
   var success = function(message) {
-    alert("Success: " + JSON.stringify(message)); 
+    //alert("Success: " + JSON.stringify(message)); 
   };
   var error = function(message) {
-    alert("Error: " + message); 
+    //alert("Error: " + message); 
   };
   // create an event interactively (only supported on Android)
   window.plugins.calendar.createEventInteractively(title,location,notes,today,today,success,error);

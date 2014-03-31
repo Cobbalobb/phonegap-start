@@ -33,7 +33,7 @@ function directToHome(){
 function docToHome(){
 	//document.location.href = 'index.html';
 	//document.getElementById('logbutt').innerHTML="<img src='img/loading.gif'>";
-$(':mobile-pagecontainer').pagecontainer('change', 'home.html', {
+$(':mobile-pagecontainer').pagecontainer('change', 'index.html', {
 			//  beforeshow: function( event, ui ) {alert('test')}
 	        transition: 'fade',
 	        changeHash: true,
