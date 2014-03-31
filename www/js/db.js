@@ -1765,7 +1765,7 @@ function newsfeed(){
                         if(response['feed'][i]['type']==1 && response['feed'][i]['status']==1){
                             html += "<div class='news'>";
                             if(response['feed'][i]['image'] == null){
-                                html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='/www/img/noprofile.jpg'</src></a></div>";
+                                html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='http://carbon.jamescobbett.co.uk/www/img/noprofile.jpg'</src></a></div>";
                             } else {
                                 html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='"+response['feed'][i]['image']+"'</src></a></div>";
                             }
@@ -1955,10 +1955,10 @@ function calendarevent(title){
   var location = "";
   var notes = "";
   var success = function(message) {
-    // alert("Success: " + JSON.stringify(message)); 
+    alert("Success: " + JSON.stringify(message)); 
   };
   var error = function(message) {
-    // alert("Error: " + message); 
+    alert("Error: " + message); 
   };
   // create an event interactively (only supported on Android)
   window.plugins.calendar.createEventInteractively(title,location,notes,today,today,success,error);
