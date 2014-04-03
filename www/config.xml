@@ -15,6 +15,7 @@
         <!-- 
         PLUGINS
     -->
+    <gap:plugin name="org.apache.cordova.geolocation" version="0.3.6" />
         <gap:plugin name="org.apache.cordova.camera" />
     <!--<gap:plugin name="org.apache.cordova.file" />-->
     <!--<gap:plugin name="org.apache.cordova.file-transfer" />-->
