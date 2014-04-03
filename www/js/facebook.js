@@ -84,7 +84,12 @@ document.addEventListener('deviceready', function() {
             }
             
             function flogin() {
-              //alert('here');
+              html = '<h1 id="badgeearned">Signing in with facebook</h1>';
+              html += '<div id="badge-name"><h3><img src="img/loadinggreen.gif"></h3></div>';
+              $('#badgealert').append(html);
+              $('#bgfade').fadeIn();
+              $('#badgealert').fadeIn();
+              //alert('fb.js linke 92');
                 FB.login(
                          function(response) {
                           //alert('test');
@@ -92,8 +97,10 @@ document.addEventListener('deviceready', function() {
                           //alert(response.session);
                           facebookLogin();
                          if (response.session) {
+                          //alert('fb line 100');
                          //alert('logged in');
                          } else {
+                          //alert('fb line 103');
                          //alert('not logged in');
                          }
                          },
@@ -103,6 +110,7 @@ document.addEventListener('deviceready', function() {
 
 
       function facebookWallPost(name) {
+        name = unescape(name);
           console.log('Debug 1');
         var params = {
             method: 'feed',
@@ -121,7 +129,7 @@ document.addEventListener('deviceready', function() {
 
         var friendID = friendIDs[randNum];
         if (friendID == undefined){
-          alert('please click the me button to get a list of friends first');
+          //alert('please click the me button to get a list of friends first');
         }else{
             console.log("friend id: " + friendID );
               console.log('Opening a dialog for friendID: ', friendID);

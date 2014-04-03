@@ -1,3 +1,20 @@
+//SET VARIABLES
+var electricity = 0;
+var gas = 0;
+var meat = 0;
+var organic = 0;
+var local = 0;
+var compost = 0;
+var total_clothes = 0;
+var total_shopping = 0;
+var total_electronics = 0;
+var car = 0;
+var train = 0;
+var bus = 0;
+var domestic_flights = 0;
+var short_flights = 0;
+var long_flights = 0;
+
 //CALCULATOR VARIABLES 
 //measurments all in tonnes
 // Electricicity
@@ -53,8 +70,8 @@ var petrol_large = 0.049333;
 var diesel_small = 0.025166;
 var diesel_medium = 0.031333;
 var diesel_large = 0.04300;
-var medium_hybrid = 0.021;
-var large_hybrid = 0.037333;
+var hybrid_medium = 0.021;
+var hybrid_large = 0.037333;
 
 // plane journeys in miles
 var domestic_flight = 264;
@@ -69,7 +86,7 @@ console.log(form);
 var form_results = new Array();
 for (var i = 0; i < form.length; i++) {
     form_results[form[i].name] = form[i].value;
-    console.log(form_results.house);
+    //console.log(form_results.house);
 }
 // var data = new FormData(form);
 // console.log(data);
@@ -78,116 +95,118 @@ for (var i = 0; i < form.length; i++) {
 // Gas and electrics
 if(form_results.house != undefined){
 	if(form_results.house == 'small'){
-		var electricity = small_elec;
-		var gas = small_gas;
+		electricity = small_elec;
+		gas = small_gas;
 	} else if(form_results.house == 'medium'){
-		var electricity = medium_elec;
-		var gas = medium_gas;
+		electricity = medium_elec;
+		gas = medium_gas;
 	} else {
-		var electricity = large_elec;
-		var gas = large_gas;
+		electricity = large_elec;
+		gas = large_gas;
 	}
 }
 
 // Meat consumption
 if(form_results.meat != undefined){
 	if(form_results.meat == '>1'){
-	 var meat = more_once;
+	 meat = more_once;
 	} else if(form_results.meat == 'daily'){
-	 var meat = daily;
+	 meat = daily;
 	} else if(form_results.meat == 'few_times_a_week'){
-	 var meat = few_week;
+	 meat = few_week;
 	} else if(form_results.meat == 'weekly'){
-	 var meat = weekly;
+	 meat = weekly;
 	} else if(form_results.meat == 'less_frequently'){
-	 var meat = less_frequently;
+	 meat = less_frequently;
 	} else if(form_results.meat == 'never'){
-	 var meat = never;
+	 meat = never;
 	}
 }
 
 // Organic food
 if(form_results.organic != undefined){
 	if(form_results.organic == 'always'){
-	 var organic = organic_always;
+	 organic = organic_always;
 	} else if(form_results.organic == 'regularly'){
-	 var organic = organic_regularly;
+	 organic = organic_regularly;
 	} else if(form_results.organic == 'sometimes'){
-	 var organic = organic_sometimes;
+	 organic = organic_sometimes;
 	} else if(form_results.organic == 'never'){
-	 var organic = organic_never;
+	 organic = organic_never;
 	}
 }
 
 // Local food
 if(form_results.local != undefined){
 	if(form_results.local == 'always'){
-	 var local = local_always;
+	 local = local_always;
 	} else if(form_results.local == 'regularly'){
-	 var local = local_regularly;
+	 local = local_regularly;
 	} else if(form_results.local == 'sometimes'){
-	 var local = local_sometimes;
+	 local = local_sometimes;
 	} else if(form_results.local == 'never'){
-	 var local = local_never;
+	 local = local_never;
 	}
 }
 
 // Compost
 if(form_results.compost != undefined){
 	if (form_results.compost == 'yes'){
-		var compost = compost_yes;
+		compost = compost_yes;
 	} else {
-		var compost = 0;
+		compost = 0;
 	}
 }
 
 // TRAVEL
 // Car
-if(form_results.engine != undefined){
-	if (form_results.engine == 'petrol'){
-	 if (form_results.car_size == 'small'){
-	 	var car = (petrol_small/100) * form_results.car_miles;
-	 } else if (form_results.car_size == 'medium'){
-	 	 var car = (petrol_medium/100) * form_results.car_miles;
-	 } else {
-	 	 var car = (petrol_large/100) * form_results.car_miles;
-	 }
-	} else if (form_results.engine == 'diesel'){
-	 if (form_results.car_size == 'small'){
-	 	var car = (diesel_small/100) * form_results.car_miles;
-	 } else if (form_results.car_size == 'medium'){
-	 	 var car = (diesel_medium/100) * form_results.car_miles;
-	 } else {
-	 	 var car = (diesel_large/100) * form_results.car_miles;
-	 }
-	} else if (form_results.engine == 'hybrid'){
-	 if (car_size == 'small'){
-	 	var car = (hybrid_medium/100) * form_results.car_miles;
-	 } else if (form_results.car_size == 'medium'){
-	 	 var car = (hybrid_medium/100) * form_results.car_miles;
-	 } else {
-	 	 var car = (hybrid_large/100) * form_results.car_miles;
-	 }
-	} else {
-		var car = 0;
+if(form_results.car == 'yes'){
+	if(form_results.engine != undefined){
+		if (form_results.engine == 'petrol'){
+		 if (form_results.car_size == 'small'){
+		 	car = (petrol_small/100) * form_results.car_miles;
+		 } else if (form_results.car_size == 'medium'){
+		 	 car = (petrol_medium/100) * form_results.car_miles;
+		 } else {
+		 	 car = (petrol_large/100) * form_results.car_miles;
+		 }
+		} else if (form_results.engine == 'diesel'){
+		 if (form_results.car_size == 'small'){
+		 	car = (diesel_small/100) * form_results.car_miles;
+		 } else if (form_results.car_size == 'medium'){
+		 	car = (diesel_medium/100) * form_results.car_miles;
+		 } else {
+		 	car = (diesel_large/100) * form_results.car_miles;
+		 }
+		} else if (form_results.engine == 'hybrid'){
+		 if (form_results.car_size == 'small'){
+		 	car = (hybrid_medium/100) * form_results.car_miles;
+		 } else if (form_results.car_size == 'medium'){
+		 	car = (hybrid_medium/100) * form_results.car_miles;
+		 } else {
+		 	car = (hybrid_large/100) * form_results.car_miles;
+		 }
+		} else {
+			car = 0;
+		}
 	}
 }
 
 // Train
-var train_total = (train/100) * form_results.train_miles;
+train_total = (train/100) * form_results.train_miles;
 
 // Bus
-var bus_total = (bus/100) * form_results.bus_miles;
+bus_total = (bus/100) * form_results.bus_miles;
 
 // Plane
-var domestic_flights = (plane*domestic_flight) * form_results.domestic_flights;
-var short_flights = (plane*short_flight) * form_results.short_flights;
-var long_flights = (plane*long_flight) * form_results.long_flights;
+domestic_flights = (plane*domestic_flight) * form_results.domestic_flights;
+short_flights = (plane*short_flight) * form_results.short_flights;
+long_flights = (plane*long_flight) * form_results.long_flights;
 
 // Others
-var total_clothes = clothes * form_results.clothes;
-var total_electronics = electronics * form_results.electronics;
-var total_shopping = shopping * form_results.other_shopping;
+total_clothes = clothes * form_results.clothes;
+total_electronics = electronics * form_results.electronics;
+total_shopping = shopping * form_results.other_shopping;
 
 calculate();
 
@@ -210,7 +229,7 @@ function calculate(){
 	console.log(long_flights);
 	var total = electricity + gas + meat + organic + local + compost + total_clothes + total_electronics + total_shopping + car + train + bus + domestic_flights + short_flights + long_flights + food + health;
 	console.log("Total: " +total);
-	alert(total);
+	//alert(total);
     var id = localStorage.getItem("id");
     //alert(localStorage.getItem("id"));
     //alert("id:" + id);	

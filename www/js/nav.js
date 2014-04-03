@@ -30,6 +30,19 @@ function directToHome(){
 	    });
 }
 
+function docToHome(){
+	//document.location.href = 'index.html';
+	//document.getElementById('logbutt').innerHTML="<img src='img/loading.gif'>";
+$(':mobile-pagecontainer').pagecontainer('change', 'home.html', {
+			//  beforeshow: function( event, ui ) {alert('test')}
+	        transition: 'fade',
+	        changeHash: true,
+	        reverse: false,
+	        showLoadMsg: true,
+	        reload: true
+	    });
+}
+
 function goToSignup(){
 	$(':mobile-pagecontainer').pagecontainer('change', 'signup.html', {
 	        transition: 'fade',

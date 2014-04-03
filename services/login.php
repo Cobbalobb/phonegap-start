@@ -50,6 +50,7 @@ if ($row['id'] == null) {
 	 	$user['image'] = $row['image'];
 	 	$user['facebookid'] = $row['facebookid'];
 	 	$user['fbactions'] = $row['fbactions'];
+	 	$user['total_actions_added'] = $row['total_actions_added'];
 	 	if($image != null){
 		 	$sql = "UPDATE user SET image = :image WHERE email = :email";
 			$q = $con->prepare($sql);

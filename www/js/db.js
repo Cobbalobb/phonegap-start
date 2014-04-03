@@ -31,9 +31,13 @@ $(document).on("pagebeforechange", function(e, ob) {
       } else if (ob.toPage[0].id === "home") {
           setTimeout(function(){getUserInfo()},0100);
        } else if (ob.toPage[0].id === "holding") {
-            console.log("blocking the back");
-            e.preventDefault();
-            //history.go(1);
+            if(ob.options.fromPage[0].id === "other"){
+
+            } else {
+                console.log("blocking the back");
+                e.preventDefault();
+                //history.go(1);
+            }
       }
     }
     // if(ob.options.fromPage != undefined){
@@ -134,14 +138,14 @@ function logout(){
     db.transaction(dropFP, errorFP, successFP);
 }
 
-function login(id, first_name, last_name, email, image, facebookid, fbactions){
+function login(id, first_name, last_name, email, image, facebookid, fbactions, total_actions_added){
     var data = new FormData();
     data.append("id", id);
     window.localStorage.setItem("id", id);
 
     function populateDB(tx) {
     tx.executeSql('DROP TABLE IF EXISTS User');
-    tx.executeSql('CREATE TABLE IF NOT EXISTS User (id unique, first_name, last_name, email, image, facebookid, fbactions)');
+    tx.executeSql('CREATE TABLE IF NOT EXISTS User (id unique, first_name, last_name, email, image, facebookid, fbactions, total_actions_added)');
     tx.executeSql('DROP TABLE IF EXISTS Actions');
     tx.executeSql('CREATE TABLE IF NOT EXISTS Actions (id, action, description, reduction, category)');
    
@@ -152,7 +156,7 @@ function login(id, first_name, last_name, email, image, facebookid, fbactions){
     tx.executeSql('CREATE TABLE IF NOT EXISTS completed_badges (user_id, badge_id, completed)');    
     tx.executeSql('DROP TABLE IF EXISTS badges');
     tx.executeSql('CREATE TABLE IF NOT EXISTS badges (id, badge)');
-    tx.executeSql('INSERT INTO User (id, first_name, last_name, email, image, facebookid, fbactions) VALUES (?,?,?,?,?,?,?)',[id, first_name, last_name, email, image, facebookid, fbactions]);
+    tx.executeSql('INSERT INTO User (id, first_name, last_name, email, image, facebookid, fbactions, total_actions_added) VALUES (?,?,?,?,?,?,?,?)',[id, first_name, last_name, email, image, facebookid, fbactions, total_actions_added]);
     }
 
     function errorCB(err) {
@@ -353,6 +357,7 @@ function redirect(){
     }
 
     function querySuccess(tx, results) {
+        closebadgepopup();
         console.log("Returned rows = " + results.rows.length);
         var num = results.rows.length;
         // this will be true since it was a select statement and so rowsAffected was 0
@@ -361,8 +366,9 @@ function redirect(){
             if (original_footprint == 'undefined'){
                 html = '<h1 id="badgeearned">Welcome to Carbon Cutter</h1>';
                 html += '<div id="badge-name"><h3>The next stage is to complete the carbon footprint calculator. This will provide an estimate of your footprint, and allow you start monitoring your footprint reductions.</h3></div>';
-                html += '<div id="badge-link"><a id="close-badge" href="#" onclick="closebadgepopup(); goToCalculator();">Go to calculator</a></div>';
+                html += '<div id="welcome-link"><a id="close-badge" href="#" onclick="closebadgepopup(); goToCalculator();">Go to calculator</a></div>';
                 $('#badgealert').append(html);
+                $( "#badgealert" ).addClass( "extra-height" );
                 $('#bgfade').fadeIn();
                 $('#badgealert').fadeIn();
                 //goToCalculator();
@@ -388,7 +394,7 @@ function redirect(){
 }
 
 function getCurrentUsersName() {
-
+//alert('392');
     function queryDB(tx) {
         //tx.executeSql('DROP TABLE IF EXISTS User');
         tx.executeSql('SELECT first_name FROM User', [], querySuccess, errorCB);
@@ -400,6 +406,7 @@ function getCurrentUsersName() {
         // this will be true since it was a select statement and so rowsAffected was 0
         if (!results.rowsAffected) {
             $('#name').append(results.rows.item(num-1).first_name + ',');
+            //alert("name: "+results.rows.item(num-1).first_name);
             $( document ).ready(function() {
                 newsfeed();
             });
@@ -441,7 +448,7 @@ function getCurrentUsersImage() {
             if(results.rows.item(num-1).image == ""){
                 document.getElementById("user-img").innerHTML = "<img alt='user-image' src='../www/img/nopic.jpg'</img>";
             } else {
-                document.getElementById("user-img").innerHTML = "<a href='#' onClick='fblogin()'><img alt='user-image' src='"+results.rows.item(num-1).image+"'</img></a>";
+                document.getElementById("user-img").innerHTML = "<img alt='user-image' src='"+results.rows.item(num-1).image+"'</img>";
             }
             return false;
         } else {
@@ -465,6 +472,7 @@ function getCurrentUsersImage() {
  }
 
 function getCurrentUsersID(goToCalc) {
+    //alert('470');
     function queryDB(tx) {
         //tx.executeSql('DROP TABLE IF EXISTS User');
         tx.executeSql('SELECT id, fbactions FROM User', [], querySuccess, errorCB);
@@ -640,7 +648,7 @@ function getCurrentUsersID(goToCalc) {
  function footprintToDatabase(id, house, meat, organic, local, compost, total_clothes, total_electronics, total_shopping, car_engine, car_miles, train, bus, domestic_flights, short_flights, long_flights, total, current){
     //alert("id: " + id);
     //alert(jQuery.type(current));
-    current = parseInt(current);
+    current = parseFloat(current);
     //alert(jQuery.type(current));
     function populateDB(tx) {
     tx.executeSql('DROP TABLE IF EXISTS Footprint');
@@ -757,22 +765,18 @@ function footprintToServerDatabase(id, house, meat, organic, local, compost, tot
                 var s = "success";
                 var message = response.indexOf("exception");
                 console.log(message);
-                alert(response);
+                //alert(response);
                 if (message == -1){
-                    if(id != undefined){
-                        html = '<h1 id="badgeearned">Footprint Calculated</h1>';
-                        html += '<div id="badge-name"><h3>Your Carbon Footprint is '+total+' tonnes.</h3></div>';
-                        html += '<div id="badge-link"><a id="close-badge" href="#" onclick="closebadgepopup(); directToHome();">OK</a></div>';
-                        $('#badgealert').append(html);
-                        $('#bgfade').fadeIn();
-                        $('#badgealert').fadeIn();
-                    }
+                    //alert('763');
+                    html = '<h1 id="badgeearned">Footprint Calculated</h1>';
+                    html += '<div id="badge-name"><h3>Your Carbon Footprint is '+Math.round(total * 100) / 100+' tonnes.</h3></div>';
+                    html += '<div id="badge-link"><a id="close-badge" href="#" onclick="closebadgepopup(); docToHome();">OK</a></div>';
+                    $('#badgealert').append(html);
+                    $('#bgfade').fadeIn();
+                    $('#badgealert').fadeIn();
                 }
                 else {
-                    //$('#success').slideDown("slow");                    
-                    //document.getElementById("failure").style.display = "none";
-                    //document.getElementById("firstName").innerHTML ='<div id="newN"><h6>'+name+'</h6></div><div id="newAL">'+age+', '+location+'</div>';
-                    //alert('failure');
+                    //alert('766');
                 }
                 //result = JSON.parse(this.responseText);
                 //injectContent(result.id, form);
@@ -794,31 +798,19 @@ function footprintToServerDatabase(id, house, meat, organic, local, compost, tot
 }
  //Functions to run on homepage
 function getUserInfo(load){
-  //alert("show "+show);
-  //alert("load "+load)
-   //if(load == true){
-       getCurrentUsersID();
-       getCurrentUsersName();
-       //getCurrentUsersActionsNo();
-       //getCurrentUsersBadgesNo();
-       getCurrentUsersReduction();
-       getCurrentUsersImage();
-       getCurrentUsersFootprint();
-       actionmessage();
-   //    show = false;
-   //} else if (show == true) {
-   //     getCurrentUsersID();
-   //     getCurrentUsersName();
-   //     getCurrentUsersFootprint();
-   //     //getCurrentUsersActionsNo();
-   //     //getCurrentUsersBadgesNo();
-   //     getCurrentUsersReduction();
-   //     getCurrentUsersImage();
-   //     actionmessage();
-   //     show = false;
-   // } else {
-
-   // }
+    //alert('796');
+    if(localStorage.getItem('id') == undefined){
+        getCurrentUsersID();
+    }
+   //getCurrentUsersID();
+   //alert('802');
+   getCurrentUsersName();
+   //getCurrentUsersActionsNo();
+   //getCurrentUsersBadgesNo();
+   getCurrentUsersReduction();
+   getCurrentUsersImage();
+   getCurrentUsersFootprint();
+   actionmessage();
 }
 
 function addActionToList(actionid){
@@ -857,6 +849,19 @@ function addActionToList(actionid){
     
     db.transaction(updateAction, errorCB, successCB);
 
+    function addAction(tx) {
+        tx.executeSql('UPDATE user SET total_actions_added = total_actions_added+1',[]);                    
+    };
+
+    function adderrorCB(err) {
+        //alert("Error processing SQL: "+err.code);
+    }
+
+    function addsuccessCB() {
+
+        }
+    
+    db.transaction(addAction, errorCB, successCB);
 
     // declaring variables to be used
     var xhr, target, changeListener, url, data;
@@ -906,20 +911,20 @@ function addActionToList(actionid){
     xhr.send(data);
 
     function queryDB(tx) {
-            tx.executeSql('SELECT * FROM current_actions', [], querySuccess, errorCB);
+            tx.executeSql('SELECT total_actions_added FROM user', [], querySuccess, errorCB);
         }
 
     function querySuccess(tx, results) {
         console.log("Returned rows = " + results.rows.length);
-        var num = results.rows.length;
+        var num = results.rows.item(num-1).total_actions_added; //RETURNED VALUE
         var badge;
-        if(num === 1){
+        if(num == 1){
             //award badge
-            badge = 3;
+            badge = 1;
             //alert('Badge earned: 1st action added');
             completebadge(badge);
-        } else if (num === 10){
-            badge = 4;
+        } else if (num == 10){
+            badge = 2;
             //alert('Badge earned: 10th action completed');
             completebadge(badge);
         } else {
@@ -1105,7 +1110,7 @@ function completeAction(actionid, reduction){
     // Check action to see if badge should be given
     // 1) Check number of actions taken
     function queryDB(tx) {
-        tx.executeSql('SELECT * FROM completed_actions', [], querySucceed, errorCB);
+        tx.executeSql('SELECT * FROM user_actions WHERE status=2', [], querySucceed, errorCB);
     }
 
     function querySucceed(tx, results) {
@@ -1231,7 +1236,7 @@ function completebadge(badge){
     var id = localStorage.getItem('id');
 
     function populateBadge(tx) {
-        tx.executeSql('UPDATE completed_badges SET completed = 1 WHERE badge_id=?',[badge.toString()]);                    
+        tx.executeSql('UPDATE completed_badges SET completed = 1 WHERE badge_id=? AND completed = ?',[badge.toString(), '0']);                    
     };
 
     function errorBadge(err) {
@@ -1401,7 +1406,7 @@ function completedactionstoDB(){
 }
 
 function facebookLogin(){
-    //alert('here 2');
+    //alert('1405');
      FB.api('/me', {fields: 'first_name, last_name, email, id, picture'}, function(response) {
         var first_name = response['first_name'];
       var last_name = response['last_name'];
@@ -1449,11 +1454,11 @@ function facebookLogin(){
                 var message = response.indexOf("New");
                 console.log(message);
                 if (message == -1){
-                    //alert('log in');
+                    //alert('1453');
                     submitLoginForm(email, image);
                 }
                 else {
-                    //alert('sign up');
+                    //alert('1457');
                     // User is new so register them
                     submitSignForm(first_name,last_name,email,image,facebookid, fbactions);
                 }
@@ -1467,9 +1472,6 @@ function facebookLogin(){
     xhr.open('POST', url, true);
     //xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.send(data);
-
-
-
     return false;
           }
         }
@@ -1482,9 +1484,10 @@ function facebookLogin(){
 
 //SUBMIT Login FORM
 function userSearch(){
+    $('#friend-search-results').empty();
   // declaring variables to be used
     var xhr, target, changeListener, url, data;
-
+    var html = '';
     //setting url to the php code to add comments to the db
     url = "http://carbon.jamescobbett.co.uk/services/usersearch.php";
     var form = document.getElementById("userSearchForm");
@@ -1504,22 +1507,36 @@ function userSearch(){
                 console.log(message);
                 if (response != ''){
                     var response = JSON.parse(this.responseText);
-                    if(response['user'] === true){
-                        var html = "<div class='user'>";
-                        html += "<div class='name searchname'>No results</div>";
-                        document.getElementById("friend-search-results").innerHTML = html;
-                    }else if(response['username'] === undefined){
-                        var html = "<div class='user'>";
-                        html += "<div class='name searchname'>No results</div>";
-                        document.getElementById("friend-search-results").innerHTML = html;
-                    }else{
-                        var html = "<div class='user'>";
-                        html += "<div class='friends-image'><img class='newsuserimage newuserfriendimage' src='"+response['image']+"'></div>";
-                        //html += "<div class='username'>"+response['username']+" </div>";
-                        html += "<div class='name searchname'>"+response['first_name']+" "+response['last_name']+ "</div>";
-                        html += "<a class='add addfriend' href='#' onclick='addFriend("+response['id']+")'>Add friend</a>";
-                        document.getElementById("friend-search-results").innerHTML = html;
+                    for(var  i= 0; i < response.length; i++){
+                        if(response[i]['user'] === true && response.length == 1){
+                            html += "<div class='user'>";
+                            html += "<div class='name searchname'>No results</div></div>";
+                            //document.getElementById("friend-search-results").innerHTML = html;
+                        }else if(response[i]['username'] === undefined){
+                            //html += "<div class='user'>";
+                            //html += "<div class='name searchname'>No results</div></div>";
+                            //document.getElementById("friend-search-results").innerHTML = html;
+                        }else{
+                            html += "<div class='user'>";
+                            html += "<div class='friends-image'><img class='newsuserimage newuserfriendimage' src='"+response[i]['image']+"'></div>";
+                            //html += "<div class='username'>"+response['username']+" </div>";
+                            html += "<div class='name searchname'>"+response[i]['first_name']+" "+response[i]['last_name']+ "</div>";
+                            if(response[i]['status'] == undefined){
+                                html += "<div class='add"+response[i]['id']+"'><a class='addfriend' href='#' onclick='addFriend("+response[i]['id']+")'>Add friend</a></div>";
+                            } else if(response[i]['status'] == 0) {
+                                if(response[i]['sent'] == 1){
+                                    html += "<div id='search-message'>Friend request sent.</div>";
+                                } else {
+                                    html += "<div class='acceptfriend' id='search-message accept"+response[i]['id']+"'><a href='#' class='acceptrequest' onclick='acceptRequest("+response[i]['id']+")'>Accept friend request</a></div>";
+                                }
+                            } else {
+                                html += "<div id='search-message'>Friends</div>";
+                            }
+                            html += "</div>";
+                            //document.getElementById("friend-search-results").innerHTML = html;
+                        }
                     }
+                $('#friend-search-results').append(html);
                 }
             }
         }
@@ -1557,8 +1574,15 @@ function addFriend(id){
                 var response = this.responseText;
                 var message = response.indexOf("Succesfully");
                 console.log(message);
-                if (message == '-1'){
+                if (message == '0'){
                      console.log('this.responseText');
+                    // html = '<h1 id="badgeearned">Friend request sent</h1>';
+                    // html += '<div id="badge-link" class="close-friend"><a id="close-badge" href="#" onclick="closebadgepopup()">Ok</a></div>';
+                    // $('#badgealert').append(html);
+                    // $( "#badgealert" ).addClass( "less-height" );
+                    // $('#bgfade').fadeIn();
+                    // $('#badgealert').fadeIn();
+                    $('.add'+id).html('<div id="search-message">Friend request sent.</div>');
                 } else {
                      console.log('this.responseText');
                 }
@@ -1600,9 +1624,10 @@ function getFriends(){
                 $( "#friend-list" ).empty();
                 for(var  i= 0; i < response.length; i++){
                     if(response[i]['confirmed']==0 && response[i]['sent']==0){
-                        html2 += "<div class='user'>";
-                        html2 += "<div class='name'>"+response[i]['first_name']+" "+response[i]['last_name']+ "</div>";
-                        html2 += "<div class='username'><a href='#' onclick='acceptRequest("+response[i]['id']+")'>Accept friend request</a></div>";
+                        html2 += "<div class='user' id='user-request'>";
+                        html2 += "<div class='friends-image'><a href='goToProfile("+response[i]['id']+")'><img class='newsuserimage' src='"+response[i]['image']+"'</src></a></div>";
+                        html2 += "<div class='name' id='name-request'>"+response[i]['first_name']+" "+response[i]['last_name']+ "</div>";
+                        html2 += "<div id='search-message'><div class='acceptfriend accept"+response[i]['id']+"'><a href='#' onclick='acceptRequest("+response[i]['id']+")'>Accept friend request</a></div></div>";
                         html2 += "</div>";
                         html2 += "<div style='clear: both;'></div>";
                         bool = 1;
@@ -1662,7 +1687,7 @@ function acceptRequest(id){
                 var message = response.indexOf("Succesfully");
                 console.log(message);
                 if (message != -1){
-                    //alert('Accepted Friend');
+                    $('.accept'+id).html('You are now freinds.');
                 }
             }
         }
@@ -1743,44 +1768,53 @@ function newsfeed(){
                         }
                         if(response['feed'][i]['type']==1 && response['feed'][i]['status']==1){
                             html += "<div class='news'>";
-                            if(response['feed'][i]['image'] == null){
-                                html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='/www/img/noprofile.jpg'</src></a></div>";
-                            } else {
+                            //if(response['feed'][i]['image'] == null){
+                            //    html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='http://carbon.jamescobbett.co.uk/www/img/noprofile.jpg'</src></a></div>";
+                            //} else {
                                 html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='"+response['feed'][i]['image']+"'</src></a></div>";
-                            }
+                            //}
                             html += "<div class='status'><a onClick='goToProfile("+response['feed'][i]['user_id']+")' href='#'>"+response['feed'][i]['user_name']+"</a> added <a onClick='goToCurrent()' href='#'>"+response['feed'][i]['action_name']+"</a> to their list.";
                             html += "<div class='time'>"+response['feed'][i]['timestamp']+"</div></div>";
                             html += "</div>";
+                            html += "<div class='line'></div>";
+                            html += "<div style='clear: both;'></div>";
                         }else if(response['feed'][i]['type']==1 && response['feed'][i]['status']==2){
                             html += "<div class='news'>";
-                            if(response['feed'][i]['image'] == null){
-                                html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='/www/img/noprofile.jpg'</src></a></div>";
-                            } else {
+                            //if(response['feed'][i]['image'] == null){
+                            //    html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='/www/img/noprofile.jpg'</src></a></div>";
+                            //} else {
                                 html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='"+response['feed'][i]['image']+"'</src></a></div>";
-                            }                        html += "<div class='status'><a onClick='goToProfile("+response['feed'][i]['user_id']+")' href='#'>"+response['feed'][i]['user_name']+"</a> completed <a onClick='goToCurrent()' href='#'>"+response['feed'][i]['action_name']+"</a>.";
+                            //}                        
+                            html += "<div class='status'><a onClick='goToProfile("+response['feed'][i]['user_id']+")' href='#'>"+response['feed'][i]['user_name']+"</a> completed <a onClick='goToCurrent()' href='#'>"+response['feed'][i]['action_name']+"</a>.";
                             html += "<div class='time'>"+response['feed'][i]['timestamp']+"</div></div>";
                             html += "</div>";
-                        }else if(response['feed'][i]['type']==2 && response['feed'][i]['status']==1){
+                            html += "<div class='line'></div>";
+                            html += "<div style='clear: both;'></div>";
+                        }else if(response['feed'][i]['type']==2 && response['feed'][i]['confirmed']==1){
                             html += "<div class='news'>";
-                            if(response['feed'][i]['image'] == null){
-                                html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='/www/img/noprofile.jpg'</src></a></div>";
-                            } else {
+                            //if(response['feed'][i]['image'] == null){
+                            //    html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='/www/img/noprofile.jpg'</src></a></div>";
+                            //} else {
                                 html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='"+response['feed'][i]['image']+"'</src></a></div>";
-                            }                        html += "<div class='status'>You are now friends with <a onClick='goToProfile("+response['feed'][i]['user_id']+")' href='#'>"+response['feed'][i]['user_name']+"</a>.";
+                            //}                        
+                            html += "<div class='status'>You are now friends with <a onClick='goToProfile("+response['feed'][i]['user_id']+")' href='#'>"+response['feed'][i]['first_name']+"</a>.";
                             html += "<div class='time'>"+response['feed'][i]['timestamp']+"</div></div>";
                             html += "</div>";
-                        }else if(response['feed'][i]['type']==2 && response['feed'][i]['status']==0){
+                            html += "<div class='line'></div>";
+                            html += "<div style='clear: both;'></div>";
+                        }else if(response['feed'][i]['type']==2 && response['feed'][i]['sent']==0 && response['feed'][i]['confirmed']==0){
                             html += "<div class='news'>";
-                            if(response['feed'][i]['image'] == null){
-                                html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='/www/img/noprofile.jpg'</src></a></div>";
-                            } else {
+                            //if(response['feed'][i]['image'] == null){
+                            //    html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='/www/img/noprofile.jpg'</src></a></div>";
+                            //} else {
                                 html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='"+response['feed'][i]['image']+"'</src></a></div>";
-                            }                        html += "<div class='status'><a onClick='goToProfile("+response['feed'][i]['user_id']+")' href='#'>"+response['feed'][i]['user_name']+"</a> sent you a friend request.";
+                            //}                        
+                            html += "<div class='status'><a onClick='goToProfile("+response['feed'][i]['user_id']+")' href='#'>"+response['feed'][i]['user_name']+"</a> sent you a friend request.";
                             html += "<div class='time'>"+response['feed'][i]['timestamp']+"</div></div>";
                             html += "</div>";
-                        }
-                        html += "<div class='line'></div>";
-                        html += "<div style='clear: both;'></div>";
+                            html += "<div class='line'></div>";
+                            html += "<div style='clear: both;'></div>";
+                        } 
                     }
                 }
                 for(var  n; n < 5; n++){
@@ -1828,13 +1862,13 @@ function getProfileInfo(id){
                 if(response.friends === 1 && response.friends ===1){
                     $('#profile-friend').append("Friends");
                 } else if (response.friends === 1 && response.friends === 0 && response.sent === 0){
-                    $('#profile-friend').append("<a href='#' onClick='acceptFriend("+response['id']+")' class='acceptfriend'>Accept request</a>");
+                    $('#profile-friend').append("<a href='#' onClick='acceptFriend("+response['id']+")' class='accept"+response['id']+" acceptfriend'>Accept request</a>");
                 } else if (response.friends === 1 && response.friends === 0 && response.sent === 1){
                     $('#profile-friend').append("Request sent");
                 } else if( response.id == localStorage.getItem('id')){
 
                 } else{
-                    $('#profile-friend').append("<a href='#' onClick='addFriend("+response['id']+")' class='addfriend'>Add Friend</a>");
+                    $('#profile-friend').append("<div class='add"+response['id']+"'><a href='#' onClick='addFriend("+response['id']+")' class='addfriend add'>Add Friend</a></div>");
                 }
                 $('#profile-img').append('<img src="'+response.image+'">');
                 $('#profile-footprint').append("<h1 class='profile-dynamic'>"+response.total+"</h1>");
@@ -1853,7 +1887,7 @@ function getProfileInfo(id){
 }
 function fblogin(){
     FB.login(function(response) {
-        //alert('here');
+        //alert('1886');
        facebookLogin();
      }, {scope: 'email, publish_actions'});
 }
@@ -1890,7 +1924,11 @@ function getFBFriends(){
                                         html += "<div class='friends-image'><img class='newsuserimage newuserfriendimage' src='"+response['image']+"'></div>";
                                         //html += "<div class='username'>"+response['username']+" </div>";
                                         html += "<div class='name searchname'>"+response['first_name']+" "+response['last_name']+ "</div>";
-                                        html += "<a class='add addfriend' href='#' onclick='addFriend("+response['id']+")'>Add friend</a>";
+                                        if(response.confirmed == 0){
+                                            html += "<div class='add"+response['id']+"'><a class='add addfriend' href='#' onclick='addFriend("+response['id']+")'>Add friend</a></div>"; 
+                                        } else{
+                                            html += "<div class='add"+response['id']+"'><div id='search-message'>Friend request sent.</div></div>";
+                                        }
                                         document.getElementById('uncomfirmed-list').innerHTML += html;
                                     }
                                 }
@@ -1912,6 +1950,7 @@ function getFBFriends(){
 }
 
 function calendarevent(title){
+    //alert('here');
      // prep some variables
   var today = new Date();
   var startDate = new Date(2014,3,6,18,30,0,0,0); // beware: month 0 = january, 11 = december
@@ -1920,10 +1959,10 @@ function calendarevent(title){
   var location = "";
   var notes = "";
   var success = function(message) {
-    // alert("Success: " + JSON.stringify(message)); 
+    //alert("Success: " + JSON.stringify(message)); 
   };
   var error = function(message) {
-    // alert("Error: " + message); 
+    //alert("Error: " + message); 
   };
   // create an event interactively (only supported on Android)
   window.plugins.calendar.createEventInteractively(title,location,notes,today,today,success,error);
@@ -1932,51 +1971,63 @@ function calendarevent(title){
 function changepassword(){
     var password = document.getElementById('password').value;
     var passwordrepeat = document.getElementById('password-repeat').value;
-    if(password === passwordrepeat){
-           // declaring variables to be used
-        var xhr, target, changeListener, url, data;
+    if(password != passwordrepeat){
+        document.getElementById("failure").innerHTML ="<div class='black' id='failureText'><img src='http://carbon.jamescobbett.co.uk/www/img/delete.png' id='cross'> <h1>Oops! Passwords don't match.<h1></div>";      
+        jQuery('#failure').slideDown("slow");    
+        //$('#emailerror').slideDown("slow");  
+        //alert('password error');
+        return false;
+    }
+    if (password.length < 7)
+    {
+      document.getElementById("failure").innerHTML ="<div class='black' id='failureText'><img src='http://carbon.jamescobbett.co.uk/www/img/delete.png' id='cross'> <h1>Oops! Passwords must be at least 7 characters.<h1></div>";      
+      jQuery('#failure').slideDown("slow");    
+      //$('#emailerror').slideDown("slow");  
+      //alert('password error');
+      return false;
+    }
+    // declaring variables to be used
+    var xhr, target, changeListener, url, data;
 
-        //setting url to the php code to add comments to the db
-        url = "http://carbon.jamescobbett.co.uk/services/changepassword.php";
-        
-        var data = new FormData();
-        data.append("password", password);
-        data.append("id", localStorage.getItem('id'));
+    //setting url to the php code to add comments to the db
+    url = "http://carbon.jamescobbett.co.uk/services/changepassword.php";
+    
+    var data = new FormData();
+    data.append("password", password);
+    data.append("id", localStorage.getItem('id'));
 
-        console.log("Sending", data);
-        console.log(this.test);
-        // create a request object
-        xhr = new XMLHttpRequest();
+    console.log("Sending", data);
+    console.log(this.test);
+    // create a request object
+    xhr = new XMLHttpRequest();
 
-        changeListener = function () {
-            if (xhr.readyState == 4) {
-                if (xhr.status == 200) {
-                    console.log("Response", this.responseText);
-                    var response = this.responseText;
-                    var s = "success";
-                    var message = response.indexOf("exception");
-                    console.log(message);
-                    if (message == -1){
-                        //alert('success');
-                    }
-                    else {
-                        //alert('failure');
-                    }
+    changeListener = function () {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                console.log("Response", this.responseText);
+                var response = this.responseText;
+                var s = "success";
+                var message = response.indexOf("exception");
+                console.log(message);
+                if (message == -1){
+                    document.getElementById("failure").innerHTML ="<div class='black' id='failureText'><img src='http://carbon.jamescobbett.co.uk/www/img/complete.png' id='cross'> <h1>Password successfully changed.<h1></div>";
+                    jQuery('#failure').slideDown("slow");
+                }
+                else {
+                    //alert('failure');
                 }
             }
-        };
+        }
+    };
 
-        // initialise a request, specifying the HTTP method
-        // to be used and the URL to be connected to.
-        xhr.onreadystatechange = changeListener;
-        xhr.open('POST', url, true);
-        //xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhr.send(data);
+    // initialise a request, specifying the HTTP method
+    // to be used and the URL to be connected to.
+    xhr.onreadystatechange = changeListener;
+    xhr.open('POST', url, true);
+    //xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.send(data);
 
-        return false;
-    }else{
-        //alert('Passwords do not match');
-    }
+    return false;
 }
  
 
@@ -2064,7 +2115,7 @@ function direct(){
 function closebadgepopup(){
     $('#badgealert').fadeOut();
     $('#bgfade').fadeOut();
-    //$('#badgealert').empty();
+    $('#badgealert').empty();
 }
 
 function showHome(){
@@ -2145,4 +2196,40 @@ function showAll(){
         // Animation complete.
     });
     $( '#action-filters'  ).slideToggle();
+}
+
+function actionmessage(){
+    var actions= new Array();
+    var a = 0;
+    function queryDB(tx) {
+                tx.executeSql('SELECT user_actions.action_id, user_actions.status, Actions.id, Actions.action, Actions.description, Actions.reduction, Actions.category FROM user_actions INNER JOIN Actions ON user_actions.action_id=Actions.id', [], querySuccess, errorCB);
+            }
+
+            function querySuccess(tx, results) {
+                console.log("Returned rows from current_actions = " + results.rows.length);
+                var num = results.rows.length;
+                // this will be true since it was a select statement and so rowsAffected was 0
+                if (!results.rowsAffected) {
+                    for(var i = 0; i < results.rows.length; i++){
+                        if (results.rows.item(i).status==1){
+                            actions[a]=new Array();
+                            actions[a]['action']=results.rows.item(i).action;
+                            a++;
+                        }
+                    };
+                    if(actions.length > 0){
+                        actions.sort(function() { return 0.5 - Math.random() });
+                        document.getElementById('actionmessage').innerHTML = actions[0]['action'];
+                    } else {
+                        document.getElementById('noactions').innerHTML = "You don't have any actions on your list, why not <a href='#' onClick='goToActions()'>add some?</a>";
+                    }
+                } else {
+                    console.log('No rows affected!');
+                }
+            }
+
+            function errorCB(err) {
+            }
+
+        db.transaction(queryDB, errorCB);
 }

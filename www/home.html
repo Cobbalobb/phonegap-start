@@ -1,71 +1,139 @@
-<div data-role="page" id="home">
-    <div data-role="panel" id="menu">
-        <ul id="menu-list">
-            <li id="menu-home" class="active"><a href="#" class="contentLink"><h1>Home</h1> </a></li>
-            <li id="menu-actions"><a onclick="goToCurrent();" href="#" class="contentLink"><h1>Actions</h1> </a></li>
-            <li id="menu-friends"><a onclick="goToFriends();" href="#" class="contentLink"><h1>Friends</h1> </a></li>
-            <li id="menu-badges"><a onclick="goToBadges();" href="#" class="contentLink"><h1>Badges</h1> </a></li>
-            <li id="menu-settings"><a onclick="goToSettings();" href="#" class="contentLink"><h1>Settings</h1> </a></li>
-            <li id="menu-settings"><a onclick=" document.location.href = 'gps/'" href="#" class="contentLink"><h1>GPS</h1> </a></li>
-            <li id="menu-signout"><a href="#" onclick="logout()" class="contentLink"><h1>Sign Out</h1> </a></li>
-        </ul>
-        </div><!-- /panel -->
-    <div class="header" data-role="header">
-    <!--     <a href="#"class="showMenu"></a>
- -->    <a href="#menu" class="showMenu"></a>
-        <h1>Carbon Cutter</h1>
-    
-    </div>
-    <div data-role="content">
-<script type="text/javascript">
-        // setTimeout(function(){getUserInfo()},7000);
-    </script>
-        <div id="welcome">
-            <div id="json"></div>
-            <div id="welcome-message">
-                <div id="user-img"><img src="http://carbon.jamescobbett.co.uk/www/img/me.jpg"></div>
-                    <h1 id="name">Hi </h1>
-                    <h2 id="noactions">How is <a id="actionmessage" href="#" onclick="goToActions()"></a> going?</h2>
-                    <div style="clear: both;"></div>
+
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=medium-dpi" />
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="js/jquery.mobile-1.3.2.min.js"></script>
+        <script src="js/users.js"></script>
+        <script src="cdv-plugin-fb-connect.js"></script>
+        <script src="facebook-js-sdk.js"></script>
+        <script src="js/plugins/Calendar.js"></script>
+        <script src="js/getactions.js"></script>
+        <script src="js/db.js"></script>
+        <script src="js/nav.js"></script>
+        <script src="js/index.js"></script>
+        <script src="cordova.js"></script>
+        <script src="cdv-plugin-fb-connect.js"></script>
+        <script src="facebook-js-sdk.js"></script>
+        <script src="http://debug.phonegap.com/target/target-script-min.js#carboncutter"></script>
+
+        <title>Hello World</title>
+    </head>
+    <body>
+        <div data-role="page" id="home">
+            <div data-role="panel" id="menu">
+                <ul id="menu-list">
+                    <li id="menu-home" class="active"><a href="#" class="contentLink"><h1>Home</h1> </a></li>
+                    <li id="menu-actions"><a onclick="goToCurrent();" href="#" class="contentLink"><h1>Actions</h1> </a></li>
+                    <li id="menu-friends"><a onclick="goToFriends();" href="#" class="contentLink"><h1>Friends</h1> </a></li>
+                    <li id="menu-badges"><a onclick="goToBadges();" href="#" class="contentLink"><h1>Badges</h1> </a></li>
+                    <li id="menu-settings"><a onclick="goToSettings();" href="#" class="contentLink"><h1>Settings</h1> </a></li>
+                                <li id="menu-settings"><a onclick=" document.location.href = 'gps/'" href="#" class="contentLink"><h1>GPS</h1> </a></li>
+
+                    <li id="menu-signout"><a href="#" onclick="logout()" class="contentLink"><h1>Sign Out</h1> </a></li>
+                </ul>
+                </div><!-- /panel -->
+            <div class="header" data-role="header">
+            <!--     <a href="#"class="showMenu"></a>
+         -->    <a href="#menu" class="showMenu"></a>
+                <h1>Carbon Cutter</h1>
+            
+>>>>>>> FETCH_HEAD
+            </div>
+            <div data-role="content">
+        <script type="text/javascript">
+                // setTimeout(function(){getUserInfo()},7000);
+            </script>
+                <div id="welcome">
+                    <div id="json"></div>
+                    <div id="welcome-message">
+                        <div id="user-img"></div>
+                            <h1 id="name">Hi </h1>
+                            <h2 id="noactions">How is <a id="actionmessage" href="#" onclick="goToActions()"></a> going?</h2>
+                            <div style="clear: both;"></div>
+                        </div>
+                                            <div style="clear: both;"></div>
+                <div id="stats">
+                    <div id="footprint">
+                        <h1 class="head">Footprint</h1>
+                    </div>
+                    <div id="reductions">
+                        <h1 class="head">Reduction</h1>
+                    </div>
                 </div>
-                                    <div style="clear: both;"></div>
-        <div id="stats">
-            <div id="footprint">
-                <h1 class="head">Footprint</h1>
+                </div>
+                <div id="newsfeed">
+                </div>
+
+
+
+        <!--        <a href="#"><div class="home_but" id="footprint">
+                    <h1 class="head">Footprint</h1>
+                </div>  </a>    
+                <div class="home_but" id="reductions">
+                    <h1 class="head">Reductions</h1> 
+                </div>        
+                <a href="#"  rel="external" onclick="goToCurrent();"><div class="home_but" id="actions">
+                    <h1 class="head">Actions</h1> 
+                </div> </a>
+                <a href="#" rel="external" onclick="goToFriends();"><div class="home_but" id="friends">
+                    <h1 class="head">Friends</h1> <h1 class="dynamic">3rd</h1>
+                </div> </a>
+                <a href="#" rel="external" onclick="goToBadges();"><div class="home_but" id="badges">
+                    <h1 class="head">Badges</h1> <h1 class="dynamic"></h1>
+                </div>      </a>
+                <div class="home_but" id="journey">
+                    <h1 class="head">Start a Journey</h1>
+                </div>
+                <a href="#" onclick="logout()"><div class="home_but" id="reductions">
+                    <h1 class="head">Sign Out</h1>
+                </div></a> -->
+
             </div>
-            <div id="reductions">
-                <h1 class="head">Reduction</h1>
-            </div>
+
+
         </div>
-        </div>
-        <div id="newsfeed">
-        </div>
-
-
-
-<!--        <a href="#"><div class="home_but" id="footprint">
-            <h1 class="head">Footprint</h1>
-        </div>  </a>    
-        <div class="home_but" id="reductions">
-            <h1 class="head">Reductions</h1> 
-        </div>        
-        <a href="#"  rel="external" onclick="goToCurrent();"><div class="home_but" id="actions">
-            <h1 class="head">Actions</h1> 
-        </div> </a>
-        <a href="#" rel="external" onclick="goToFriends();"><div class="home_but" id="friends">
-            <h1 class="head">Friends</h1> <h1 class="dynamic">3rd</h1>
-        </div> </a>
-        <a href="#" rel="external" onclick="goToBadges();"><div class="home_but" id="badges">
-            <h1 class="head">Badges</h1> <h1 class="dynamic"></h1>
-        </div>      </a>
-        <div class="home_but" id="journey">
-            <h1 class="head">Start a Journey</h1>
-        </div>
-        <a href="#" onclick="logout()"><div class="home_but" id="reductions">
-            <h1 class="head">Sign Out</h1>
-        </div></a> -->
-
-    </div>
-
-
-</div>
+<!-- End of Home page -->
+<div id="bgfade" style="display:none"></div>
+<div id="badgealert" style="display:none"></div>
+        <script type="text/javascript">
+           $( document ).ready(setTimeout(function(){direct()},2500));   
+           //$( document ).ready(direct());   
+        </script>
+        <!--<script type="text/javascript">newsfeed();</script>-->
+        <script type="text/javascript" src="phonegap.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script src="http://debug.phonegap.com/target/target-script-min.js#carboncutter"></script>
+        <script type="text/javascript">
+            app.initialize();
+        //     $(document).on('mobileinit', function() {
+        //           FB.init({
+        //             appId : auth.fbId,
+        //             nativeInterface : CDV.FB,
+        //             useCachedDialogs : false
+        //           });
+        // </script>
+    </body>
+</html>

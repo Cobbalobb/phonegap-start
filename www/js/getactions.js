@@ -97,10 +97,11 @@ function getActionsL(){
         if (!results.rowsAffected) {
         	for(var i = 0; i < results.rows.length; i++){
         		if (results.rows.item(i).status==0){
+        			var name = escape(results.rows.item(i).action);
 		    		var action = "<div class='action con-"+results.rows.item(i).category+"'><div class='action-category "+results.rows.item(i).category+"'>"+results.rows.item(i).category+"</div><div class='action-title'>"+results.rows.item(i).action+"</div><div class='action-description'>"+results.rows.item(i).description+"</div>";
 				 	var action = action + "<div class='action-links-container'><div class='action-links'id='"+results.rows.item(i).id+"success'><a class='action-add' onclick='addActionToList("+results.rows.item(i).id+")' href='#'>Add to list</a> <a href='#' class='action-complete' onclick='completeAction("+results.rows.item(i).id+","+results.rows.item(i).reduction+")'>Mark as completed</a></div><div style='clear: both;'></div>";
 				 	var action = action + '<div style="clear: both;"></div>';
-					var action = action + '<div class="action-links padd-top"><a href="#" class="calendar-add-list" onClick="calendarevent(\''+results.rows.item(i).action+'\');">Add to calendar</a><a href="#" class="facebook-share" onclick="facebookWallPost(\''+results.rows.item(i).action+'\')">Share</a></div><div style="clear: both;"></div></div></div>';
+					var action = action + '<div class="action-links padd-top"><a href="#" class="calendar-add-list" onClick="calendarevent(\''+name+'\');">Add to calendar</a><a href="#" class="facebook-share" onclick="facebookWallPost(\''+name+'\')">Share</a></div><div style="clear: both;"></div></div></div>';
 				 	document.getElementById("action-list").innerHTML=document.getElementById("action-list").innerHTML + action;
 				 	//document.getElementById("actions").innerHTML=document.getElementById("actions").innerHTML + response[i]['action'];
 				 	//document.getElementById("actions").innerHTML=document.getElementById("actions").innerHTML + response[i]['description'];
@@ -130,6 +131,7 @@ function getActionsL(){
 
 //GET LIST ACTIONS FROM LOCAL
 function getListActionsL(){
+	var m = 0;
 	function queryDB(tx) {
         //tx.executeSql('SELECT action_id FROM current_actions', [], querySuccess, errorCB);
 		tx.executeSql('SELECT user_actions.action_id, user_actions.status, Actions.id, Actions.action, Actions.description, Actions.reduction, Actions.category FROM user_actions INNER JOIN Actions ON user_actions.action_id=Actions.id', [], querySuccess, errorCB);
@@ -144,19 +146,24 @@ function getListActionsL(){
         	for(var i = 0; i < results.rows.length; i++){
         		if (results.rows.item(i).status==1){
 	        		console.log(results.rows.item(i));
+	        		//var name = results.rows.item(i).action.replace("'","&#39;");
+				    var name = escape(results.rows.item(i).action);
 				    var action = "<div class='action con-"+results.rows.item(i).category+"'><div class='action-category "+results.rows.item(i).category+"'>"+results.rows.item(i).category+"</div><div class='action-title'>"+results.rows.item(i).action+"</div><div class='action-description'>"+results.rows.item(i).description+"</div>";
 					var action = action + "<div class='action-links-container'><div class='action-links' id='"+results.rows.item(i).id+"success'><a class='action-remove' onclick='removeActionFromList("+results.rows.item(i).id+")' href='#'>Remove from list</a> <a href='#' class='action-complete' onclick='completeAction("+results.rows.item(i).id+","+results.rows.item(i).reduction+")'>Mark as completed</a></div>";
 					var action = action + '<div style="clear: both;"></div>';
-					var action = action + '<div class="action-links padd-top"><a href="#" class="calendar-add-list" onClick="calendarevent(\''+results.rows.item(i).action+'\');">Add to calendar</a><a href="#" class="facebook-share" onclick="facebookWallPost(\''+results.rows.item(i).action+'\')">Share</a></div><div style="clear: both;"></div></div></div>';
+					var action = action + '<div class="action-links padd-top"><a href="#" class="calendar-add-list" onClick="calendarevent(\''+name+'\');">Add to calendar</a><a href="#" class="facebook-share" onclick="facebookWallPost(\''+name+'\')">Share</a></div><div style="clear: both;"></div></div></div>';
+					m = 1;
 					document.getElementById("action-list").innerHTML=document.getElementById("action-list").innerHTML + action;
 				}
 					};
-        } else {
-			document.getElementById("action-list").innerHTML=document.getElementById("action-list").innerHTML + "<h2>No Actions on your list. Why not <a href='#' onClick='goToActions();'>add some?</a></h2>";
-        }
-    }
+        			if(m == 0){
+						document.getElementById("action-list").innerHTML=document.getElementById("action-list").innerHTML + "<div id='action-message'><h2>No Actions on your list. Why not <a href='#' onClick='goToActions();'>add some?</a></h2></div>";
+					}
+    	}
+	}
 
     function errorCB(err) {
+    		document.getElementById("action-list").innerHTML=document.getElementById("action-list").innerHTML + "<div id='action-message'><h2>No Actions on your list. Why not <a href='#' onClick='goToActions();'>add some?</a></h2></div>";
     }
 
     db.transaction(queryDB, errorCB);
@@ -164,6 +171,7 @@ function getListActionsL(){
 
 //SHOW COMPLETED ACTIONS FROM LOCAL
 function getCompletedActionsL(){
+	var m = 0;
 	function queryDB(tx) {
 		        tx.executeSql('SELECT user_actions.action_id, user_actions.status, Actions.id, Actions.action, Actions.description, Actions.reduction, Actions.category FROM user_actions INNER JOIN Actions ON user_actions.action_id=Actions.id', [], querySuccess, errorCB);
 		    }
@@ -180,56 +188,22 @@ function getCompletedActionsL(){
 							var action = "<div class='action con-"+results.rows.item(i).category+"'><div class='action-category "+results.rows.item(i).category+"'>"+results.rows.item(i).category+"</div><div class='action-title'>"+results.rows.item(i).action+"</div><div class='action-description'>"+results.rows.item(i).description+"</div>";
 							//var action = action + "<div class='action-links'><a onclick='addActionToList("+results.rows.item(i).id+")' href='#'>Remove from list</a> <a href='#' onclick='completeAction("+results.rows.item(i).id+","+results.rows.item(i).reduction+")'>Mark as completed</a></div></div>";
 							document.getElementById("action-list").innerHTML=document.getElementById("action-list").innerHTML + action;
+							m = 1;
 						}
 					};
-		        } else {
-		            document.getElementById("action-list").innerHTML=document.getElementById("action-list").innerHTML + "<h2>No Actions completed yet.</h2>";
-
-		        }
+					if(m == 0){
+						document.getElementById("action-list").innerHTML=document.getElementById("action-list").innerHTML + "<div id='action-message'><h2>No Actions completed yet.</h2></div>";
+					}
+		        } 
+		       
 		    }
 
 		    function errorCB(err) {
+		    	document.getElementById("action-list").innerHTML=document.getElementById("action-list").innerHTML + "<h2>No Actions completed yet.</h2>";
 		    }
 
 	    db.transaction(queryDB, errorCB);
 };
-
-
-function actionmessage(){
-	var actions= new Array();
-	var a = 0;
-    function queryDB(tx) {
-		        tx.executeSql('SELECT user_actions.action_id, user_actions.status, Actions.id, Actions.action, Actions.description, Actions.reduction, Actions.category FROM user_actions INNER JOIN Actions ON user_actions.action_id=Actions.id', [], querySuccess, errorCB);
-		    }
-
-		    function querySuccess(tx, results) {
-		        console.log("Returned rows from current_actions = " + results.rows.length);
-		        var num = results.rows.length;
-		        // this will be true since it was a select statement and so rowsAffected was 0
-		        if (!results.rowsAffected) {
-					for(var i = 0; i < results.rows.length; i++){
-						if (results.rows.item(i).status==1){
-							actions[a]=new Array();
-							actions[a]['action']=results.rows.item(i).action;
-							a++;
-						}
-					};
-					if(actions.length > 0){
-						actions.sort(function() { return 0.5 - Math.random() });
-						document.getElementById('actionmessage').innerHTML = actions[0]['action'];
-					} else {
-						document.getElementById('noactions').innerHTML = "You don't have any actions on your list, why not <a href='#' onClick='goToActions()'>add some?</a>";
-					}
-		        } else {
-		            console.log('No rows affected!');
-		        }
-		    }
-
-		    function errorCB(err) {
-		    }
-
-	    db.transaction(queryDB, errorCB);
-}
 
 //GET COMPLETED BADGES FROM LOCAL
 function getCompletedBadges(){

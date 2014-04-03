@@ -74,7 +74,11 @@
 <!-- Start of Home page -->
 <div data-role="page" id="holding">
     <div id="logo"></div>
-
+    <div id='holding-load'><img src='img/loading.gif'></div>
+<script type="text/javascript">
+           $( document ).ready(setTimeout(function(){direct()},2500));   
+           //$( document ).ready(direct());   
+        </script>
 <script type="text/javascript">
         //setTimeout(function(){direct()},0800);
     </script>
@@ -82,10 +86,7 @@
 <!-- End of Home page -->
 <div id="bgfade" style="display:none"></div>
 <div id="badgealert" style="display:none"></div>
-        <script type="text/javascript">
-           $( document ).ready(setTimeout(function(){direct()},2500));   
-           //$( document ).ready(direct());   
-        </script>
+        
         <!--<script type="text/javascript">newsfeed();</script>-->
         <script type="text/javascript" src="phonegap.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
