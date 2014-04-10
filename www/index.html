@@ -52,8 +52,12 @@
             }
 
             $(document).bind("mobileinit", function() {
+                alert('tttt');
                 $.support.cors = true;
                 $.mobile.allowCrossDomainPages = true;
+                $("#home").on("pageshow" , function() {
+                  alert('test');
+                });
             });
 
         </script>
@@ -76,7 +80,7 @@
     <div id="logo"></div>
     <div id='holding-load'><img src='img/loading.gif'></div>
 <script type="text/javascript">
-           $( document ).ready(setTimeout(function(){direct()},2500));   
+            $( document ).ready(setTimeout(function(){direct()},1500));   
            //$( document ).ready(direct());   
         </script>
 <script type="text/javascript">

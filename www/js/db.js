@@ -5,6 +5,35 @@ var show;
 var web = true;
 var redirecttologin = false;
 
+// Page initialisation
+$( document ).on( "pageinit", function( event ) {
+    $.support.cors = true;
+    $.mobile.allowCrossDomainPages = true;
+    $(".ui-page").on("pageshow" , function() {
+       if($.mobile.activePage.attr("id") == 'home'){
+         getUserInfo();
+       }
+       if($.mobile.activePage.attr("id") == 'actions'){
+         getActionsL();
+       }
+       if($.mobile.activePage.attr("id") == 'todo'){
+         getListActionsL();
+       }
+       if($.mobile.activePage.attr("id") == 'completedactions'){
+         getCompletedActionsL();
+       }
+       if($.mobile.activePage.attr("id") == 'badges'){
+         getCompletedBadges();
+       }
+       if($.mobile.activePage.attr("id") == 'friendlist'){
+         getFriends();
+       }
+       if($.mobile.activePage.attr("id") == 'profile'){
+         getUserInfo();
+       }
+    });
+});
+
 // Function to run before page changes
 // Prevents user going back to login once signed in
 // Prevents user going back once signed out
@@ -29,7 +58,7 @@ $(document).on("pagebeforechange", function(e, ob) {
               history.go(1);
           }
       } else if (ob.toPage[0].id === "home") {
-          setTimeout(function(){getUserInfo()},0100);
+          //setTimeout(function(){getUserInfo()},0100);
        } else if (ob.toPage[0].id === "holding") {
             if(ob.options.fromPage[0].id === "other"){
 
@@ -139,6 +168,7 @@ function logout(){
 }
 
 function login(id, first_name, last_name, email, image, facebookid, fbactions, total_actions_added){
+    var count = 0;
     var data = new FormData();
     data.append("id", id);
     window.localStorage.setItem("id", id);
@@ -164,6 +194,10 @@ function login(id, first_name, last_name, email, image, facebookid, fbactions, t
     }
 
     function successCB() {
+        count += 1;
+        if(count == 6){
+            redirect();
+        }
         //alert("success!");
         //document.location.href = 'index.html';
     }
@@ -188,8 +222,10 @@ function login(id, first_name, last_name, email, image, facebookid, fbactions, t
                         tx.executeSql('INSERT INTO Actions (id, action, description, reduction, category) VALUES (?,?,?,?,?)', [response[i]['id'],response[i]['action'],response[i]['description'],response[i]['reduction'],response[i]['category']]);
                     };
                   });
-               // }(i);
-                //actionstoDB(response[i]['id'], response[i]['action'], response[i]['description'], response[i]['reduction'], response[i]['category'], response[i]['max']);
+               count += 1;
+                if(count == 6){
+                    redirect();
+                }
         }
       }
     xmlhttp.open("GET","http://carbon.jamescobbett.co.uk/services/getactions.php");
@@ -211,8 +247,10 @@ function login(id, first_name, last_name, email, image, facebookid, fbactions, t
                         tx.executeSql('INSERT INTO Badges (id, badge) VALUES (?,?)', [response[i]['id'],response[i]['badge']]);
                     };
                   });
-               // }(i);
-                //actionstoDB(response[i]['id'], response[i]['action'], response[i]['description'], response[i]['reduction'], response[i]['category'], response[i]['max']);
+               count += 1;
+            if(count == 6){
+                redirect();
+            }
         }
       }
     baxmlhttp.open("GET","http://carbon.jamescobbett.co.uk/services/getallbadges.php");
@@ -259,8 +297,10 @@ function login(id, first_name, last_name, email, image, facebookid, fbactions, t
                         tx.executeSql('INSERT INTO user_actions (user_id, action_id, status, timestamp) VALUES (?,?,?,?)',[response[i]['user_id'], response[i]['action_id'], response[i]['status'], response[i]['timestamp']]);                    
                     };
                   });
-               // }(i);
-                //actionstoDB(response[i]['id'], response[i]['action'], response[i]['description'], response[i]['reduction'], response[i]['category'], response[i]['max']);
+               count += 1;
+                if(count == 6){
+                    redirect();
+                }
         }
       }
     cxmhttp.open("POST","http://carbon.jamescobbett.co.uk/services/getuseractions.php");
@@ -283,8 +323,10 @@ function login(id, first_name, last_name, email, image, facebookid, fbactions, t
                         tx.executeSql('INSERT INTO completed_badges (user_id, badge_id, completed) VALUES (?,?,?)',[response[i]['user_id'], response[i]['badge_id'], response[i]['completed']]);                    
                     };
                   });
-               // }(i);
-                //actionstoDB(response[i]['id'], response[i]['action'], response[i]['description'], response[i]['reduction'], response[i]['category'], response[i]['max']);
+               count += 1;
+                if(count == 6){
+                    redirect();
+                }
         }
       }
     bxmhttp.open("POST","http://carbon.jamescobbett.co.uk/services/getbadges.php");
@@ -320,6 +362,10 @@ function login(id, first_name, last_name, email, image, facebookid, fbactions, t
                     var response = JSON.parse(this.responseText);
                     console.log(response['house']);
                     footprintToDatabase(response['id'], response['house'], response['meat'], response['organic'], response['local'], response['compost'], response['total_clothes'], response['total_electronics'], response['total_shopping'], response['car_engine'], response['car_miles'], response['train'], response['bus'], response['domestic_flights'], response['short_flights'], response['long_flights'], response['total'], response['current']);
+                    count += 1;
+                    if(count == 6){
+                        redirect();
+                    }
                 }
                 else {
                     //alert('no FP');
@@ -342,7 +388,7 @@ function login(id, first_name, last_name, email, image, facebookid, fbactions, t
     xhr.send(data);
 
 
-    setTimeout(function(){redirect();},2500);
+    //setTimeout(function(){redirect();},2500);
 
     return false;
 

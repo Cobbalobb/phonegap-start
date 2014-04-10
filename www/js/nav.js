@@ -10,7 +10,7 @@ function goToActions(){
 
 function goToHome(){
 	$(':mobile-pagecontainer').pagecontainer('change', 'home.html', {
-			//  beforeshow: function( event, ui ) {alert('test')}
+			show: function( event, ui ) {console.log("TEETETEETETE")},
 	        transition: 'slide',
 	        changeHash: true,
 	        reverse: false,
