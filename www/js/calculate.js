@@ -29,11 +29,11 @@ var medium_gas = 3.65;
 var large_gas = 5.48;
 
 // Frequency of meat eating
-var more_once = 0;
-var daily = 0;
-var few_week = 0;
-var weekly = 0;
-var less_frequently = 0;
+var more_once = 0.7;
+var daily = 0.4;
+var few_week = 0.3;
+var weekly = 0.2;
+var less_frequently = 0.1;
 var never = 0;
 
 // Organic produce

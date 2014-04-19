@@ -50,6 +50,7 @@ while($row = mysqli_fetch_array($results2)){
 	$id1=$row['id1'];
 	$id2=$row['id2'];
 	$confirmed = $row['confirmed'];
+	$timestamp = timeago($row['timestamp']);
 
 	if($id1 != $id){
 	$results1 = mysqli_query($con,"SELECT user.id, user.username, user.first_name, user.last_name, user.image, footprint.total, footprint.current FROM user INNER JOIN footprint ON user.id=footprint.id WHERE user.id = '$id1'");
@@ -65,7 +66,7 @@ while($row = mysqli_fetch_array($results2)){
 		$news['feed'][$n]['type'] = 2;
 		$news['feed'][$n]['user_id'] = $row['id'];
 		$news['feed'][$n]['confirmed'] = $confirmed;
-		$news['feed'][$n]['timestamp'] = timeago($row['timestamp']);
+		$news['feed'][$n]['timestamp'] = $timestamp;
 		$news['feed'][$n]['sent'] = 0;
 		$n++;
 	}
@@ -83,7 +84,7 @@ while($row = mysqli_fetch_array($results2)){
 			$news['feed'][$n]['type'] = 2;
 			$news['feed'][$n]['user_id'] = $row['id'];
 			$news['feed'][$n]['confirmed'] = $confirmed;
-			$news['feed'][$n]['timestamp'] = timeago($row['timestamp']);
+			$news['feed'][$n]['timestamp'] = $timestamp;
 			$news['feed'][$n]['sent'] = 1;
 			$n++;
 		}

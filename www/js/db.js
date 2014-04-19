@@ -1855,8 +1855,9 @@ function newsfeed(){
                             //} else {
                                 html += "<div class='news-image'><a href='#' onClick='goToProfile("+response['feed'][i]['user_id']+")'><img class='newsuserimage' src='"+response['feed'][i]['image']+"'</src></a></div>";
                             //}                        
-                            html += "<div class='status'><a onClick='goToProfile("+response['feed'][i]['user_id']+")' href='#'>"+response['feed'][i]['user_name']+"</a> sent you a friend request.";
-                            html += "<div class='time'>"+response['feed'][i]['timestamp']+"</div></div>";
+                            html += "<div class='status'><a onClick='goToProfile("+response['feed'][i]['user_id']+")' href='#'>"+response['feed'][i]['first_name']+"</a> sent you a friend request.";
+                            html += "<div class='time'>"+response['feed'][i]['timestamp']+"</div>";
+                            html += "<div class='acceptfriend accept"+response['feed'][i]['user_id']+"'><a href='#' class='acceptrequest' onclick='acceptRequest("+response['feed'][i]['user_id']+")'>Accept friend request</a></div></div>";
                             html += "</div>";
                             html += "<div class='line'></div>";
                             html += "<div style='clear: both;'></div>";
@@ -1917,8 +1918,8 @@ function getProfileInfo(id){
                     $('#profile-friend').append("<div class='add"+response['id']+"'><a href='#' onClick='addFriend("+response['id']+")' class='addfriend add'>Add Friend</a></div>");
                 }
                 $('#profile-img').append('<img src="'+response.image+'">');
-                $('#profile-footprint').append("<h1 class='profile-dynamic'>"+response.total+"</h1>");
-                $('#profile-reductions').append("<h1 class='profile-dynamic'>"+(response.total - response.current)+"</h1>");
+                $('#profile-footprint').append("<h1 class='profile-dynamic'>"+Math.round(response.total * 100) / 100+"</h1>");
+                $('#profile-reductions').append("<h1 class='profile-dynamic'>"(Math.round((response.total - response.current) * 100) / 100)+"</h1>");
                 $('#profile-actions').append("<h1 class='profile-dynamic'>"+response.actions+"</h1>");
                 $('#profile-badges').append("<h1 class='profile-dynamic'>"+response.badges+"</h1>");
             }
