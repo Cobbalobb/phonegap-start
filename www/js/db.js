@@ -69,15 +69,6 @@ $(document).on("pagebeforechange", function(e, ob) {
             }
       }
     }
-    // if(ob.options.fromPage != undefined){
-    //   if (ob.toPage[0].id === "home" && ob.options.fromPage[0].id === "login") {
-    //     alert('here');
-    //       setTimeout(function(){getUserInfo()},1000);
-    //   } else if(ob.options.fromPage[0].id == "holding" && ob.toPage[0].id === "home"){
-    //     alert("From Holding to Home");
-    //       setTimeout(function(){getUserInfo()},0100);
-    //   }
-    // }
 });
 
 // Facebook web settijgs
@@ -145,25 +136,10 @@ function logout(){
     }
 
     function successFP() {
-        //alert("success!");
-
-        //FB.getLoginStatus(function(response) {
-
-          //  FB.api("/me/permissions", "delete", function(response){ 
-                //document.location.href = 'index.html';
-                // FB.logout(function(response) {
-                //           alert('logged out');
-                //           });
-                show = true;
-                redirecttologin = true;
-                goToLogin();
-            //});
-
-        //});
-
-        //document.location.href = 'index.html';
+        show = true;
+        redirecttologin = true;
+        goToLogin();
     }
-    //db = window.openDatabase("Footprint", "1.0", "User DB", 1000000);
     db.transaction(dropFP, errorFP, successFP);
 }
 
@@ -198,15 +174,10 @@ function login(id, first_name, last_name, email, image, facebookid, fbactions, t
         if(count == 6){
             redirect();
         }
-        //alert("success!");
-        //document.location.href = 'index.html';
     }
-    //var db = window.openDatabase("User", "1.0", "User DB", 1000000);
     db.transaction(populateDB, errorCB, successCB);
-    //document.location.href = 'index.html';
     
     //GET ACTIONS FROM SERVER TO LOCAL DB
-    //actionstoDB();
     xmlhttp=new XMLHttpRequest();
     xmlhttp.onreadystatechange=function()
       {
@@ -255,30 +226,6 @@ function login(id, first_name, last_name, email, image, facebookid, fbactions, t
       }
     baxmlhttp.open("GET","http://carbon.jamescobbett.co.uk/services/getallbadges.php");
     baxmlhttp.send();
-
-    //GET ACTIONS IN LIST FROM SERVER TO LOCAL DB
-    // xmhttp=new XMLHttpRequest();
-    // xmhttp.onreadystatechange=function()
-    //   {
-    //   if (xmhttp.readyState==4 && xmhttp.status==200)
-    //     {
-    //         //console.log(xmlhttp.responseText);
-    //         var response = JSON.parse(xmhttp.responseText);
-    //         console.log("completed actions: " + response);
-    //             //function(response) { 
-    //                 db.transaction(function (tx) {  
-    //                 for(var i = 0; i < response.length; i++){
-    //                     console.log('HERE');
-    //                     console.log(response[i]);
-    //                     tx.executeSql('INSERT INTO current_actions (user_id, action_id) VALUES (?,?)',[response[i]['user_id'], response[i]['action_id']]);                    
-    //                 };
-    //               });
-    //            // }(i);
-    //             //actionstoDB(response[i]['id'], response[i]['action'], response[i]['description'], response[i]['reduction'], response[i]['category'], response[i]['max']);
-    //     }
-    //   }
-    // xmhttp.open("POST","http://carbon.jamescobbett.co.uk/services/getactionsl.php");
-    // xmhttp.send(data);
 
     //GET USER ACTIONS FROM SERVER TO LOCAL DB
     cxmhttp=new XMLHttpRequest();
@@ -337,10 +284,7 @@ function login(id, first_name, last_name, email, image, facebookid, fbactions, t
     var xhr, target, changeListener, url, data;
     //setting url to the php code to add comments to the db
     url = "http://carbon.jamescobbett.co.uk/services/getfootprint.php";
-    // var data = new FormData();
 
-    // data.append("id", id);
-    // alert(id);
     console.log("Sending", data);
     console.log(this.test);
     // create a request object
@@ -355,10 +299,6 @@ function login(id, first_name, last_name, email, image, facebookid, fbactions, t
                 var message = response.indexOf("exception");
                 console.log(message);
                 if (message == -1){
-                    //$('#succesfully-added').slideToggle("slow");                    
-                    //document.getElementById("failure").style.display = "block";
-                    //document.getElementById("success-message").innerHTML = "Succesfully added to your list.";
-                    //alert('success adding FP');
                     var response = JSON.parse(this.responseText);
                     console.log(response['house']);
                     footprintToDatabase(response['id'], response['house'], response['meat'], response['organic'], response['local'], response['compost'], response['total_clothes'], response['total_electronics'], response['total_shopping'], response['car_engine'], response['car_miles'], response['train'], response['bus'], response['domestic_flights'], response['short_flights'], response['long_flights'], response['total'], response['current']);
@@ -368,14 +308,7 @@ function login(id, first_name, last_name, email, image, facebookid, fbactions, t
                     }
                 }
                 else {
-                    //alert('no FP');
-                    //$('#success').slideDown("slow");                    
-                    //document.getElementById("failure").style.display = "none";
-                    //document.getElementById("firstName").innerHTML ='<div id="newN"><h6>'+name+'</h6></div><div id="newAL">'+age+', '+location+'</div>';
-                    //alert('failure');
                 }
-                //result = JSON.parse(this.responseText);
-                //injectContent(result.id, form);
             }
         }
     };
@@ -465,18 +398,10 @@ function getCurrentUsersName() {
     }
 
     function errorCB(err) {
-        //alert("Name Error processing SQL: "+err.code);
-        //goToLogin();
-        //document.location.href = 'login.html';
         redirecttologin = true;
         goToLogin();
     }
-
-    //var db = window.openDatabase("User", "1.0", "User DB", 1000000);
     db.transaction(queryDB, errorCB);
-    //tx.executeSql('SELECT first_name FROM User', [], function (tx, results) {
-    //alert(results.rows.item(i).first_name);
-    //$('#name').append(data.items.first_name + ',');
  }
 
 function getCurrentUsersImage() {
@@ -1629,6 +1554,8 @@ function addFriend(id){
                     // $('#bgfade').fadeIn();
                     // $('#badgealert').fadeIn();
                     $('.add'+id).html('<div id="search-message">Friend request sent.</div>');
+                    // Award bade
+                    completebadge(11);
                 } else {
                      console.log('this.responseText');
                 }
@@ -1735,6 +1662,8 @@ function acceptRequest(id){
                 if (message != -1){
                     $('.accept'+id).html('You are now freinds.');
                 }
+                // Award bade
+                completebadge(11);
             }
         }
     };
@@ -1997,12 +1926,10 @@ function getFBFriends(){
 }
 
 function calendarevent(title){
-    //alert('here');
-     // prep some variables
   var today = new Date();
   var startDate = new Date(2014,3,6,18,30,0,0,0); // beware: month 0 = january, 11 = december
   var endDate = new Date(2014,3,6,19,30,0,0,0);
-  var title = title;
+  var title = unescape(title);
   var location = "";
   var notes = "";
   var success = function(message) {
@@ -2079,6 +2006,8 @@ function changepassword(){
  
 
 function shareaction(){
+    // Award bade
+    completebadge(13);
     var objectToLike = 'http://samples.ogp.me/488117217965116';
 FB.api(
        'me/carboncutter:added',
@@ -2100,37 +2029,9 @@ FB.api(
          }
        }
     );
-
-
-
-// FB.api(
-//   'me/carboncutter:added',
-//   'post',
-//   {
-//     carbon_action: "http://samples.ogp.me/488117217965116"
-//   },
-//   function(response) {
-//     console.log(response);
-//     if (!response || response.error) {
-//     alert('Error occured');
-//     } else {
-//     alert('Demo was liked successfully! Action ID: ' + response.id);
-//     }
-//   }
-// );
 }
 
 function direct(){
-  //alert('in direct');
-  // alert('web: '+web);
-  // alert(localStorage.getItem('id'));
-  // if(localStorage.getItem('id') != undefined || localStorage.getItem('id') != null){
-  //   directToHome();
-  // } else {
-  //   goToLogin();
-  // }
-//var db = window.openDatabase("User", "1.0", "User DB", 1000000);
-
   function queryDB(tx) {
           //tx.executeSql('DROP TABLE IF EXISTS User');
           tx.executeSql('SELECT first_name FROM User', [], querySuccess, errorCB);
