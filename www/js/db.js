@@ -5,6 +5,7 @@ var show;
 var web = true;
 var redirecttologin = false;
 
+// logout function - drops local database tables
 function logout(){
     function dropDB(tx) {
     tx.executeSql('DROP TABLE IF EXISTS User');
@@ -16,7 +17,6 @@ function logout(){
 
     function successCB() {
         //alert("success!");
-        //document.location.href = 'index.html';
     }
     var db = window.openDatabase("User", "1.0", "User DB", 1000000);
     db.transaction(dropDB, errorCB, successCB);
@@ -37,6 +37,7 @@ function logout(){
     db.transaction(dropFP, errorFP, successFP);
 }
 
+// login function - populates local databases from server
 function login(id, first_name, last_name, email, image, facebookid, fbactions, total_actions_added){
     var count = 0;
     var data = new FormData();
@@ -213,21 +214,15 @@ function login(id, first_name, last_name, email, image, facebookid, fbactions, t
     xhr.open('POST', url, true);
     //xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.send(data);
-
-
-    //setTimeout(function(){redirect();},2500);
-
     return false;
-
-    //footprintToDatabase(id, house, meat, organic, local, compost, total_clothes, total_electronics, total_shopping, car_engine, car_miles, train, bus, domestic_flights, short_flights, long_flights, total);
-
 }
 
+// Function to redirect user after login - either to home or calculator
 function redirect(){
     function queryDB(tx) {
         //tx.executeSql('DROP TABLE IF EXISTS User');
         tx.executeSql('SELECT total FROM Footprint', [], querySuccess, errorCB);
-    }
+}
 
     function querySuccess(tx, results) {
         closebadgepopup();
@@ -325,21 +320,13 @@ function getCurrentUsersImage() {
 
     function errorCB(err) {
         //alert("Image Error processing SQL: "+err.code);
-        //goToLogin();
-        //document.location.href = 'login.html';
     }
 
-    //var db = window.openDatabase("User", "1.0", "User DB", 1000000);
     db.transaction(queryDB, errorCB);
-    //tx.executeSql('SELECT first_name FROM User', [], function (tx, results) {
-    //alert(results.rows.item(i).first_name);
-    //$('#name').append(data.items.first_name + ',');
  }
 
 function getCurrentUsersID(goToCalc) {
-    //alert('470');
     function queryDB(tx) {
-        //tx.executeSql('DROP TABLE IF EXISTS User');
         tx.executeSql('SELECT id, fbactions FROM User', [], querySuccess, errorCB);
     }
 
@@ -352,7 +339,6 @@ function getCurrentUsersID(goToCalc) {
             console.log(results.rows.item(num-1).id);
             //alert('found results');
             var id = results.rows.item(num-1).id;
-            //$('#name').append(results.rows.item(num-1).first_name + ',');
             console.log("id: " + id);
             window.localStorage.setItem("id", id);
             window.localStorage.setItem("fbactions", results.rows.item(num-1).fbactions);
@@ -370,14 +356,10 @@ function getCurrentUsersID(goToCalc) {
 
     function errorCB(err) {
         //alert("ID Error processing SQL: "+err.code);
-        //document.location.href = 'login.html';
     }
 
     var db = window.openDatabase("User", "1.0", "User DB", 1000000);
     db.transaction(queryDB, errorCB);
-    //tx.executeSql('SELECT first_name FROM User', [], function (tx, results) {
-    //alert(results.rows.item(i).first_name);
-    //$('#name').append(data.items.first_name + ',');
  }
 
  function getCurrentUsersFootprint() {
@@ -411,14 +393,9 @@ function getCurrentUsersID(goToCalc) {
 
     function errorCB(err) {
         //alert("FP Error processing SQL: "+err.code);
-        //document.location.href = 'login.html';
     }
 
-    //var db = window.openDatabase("Footprint", "1.0", "Footprint DB", 1000000);
     db.transaction(queryDB, errorCB);
-    //tx.executeSql('SELECT first_name FROM User', [], function (tx, results) {
-    //alert(results.rows.item(i).first_name);
-    //$('#name').append(data.items.first_name + ',');
  }
 
  function getCurrentUsersReduction() {
@@ -448,14 +425,9 @@ function getCurrentUsersID(goToCalc) {
 
     function errorCB(err) {
         //alert("Reduction Error processing SQL: "+err.code);
-        //document.location.href = 'login.html';
     }
 
-    //var db = window.openDatabase("Footprint", "1.0", "Footprint DB", 1000000);
     db.transaction(queryDB, errorCB);
-    //tx.executeSql('SELECT first_name FROM User', [], function (tx, results) {
-    //alert(results.rows.item(i).first_name);
-    //$('#name').append(data.items.first_name + ',');
  }
 
  function getCurrentUsersActionsNo() {
@@ -473,21 +445,15 @@ function getCurrentUsersID(goToCalc) {
 
     function errorCB(err) {
         //alert("Actions Error processing SQL: "+err.code);
-        //document.location.href = 'login.html';
     }
 
-    //var db = window.openDatabase("Footprint", "1.0", "Footprint DB", 1000000);
     db.transaction(queryDB, errorCB);
-    //tx.executeSql('SELECT first_name FROM User', [], function (tx, results) {
-    //alert(results.rows.item(i).first_name);
-    //$('#name').append(data.items.first_name + ',');
  }
 
 
  function getCurrentUsersBadgesNo() {
 
     function queryDB(tx) {
-        //tx.executeSql('DROP TABLE IF EXISTS User');
         tx.executeSql('SELECT * FROM completed_badges', [], querySuccess, errorCB);
     }
 
@@ -499,14 +465,9 @@ function getCurrentUsersID(goToCalc) {
 
     function errorCB(err) {
         //alert("BadgesError processing SQL: "+err.code);
-        //document.location.href = 'login.html';
     }
 
-    //var db = window.openDatabase("Footprint", "1.0", "Footprint DB", 1000000);
     db.transaction(queryDB, errorCB);
-    //tx.executeSql('SELECT first_name FROM User', [], function (tx, results) {
-    //alert(results.rows.item(i).first_name);
-    //$('#name').append(data.items.first_name + ',');
  }
 
 
@@ -526,14 +487,10 @@ function getCurrentUsersID(goToCalc) {
     }
 
     function successCB() {
-        //alert("success footprint added!");
         //document.location.href = 'index.html';
     }
-    // var dbfp = window.openDatabase("Footprint", "1.0", "User DB", 1000000);
-    // dbfp.transaction(populateDB, errorCB, successCB);
     var db = window.openDatabase("User", "1.0", "User DB", 1000000);
     db.transaction(populateDB, errorCB, successCB);
-    //document.location.href = 'index.html';
  }
 
 //Add Footprint to Server DB
@@ -641,10 +598,7 @@ function footprintToServerDatabase(id, house, meat, organic, local, compost, tot
                     $('#badgealert').fadeIn();
                 }
                 else {
-                    //alert('766');
                 }
-                //result = JSON.parse(this.responseText);
-                //injectContent(result.id, form);
             }
         }
     };
@@ -663,15 +617,10 @@ function footprintToServerDatabase(id, house, meat, organic, local, compost, tot
 }
  //Functions to run on homepage
 function getUserInfo(load){
-    //alert('796');
     if(localStorage.getItem('id') == undefined){
         getCurrentUsersID();
     }
-   //getCurrentUsersID();
-   //alert('802');
    getCurrentUsersName();
-   //getCurrentUsersActionsNo();
-   //getCurrentUsersBadgesNo();
    getCurrentUsersReduction();
    getCurrentUsersImage();
    getCurrentUsersFootprint();
@@ -693,12 +642,14 @@ function addActionToList(actionid){
 
     function successCB() {
         document.getElementById(actionid+"success").innerHTML ='<div class="successful-added">Action added to your list.</div>';
+        // Checks if setting to automatically add actions to FB 'recent activity' is set to yes
+        // Add it to users wall if it is
         if(fb==1){
         FB.api(
           'me/carboncutter:added',
           'post',
           {
-            carbon_action: "http://samples.ogp.me/488117217965116"
+            carbon_action: "http://carboncutterapp.co.uk"
           },
           function(response) {
             console.log(response);
@@ -751,19 +702,11 @@ function addActionToList(actionid){
                 var message = response.indexOf("exception");
                 console.log(message);
                 if (message == -1){
-                    //$('#succesfully-added').slideToggle("slow");                    
-                    //document.getElementById("failure").style.display = "block";
-                    //document.getElementById("success-message").innerHTML = "Succesfully added to your list.";
                     //alert('success');
                 }
                 else {
-                    //$('#success').slideDown("slow");                    
-                    //document.getElementById("failure").style.display = "none";
-                    //document.getElementById("firstName").innerHTML ='<div id="newN"><h6>'+name+'</h6></div><div id="newAL">'+age+', '+location+'</div>';
                     //alert('failure');
                 }
-                //result = JSON.parse(this.responseText);
-                //injectContent(result.id, form);
             }
         }
     };
@@ -928,15 +871,9 @@ function completeAction(actionid, reduction){
                 var message = response.indexOf("exception");
                 console.log(message);
                 if (message == -1){
-                    //$('#succesfully-added').slideToggle("slow");                    
-                    //document.getElementById("failure").style.display = "block";
-                    //document.getElementById("success-message").innerHTML = "Well done, you have completed the action.";
                     //alert('success');
                 }
                 else {
-                    //$('#success').slideDown("slow");                    
-                    //document.getElementById("failure").style.display = "none";
-                    //document.getElementById("firstName").innerHTML ='<div id="newN"><h6>'+name+'</h6></div><div id="newAL">'+age+', '+location+'</div>';
                     //alert('failure');
                 }
                 //result = JSON.parse(this.responseText);
@@ -955,9 +892,6 @@ function completeAction(actionid, reduction){
 
     //UPDATE FOOTPRINT
     function updateFP(tx) {
-        //tx.executeSql('INSERT INTO completed_actions (user_id, action_id) VALUES (?,?)',[id, actionid]);     
-        //alert(reduction);
-        //alert(jQuery.type(reduction));
         tx.executeSql('UPDATE Footprint SET current = current - ?', [reduction]);                    
     };
 
@@ -1074,6 +1008,7 @@ function completeAction(actionid, reduction){
     return false;
 }
 
+// Awards badge for percentage of carbon cut if not already awarded
 function percentcheck(badge){
     function queryDB(tx) {
         tx.executeSql('SELECT badge_id FROM completed_badges WHERE completed = 1 AND badge_id = ?', [badge.toString()], querySuccess, errorCB);
@@ -1097,6 +1032,7 @@ function percentcheck(badge){
 
 }
 
+// Mark badge as complete in local and server database. Display award notification
 function completebadge(badge){
     var id = localStorage.getItem('id');
 

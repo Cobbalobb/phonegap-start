@@ -108,18 +108,14 @@ function closeSuccessMessage(){
 	document.getElementById("succesfully-added").style.display = "none";
 }
 
+// Call to facebook API to login with facebook
 function facebookLogin(){
-    //alert('1405');
      FB.api('/me', {fields: 'first_name, last_name, email, id, picture'}, function(response) {
         var first_name = response['first_name'];
       var last_name = response['last_name'];
       var email = response['email'];
       var facebookid = response['id'];
       var fbactions = 1;
-      //alert(first_name);
-      //alert(last_name);
-      //alert(email);
-      //alert(facebookid);
         console.log(first_name + " " + last_name);
         FB.api(
         "/me/picture",
@@ -306,6 +302,7 @@ function addFriend(id){
     return false;
 }
 
+// Find users friends
 function getFriends(){
   // declaring variables to be used
     var xhr, target, changeListener, url, data;
@@ -373,6 +370,7 @@ function getFriends(){
     xhr.send(data);
 };
 
+//Accept a friend request
 function acceptRequest(id){
     var xhr, target, changeListener, url, data;
 
@@ -601,6 +599,7 @@ function fblogin(){
 }
 
 function getFBFriends(){
+    // Call to FB API to find friends
     FB.api('/me/friends?fields=installed', {fields: 'installed'}, function(response) {
         if(response.data) {
             console.log(response);
@@ -657,6 +656,7 @@ function getFBFriends(){
     });
 }
 
+// Add event to calendar
 function calendarevent(title){
   var today = new Date();
   var startDate = new Date(2014,3,6,18,30,0,0,0); // beware: month 0 = january, 11 = december
@@ -722,6 +722,7 @@ function showHome(){
     $( '#action-filters'  ).slideUp();
 }
 
+// Filter toggles for actions 
 function showFood(){
     $( ".con-Home" ).fadeOut( "fast", function() {
         // Animation complete.
