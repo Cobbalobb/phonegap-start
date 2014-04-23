@@ -2,25 +2,6 @@ var serviceURL = "http://carbon.jamescobbett.co.uk/services/";
 
 var users;
 
- // function getuserList() {
- //  $.ajax({       
- //   type : 'POST',   
- //   url : 'http://carbon.jamescobbett.co.uk/services/getuser.php',
-   
- //   dataType:'json',
- //   success : function(data) {       
- //   		console.log(data.items.name);
- //   		$('#name').append(data.items.first_name + ',');
-
- //          },
- //   error : function(xhr, type) { 
-    
- //   }  
- //  }); 
- // }
-
-
-
 //SUBMIT REGISTRATION FORM
 function submitSignForm(first_name, last_name, email, image,facebookid, fbactions){
   // declaring variables to be used

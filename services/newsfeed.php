@@ -25,7 +25,6 @@ function timeago($time)
 // Create connection
 include('config.php');
 $con=mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
-//$con=mysqli_connect('10.168.1.52','carbonja_carbon','GSwMAYuNyVzSguTf','carbonja_carb');
 
 $id = $_POST['id'];
 //$id = 1;
