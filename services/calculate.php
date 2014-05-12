@@ -1,11 +1,5 @@
 <?php
-//include 'http://carbon.jamescobbett.co.uk/services/config.php';
-
-	$dbhost = '10.168.1.52';
-	$dbuser = 'carbonja_carbon';
-	$dbpass = 'GSwMAYuNyVzSguTf';
-	$dbname = 'carbonja_carb';
-
+include('config.php');
 
 //$fname = $_GET['firstname'];
 $id = $_POST['id'];
@@ -32,7 +26,7 @@ $total = $_POST['total'];
 //$con=mysqli_connect('10.168.1.52','carbonja_carbon','GSwMAYuNyVzSguTf','carbonja_carb');
 $con = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
 $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-$conn=mysqli_connect('10.168.1.52','carbonja_carbon','GSwMAYuNyVzSguTf','carbonja_carb');
+$con=mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
 
 $results = mysqli_query($conn,"SELECT * FROM footprint WHERE id=$id");
 if($row = mysqli_fetch_array($results)){

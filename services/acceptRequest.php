@@ -1,11 +1,5 @@
 <?php
-//include 'http://carbon.jamescobbett.co.uk/services/config.php';
-
-	$dbhost = '10.168.1.52';
-	$dbuser = 'carbonja_carbon';
-	$dbpass = 'GSwMAYuNyVzSguTf';
-	$dbname = 'carbonja_carb';
-
+include('config.php');
 
 //$fname = $_GET['firstname'];
 $current_id = $_POST['current-id'];

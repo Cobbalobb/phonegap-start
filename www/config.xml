@@ -24,6 +24,7 @@
         <param name="APP_ID" value="483622355081269" />
         <param name="APP_NAME" value="carboncutter" />
     </gap:plugin>
+    <gap:plugin name="org.li8.inappbrowser" version="0.1" />
 <!-- <gap:plugin name="FacebookConnect">
   <param
     name="APP_ID"
