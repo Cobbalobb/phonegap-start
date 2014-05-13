@@ -463,8 +463,9 @@ function newsfeed(){
                         if (inArray(arr, i)) {
                             html += "<div class='news'>";
                             html += "<div class='news-image'><a href='"+response['news'][n]['url']+"'><img class='newsuserimage' src='http://carbon.jamescobbett.co.uk/www/img/news.png'</src></a></div>";
-                            html += "<div class='status'><a class='black' href='"+response['news'][n]['url']+"'>"+response['news'][n]['headline']+"</a></div>";
-                            html += "<div class='source'><a href='"+response['news'][n]['url']+"'>"+response['news'][n]['source']+"</a></div>";
+                            html += "<div class='status'><a class='black' href='#' onclick='window.open(&#39;"+response['news'][n]['url']+"&#39;, &#39;_system&#39;);'>"+response['news'][n]['headline']+"</a></div>";
+                    //html += "<div class='status'><a class='black' href='"+response['news'][n]['url']+"'>"+response['news'][n]['headline']+"</a></div>";
+                            html += "<div class='source'><a href='#' onclick='window.open(&#39;"+response['news'][n]['url']+"&#39;, &#39;_system&#39;);' >"+response['news'][n]['source']+"</a></div>";
                             //html += "<div class='time'>"+response['feed'][i]['timestamp']+"</div></div>";
                             html += "</div>";
                             html += "<div class='line'></div>";
@@ -526,8 +527,9 @@ function newsfeed(){
                 for(var  n; n < 5; n++){
                     html += "<div class='news'>";
                     html += "<div class='news-image'><a href='"+response['news'][n]['url']+"'><img class='newsuserimage' src='http://carbon.jamescobbett.co.uk/www/img/news.png'</src></a></div>";
-                    html += "<div class='status'><a class='black' href='"+response['news'][n]['url']+"'>"+response['news'][n]['headline']+"</a></div>";
-                    html += "<div class='source'><a href='#' onclick='window.open(/'"+response['news'][n]['url']+"/', /'_system/');' >"+response['news'][n]['source']+"</a></div>";
+                    html += "<div class='status'><a class='black' href='#' onclick='window.open(&#39;"+response['news'][n]['url']+"&#39;, &#39;_system&#39;);'>"+response['news'][n]['headline']+"</a></div>";
+                    //html += "<div class='status'><a class='black' href='"+response['news'][n]['url']+"'>"+response['news'][n]['headline']+"</a></div>";
+                    html += "<div class='source'><a href='#' onclick='window.open(&#39;"+response['news'][n]['url']+"&#39;, &#39;_system&#39;);' >"+response['news'][n]['source']+"</a></div>";
                     //html += "<div class='time'>"+response['feed'][i]['timestamp']+"</div></div>";
                     html += "</div>";
                     html += "<div class='line'></div>";
